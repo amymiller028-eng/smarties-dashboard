@@ -26,78 +26,140 @@
   <main class="container">
     <section class="intro">
       <h1>End of Session Impact</h1>
-      <p class="lede">Real feedback from the people who completed our emotional intelligence programs. Click a tab to drill into a specific program.</p>
+      <p class="lede">Real feedback from participants across our emotional intelligence programs. Click any tab to drill into a specific program family.</p>
     </section>
 
-    <div class="tabs" role="tablist" aria-label="Program view">
-      <button class="tab is-active" data-view="all" role="tab" aria-selected="true">All Programs</button>
-      <button class="tab" data-view="ttt" role="tab" aria-selected="false">Train the Trainer</button>
-      <button class="tab" data-view="private" role="tab" aria-selected="false">Private Programs</button>
-    </div>
-
-    <section class="hero-kpi">
-      <div class="hero-card">
-        <div class="hero-eyebrow">Net Promoter Score</div>
-        <div class="hero-number" id="npsValue">—</div>
-        <div class="hero-caption" id="npsCaption">World-class satisfaction</div>
-        <div class="hero-footnote">* Any NPS above 70 is considered world-class.</div>
-        <div class="hero-scale">
-          <span>-100</span>
-          <div class="scale-bar"><div class="scale-fill" id="npsBar"></div></div>
-          <span>+100</span>
-        </div>
+    <nav class="tabs-wrap" aria-label="Program view">
+      <div class="tabs primary-tabs" role="tablist">
+        <button class="tab is-active" data-view="all" role="tab" aria-selected="true">All Programs</button>
+        <button class="tab" data-view="ttt-summary" data-group="ttt" role="tab" aria-selected="false">Train the Trainer</button>
+        <button class="tab" data-view="private-summary" data-group="private" role="tab" aria-selected="false">Private Program</button>
+        <button class="tab" data-view="public-l1" role="tab" aria-selected="false">Public Program</button>
+        <button class="tab" data-view="custom" role="tab" aria-selected="false">Custom Programs</button>
+        <button class="tab" data-view="refresher" role="tab" aria-selected="false">Refresher</button>
       </div>
-      <div class="hero-side">
-        <div class="side-card">
-          <div class="side-eyebrow">% of EI growth clients credit to this training</div>
-          <div class="side-number"><span id="eiGrowth">—</span><span class="unit">%</span></div>
-          <div class="side-caption"><span id="eiConfidence">—</span>% average confidence in estimate</div>
-        </div>
-        <div class="side-card">
-          <div class="side-eyebrow">Reach</div>
-          <div class="reach-grid">
-            <div><div class="reach-num" id="participants">—</div><div class="reach-label">Participants</div></div>
-            <div><div class="reach-num" id="sessions">—</div><div class="reach-label">Sessions</div></div>
-            <div><div class="reach-num" id="clients">—</div><div class="reach-label">Client companies</div></div>
+
+      <div class="sub-tabs" data-group="ttt" hidden>
+        <button class="sub-tab is-active" data-view="ttt-summary">Summary</button>
+        <button class="sub-tab" data-view="ttt-l1">Level 1</button>
+        <button class="sub-tab" data-view="ttt-l2">Level 2</button>
+        <button class="sub-tab" data-view="ttt-teams">Teams</button>
+      </div>
+      <div class="sub-tabs" data-group="private" hidden>
+        <button class="sub-tab is-active" data-view="private-summary">Summary</button>
+        <button class="sub-tab" data-view="private-l1">Level 1</button>
+        <button class="sub-tab" data-view="private-l2">Level 2</button>
+      </div>
+    </nav>
+
+    <div class="view-label" id="viewLabel">All Programs</div>
+
+    <!-- ============= STANDARD VIEW ============= -->
+    <div id="standardView">
+      <section class="hero-kpi">
+        <div class="hero-card">
+          <div class="hero-eyebrow">Net Promoter Score</div>
+          <div class="hero-number" id="npsValue">—</div>
+          <div class="hero-caption" id="npsCaption">World-class satisfaction</div>
+          <div class="hero-footnote">* Any NPS above 70 is considered world-class.</div>
+          <div class="hero-scale">
+            <span>-100</span>
+            <div class="scale-bar"><div class="scale-fill" id="npsBar"></div></div>
+            <span>+100</span>
           </div>
         </div>
-      </div>
-    </section>
-
-    <section class="kpi-grid">
-      <h2 class="section-title">What participants told us</h2>
-      <p class="section-sub">Share of participants who rated 4 or 5 out of 5.</p>
-      <div class="kpi-cards">
-        <div class="kpi-card"><div class="kpi-num"><span data-metric="applyOnJob">—</span>%</div><div class="kpi-label">will apply what they learned on the job</div></div>
-        <div class="kpi-card"><div class="kpi-num"><span data-metric="gainedKnowledge">—</span>%</div><div class="kpi-label">gained new knowledge</div></div>
-        <div class="kpi-card"><div class="kpi-num"><span data-metric="worthwhileInvestment">—</span>%</div><div class="kpi-label">called it a worthwhile investment of their time</div></div>
-        <div class="kpi-card"><div class="kpi-num"><span data-metric="contentRelevant">—</span>%</div><div class="kpi-label">said the content was relevant to their job</div></div>
-        <div class="kpi-card"><div class="kpi-num"><span data-metric="facilitatorKnowledge">—</span>%</div><div class="kpi-label">said facilitator knowledge enhanced their learning</div></div>
-        <div class="kpi-card"><div class="kpi-num"><span data-metric="facilitatorEngaging">—</span>%</div><div class="kpi-label">said the facilitator kept them engaged</div></div>
-      </div>
-    </section>
-
-    <section class="split">
-      <div class="split-col">
-        <h2 class="section-title">In their own words</h2>
-        <div class="testimonials" id="testimonials"></div>
-      </div>
-      <div class="split-col">
-        <h2 class="section-title">NPS over time</h2>
-        <p class="section-sub">Updated weekly as new sessions close.</p>
-        <canvas id="trendChart" height="220"></canvas>
-      </div>
-    </section>
-
-    <section class="modality">
-      <h2 class="section-title">Delivery modality</h2>
-      <div class="modality-row">
-        <div class="modality-bar">
-          <div class="modality-fill virtual" id="virtualFill"><span id="virtualLabel">—</span></div>
-          <div class="modality-fill inperson" id="inPersonFill"><span id="inPersonLabel">—</span></div>
+        <div class="hero-side">
+          <div class="side-card">
+            <div class="side-eyebrow">% of EI growth clients credit to this training</div>
+            <div class="side-number"><span id="eiGrowth">—</span><span class="unit">%</span></div>
+            <div class="side-caption"><span id="eiConfidence">—</span>% average confidence in estimate</div>
+          </div>
+          <div class="side-card">
+            <div class="side-eyebrow">Reach</div>
+            <div class="reach-grid">
+              <div><div class="reach-num" id="participants">—</div><div class="reach-label">Participants</div></div>
+              <div><div class="reach-num" id="sessions">—</div><div class="reach-label">Sessions</div></div>
+              <div><div class="reach-num" id="clients">—</div><div class="reach-label">Client engagements</div></div>
+            </div>
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+
+      <section class="kpi-grid">
+        <h2 class="section-title">What participants told us</h2>
+        <p class="section-sub">Share of participants who rated 4 or 5 out of 5.</p>
+        <div class="kpi-cards" id="kpiCards">
+          <div class="kpi-card"><div class="kpi-num"><span data-metric="applyOnJob">—</span>%</div><div class="kpi-label">will apply what they learned on the job</div></div>
+          <div class="kpi-card"><div class="kpi-num"><span data-metric="gainedKnowledge">—</span>%</div><div class="kpi-label">gained new knowledge</div></div>
+          <div class="kpi-card"><div class="kpi-num"><span data-metric="worthwhileInvestment">—</span>%</div><div class="kpi-label">called it a worthwhile investment of their time</div></div>
+          <div class="kpi-card"><div class="kpi-num"><span data-metric="contentRelevant">—</span>%</div><div class="kpi-label">said the content was relevant to their job</div></div>
+          <div class="kpi-card"><div class="kpi-num"><span data-metric="facilitatorKnowledge">—</span>%</div><div class="kpi-label">said facilitator knowledge enhanced their learning</div></div>
+          <div class="kpi-card"><div class="kpi-num"><span data-metric="facilitatorEngaging">—</span>%</div><div class="kpi-label">said the facilitator kept them engaged</div></div>
+          <div class="kpi-card kpi-card-warn" id="noManagerCard" hidden>
+            <div class="kpi-num"><span id="noManagerPct">—</span>%</div>
+            <div class="kpi-label">did <strong>not</strong> have a manager who set clear expectations about applying this training on the job<span class="kpi-sub" id="noManagerN"></span></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="split">
+        <div class="split-col">
+          <h2 class="section-title">In their own words</h2>
+          <div class="testimonials" id="testimonials"></div>
+        </div>
+        <div class="split-col">
+          <h2 class="section-title">Delivery modality</h2>
+          <p class="section-sub">How participants attended.</p>
+          <div class="modality-row">
+            <div class="modality-bar">
+              <div class="modality-fill virtual" id="virtualFill"><span id="virtualLabel">—</span></div>
+              <div class="modality-fill inperson" id="inPersonFill"><span id="inPersonLabel">—</span></div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- ============= REFRESHER VIEW ============= -->
+    <div id="refresherView" hidden>
+      <section class="hero-kpi refresher-hero">
+        <div class="hero-card">
+          <div class="hero-eyebrow">Confidence in delivering training</div>
+          <div class="hero-confidence">
+            <div class="confidence-side">
+              <div class="confidence-label">Before refresher</div>
+              <div class="confidence-num" id="confBefore">—</div>
+            </div>
+            <div class="confidence-arrow">→</div>
+            <div class="confidence-side">
+              <div class="confidence-label">After refresher</div>
+              <div class="confidence-num" id="confAfter">—</div>
+            </div>
+          </div>
+          <div class="hero-caption" id="confGrowth">—</div>
+          <div class="hero-footnote" id="confScale">—</div>
+        </div>
+        <div class="hero-side">
+          <div class="side-card highlight-card">
+            <div class="side-eyebrow">Session value</div>
+            <div class="side-number"><span id="pctValuable">—</span><span class="unit">%</span></div>
+            <div class="side-caption">rated the session "very valuable" or "extremely valuable"</div>
+          </div>
+          <div class="side-card">
+            <div class="side-eyebrow">Reach</div>
+            <div class="reach-grid">
+              <div><div class="reach-num" id="refParticipants">—</div><div class="reach-label">Participants</div></div>
+              <div><div class="reach-num" id="refSessions">—</div><div class="reach-label">Sessions</div></div>
+              <div><div class="reach-num"><span id="pctMovedUp">—</span>%</div><div class="reach-label">Improved confidence</div></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="refresher-note">
+        <p>Refresher sessions use a different survey designed to measure facilitator readiness, not initial program impact. NPS and learner top-2-box metrics are not collected here.</p>
+      </section>
+    </div>
   </main>
 
   <footer class="site-footer">
@@ -107,7 +169,6 @@
     </div>
   </footer>
 
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
   <script src="dashboard.js"></script>
 </body>
 </html>

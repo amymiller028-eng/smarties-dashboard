@@ -1,91 +1,357 @@
 {
   "meta": {
     "lastUpdated": "2026-04-19",
-    "reportingPeriod": "January 2026 – to date"
+    "reportingPeriod": "Q1 2026 to date"
   },
   "views": {
     "all": {
       "label": "All Programs",
-      "nps": 89,
-      "participants": 27,
-      "sessions": 2,
-      "clients": 2,
-      "eiDevelopmentAttributed": 67,
-      "confidenceInEstimate": 77,
+      "type": "standard",
+      "nps": 71,
+      "participants": 221,
+      "sessions": 18,
+      "clients": 18,
+      "eiDevelopmentAttributed": 66,
+      "confidenceInEstimate": 80,
       "topBox": {
-        "applyOnJob": 100,
-        "gainedKnowledge": 100,
+        "applyOnJob": 98,
+        "gainedKnowledge": 97,
         "worthwhileInvestment": 96,
-        "contentRelevant": 96,
+        "contentRelevant": 99,
+        "facilitatorKnowledge": 98,
+        "facilitatorEngaging": 98
+      },
+      "modality": {
+        "virtual": 189,
+        "inPerson": 35
+      },
+      "noManagerExpectationsPct": 62,
+      "managerExpectationsResponses": 136
+    },
+    "ttt-summary": {
+      "label": "Train the Trainer \u2014 Summary",
+      "type": "standard",
+      "nps": 81,
+      "participants": 68,
+      "sessions": 6,
+      "clients": 6,
+      "eiDevelopmentAttributed": 68,
+      "confidenceInEstimate": 87,
+      "topBox": {
+        "applyOnJob": 99,
+        "gainedKnowledge": 96,
+        "worthwhileInvestment": 97,
+        "contentRelevant": 100,
         "facilitatorKnowledge": 96,
         "facilitatorEngaging": 96
       },
-      "modality": { "virtual": 19, "inPerson": 8 }
+      "modality": {
+        "virtual": 47,
+        "inPerson": 22
+      }
     },
-    "ttt": {
-      "label": "Train the Trainer",
-      "nps": 94,
-      "participants": 16,
-      "sessions": 1,
-      "clients": 1,
-      "eiDevelopmentAttributed": 63,
+    "ttt-l1": {
+      "label": "Train the Trainer \u2014 Level 1",
+      "type": "standard",
+      "nps": 80,
+      "participants": 44,
+      "sessions": 3,
+      "clients": 3,
+      "eiDevelopmentAttributed": 65,
       "confidenceInEstimate": 85,
+      "topBox": {
+        "applyOnJob": 98,
+        "gainedKnowledge": 93,
+        "worthwhileInvestment": 95,
+        "contentRelevant": 100,
+        "facilitatorKnowledge": 93,
+        "facilitatorEngaging": 93
+      },
+      "modality": {
+        "virtual": 30,
+        "inPerson": 14
+      }
+    },
+    "ttt-l2": {
+      "label": "Train the Trainer \u2014 Level 2",
+      "type": "standard",
+      "nps": 81,
+      "participants": 16,
+      "sessions": 2,
+      "clients": 2,
+      "eiDevelopmentAttributed": 77,
+      "confidenceInEstimate": 90,
       "topBox": {
         "applyOnJob": 100,
         "gainedKnowledge": 100,
         "worthwhileInvestment": 100,
         "contentRelevant": 100,
-        "facilitatorKnowledge": 94,
-        "facilitatorEngaging": 94
-      },
-      "modality": { "virtual": 16, "inPerson": 0 }
-    },
-    "private": {
-      "label": "Private Programs",
-      "nps": 82,
-      "participants": 11,
-      "sessions": 1,
-      "clients": 1,
-      "eiDevelopmentAttributed": 71,
-      "confidenceInEstimate": 66,
-      "topBox": {
-        "applyOnJob": 100,
-        "gainedKnowledge": 100,
-        "worthwhileInvestment": 91,
-        "contentRelevant": 91,
         "facilitatorKnowledge": 100,
         "facilitatorEngaging": 100
       },
-      "modality": { "virtual": 3, "inPerson": 8 }
+      "modality": {
+        "virtual": 9,
+        "inPerson": 8
+      }
+    },
+    "ttt-teams": {
+      "label": "Train the Trainer \u2014 Teams",
+      "type": "standard",
+      "nps": 88,
+      "participants": 8,
+      "sessions": 1,
+      "clients": 1,
+      "eiDevelopmentAttributed": 65,
+      "confidenceInEstimate": 87,
+      "topBox": {
+        "applyOnJob": 100,
+        "gainedKnowledge": 100,
+        "worthwhileInvestment": 100,
+        "contentRelevant": 100,
+        "facilitatorKnowledge": 100,
+        "facilitatorEngaging": 100
+      },
+      "modality": {
+        "virtual": 8,
+        "inPerson": 0
+      }
+    },
+    "private-summary": {
+      "label": "Private Program \u2014 Summary",
+      "type": "standard",
+      "nps": 63,
+      "participants": 108,
+      "sessions": 8,
+      "clients": 8,
+      "eiDevelopmentAttributed": 65,
+      "confidenceInEstimate": 78,
+      "topBox": {
+        "applyOnJob": 98,
+        "gainedKnowledge": 98,
+        "worthwhileInvestment": 95,
+        "contentRelevant": 99,
+        "facilitatorKnowledge": 99,
+        "facilitatorEngaging": 99
+      },
+      "modality": {
+        "virtual": 97,
+        "inPerson": 13
+      },
+      "noManagerExpectationsPct": 57,
+      "managerExpectationsResponses": 108
+    },
+    "private-l1": {
+      "label": "Private Program \u2014 Level 1",
+      "type": "standard",
+      "nps": 57,
+      "participants": 75,
+      "sessions": 7,
+      "clients": 7,
+      "eiDevelopmentAttributed": 65,
+      "confidenceInEstimate": 75,
+      "topBox": {
+        "applyOnJob": 97,
+        "gainedKnowledge": 99,
+        "worthwhileInvestment": 95,
+        "contentRelevant": 99,
+        "facilitatorKnowledge": 99,
+        "facilitatorEngaging": 100
+      },
+      "modality": {
+        "virtual": 62,
+        "inPerson": 13
+      },
+      "noManagerExpectationsPct": 56,
+      "managerExpectationsResponses": 75
+    },
+    "private-l2": {
+      "label": "Private Program \u2014 Level 2",
+      "type": "standard",
+      "nps": 76,
+      "participants": 33,
+      "sessions": 1,
+      "clients": 1,
+      "eiDevelopmentAttributed": 64,
+      "confidenceInEstimate": 87,
+      "topBox": {
+        "applyOnJob": 100,
+        "gainedKnowledge": 97,
+        "worthwhileInvestment": 94,
+        "contentRelevant": 100,
+        "facilitatorKnowledge": 100,
+        "facilitatorEngaging": 97
+      },
+      "modality": {
+        "virtual": 35,
+        "inPerson": 0
+      },
+      "noManagerExpectationsPct": 61,
+      "managerExpectationsResponses": 33
+    },
+    "public-l1": {
+      "label": "Public Program",
+      "type": "standard",
+      "nps": 70,
+      "participants": 10,
+      "sessions": 1,
+      "clients": 1,
+      "eiDevelopmentAttributed": 59,
+      "confidenceInEstimate": 73,
+      "topBox": {
+        "applyOnJob": 100,
+        "gainedKnowledge": 100,
+        "worthwhileInvestment": 100,
+        "contentRelevant": 100,
+        "facilitatorKnowledge": 100,
+        "facilitatorEngaging": 100
+      },
+      "modality": {
+        "virtual": 10,
+        "inPerson": 0
+      }
+    },
+    "custom": {
+      "label": "Custom Programs",
+      "type": "standard",
+      "nps": 74,
+      "participants": 35,
+      "sessions": 3,
+      "clients": 3,
+      "eiDevelopmentAttributed": 66,
+      "confidenceInEstimate": 71,
+      "topBox": {
+        "applyOnJob": 97,
+        "gainedKnowledge": 97,
+        "worthwhileInvestment": 97,
+        "contentRelevant": 97,
+        "facilitatorKnowledge": 97,
+        "facilitatorEngaging": 100
+      },
+      "modality": {
+        "virtual": 35,
+        "inPerson": 0
+      },
+      "noManagerExpectationsPct": 82,
+      "managerExpectationsResponses": 28
+    },
+    "refresher": {
+      "label": "Refresher",
+      "type": "refresher",
+      "participants": 7,
+      "sessions": 1,
+      "confidenceBefore": 2.43,
+      "confidenceAfter": 3.29,
+      "confidenceGrowth": 0.86,
+      "pctMovedUpInConfidence": 71,
+      "pctRatedValuable": 100,
+      "confidenceScale": "1=Slightly \u00b7 2=Moderately \u00b7 3=Confident \u00b7 4=Fully"
     }
   },
-  "trend": [
-    { "label": "Jan 2026", "nps": 89 }
-  ],
   "testimonials": [
     {
-      "quote": "Join this session, best in the business!",
-      "program": "Train the Trainer"
+      "quote": "Appreciated the individual 1:1 breakout rooms, Appreciated the vastness of resources. The uniqueness of the teachback was great. I appreciated that this material was maintained to it's Fidelity and didn't try to link or overlap with other models or modalities.",
+      "program": "Train the Trainer L1",
+      "view": "ttt-l1"
     },
     {
-      "quote": "I wasn't sure what to expect but already think this will be a huge help in daily life.",
-      "program": "Private Program"
+      "quote": "Sharing personal stories is so impactful!    Also- When attending breakout sessions I was often in the room with some of the same people. It would be enhanced to have been with different people each breakout.",
+      "program": "Train the Trainer L1",
+      "view": "ttt-l1"
     },
     {
-      "quote": "High value, good pace for learning.",
-      "program": "Train the Trainer"
+      "quote": "I gained a better insight of myself immediately and how I manage my own emotions while facilitating the conversation of self management so it\u2019s eye opening and worrisome",
+      "program": "Train the Trainer L1",
+      "view": "ttt-l1"
     },
     {
-      "quote": "Emotional intelligence will allow you to understand yourself and others better, allowing you to move forward in your career.",
-      "program": "Private Program"
+      "quote": "Make it your own. Really look at the material and determine how much time you need to have a productive session.",
+      "program": "TTT for Teams",
+      "view": "ttt-teams"
     },
     {
-      "quote": "Sharing personal stories is so impactful!",
-      "program": "Train the Trainer"
+      "quote": "Great practical ways to improve team performance.",
+      "program": "TTT for Teams",
+      "view": "ttt-teams"
     },
     {
-      "quote": "Valuable to attend in person!!",
-      "program": "Private Program"
+      "quote": "Have faith in the Leader Guide.",
+      "program": "TTT for Teams",
+      "view": "ttt-teams"
+    },
+    {
+      "quote": "I would share the VALUE of doing a multi tater assessment over a self assessment. The self assessment is valuable but knowing how others perceive you is priceless in the ability to change your own behavior.",
+      "program": "Train the Trainer L2",
+      "view": "ttt-l2"
+    },
+    {
+      "quote": "David is very knowledgeable and really knows how to help us all get to where we need to be by the end of the two days. He shows compassion, understanding, and provides great feedback.",
+      "program": "Train the Trainer L2",
+      "view": "ttt-l2"
+    },
+    {
+      "quote": "This course is worth your time and valuable to a company that care about its employees. If you want to improve your work environment and foster teams, this is the course.",
+      "program": "Train the Trainer L2",
+      "view": "ttt-l2"
+    },
+    {
+      "quote": "This session is valuable because it brings clear structure to a topic I already felt confident in. Even with a high EQ, I found the framework and reflections helpful in sharpening how I apply emotional intelligence in both professional and personal situations.",
+      "program": "Private Program L1",
+      "view": "private-l1"
+    },
+    {
+      "quote": "I thought the session was impactful. I disagreed with some of the results even though I am the one who took the assessment. Through discussion, I realized that the results were spot on. I am excited to learn how to up my game in all relationships.",
+      "program": "Private Program L1",
+      "view": "private-l1"
+    },
+    {
+      "quote": "Block diary and log off Teams. And ask organiser if alternative date. If session day before important internal milestones are next day. My work partners need me and of course I\u2019ll be inclined to help considering it\u2019s urgent and important work.",
+      "program": "Private Program L1",
+      "view": "private-l1"
+    },
+    {
+      "quote": "This is a great course that allows a lot of self-reflection. If you take it seriously and put the work in, you will learn a lot about yourself.",
+      "program": "Private Program L2",
+      "view": "private-l2"
+    },
+    {
+      "quote": "That even if you've done Level 1, that Level 2 helps to fine tune those skills.  Also, that Dimyas is a phenomenal trainer!!",
+      "program": "Private Program L2",
+      "view": "private-l2"
+    },
+    {
+      "quote": "Participating in the small groups is quite powerful. We really do not know what we can give or get, until we speak.",
+      "program": "Private Program L2",
+      "view": "private-l2"
+    },
+    {
+      "quote": "Overall you can work on your emotional intelligence to improve. Provide a handout. So we can take away from slide presentation. Love the interaction but wish I could have seen the group again.",
+      "program": "Public Program",
+      "view": "public-l1"
+    },
+    {
+      "quote": "How to teach some of this to others and to learn more. Maybe allow anyone having technical issues getting to the guides to do a share screen during a break so they can access the materials.",
+      "program": "Public Program",
+      "view": "public-l1"
+    },
+    {
+      "quote": "I would have the mouse function disabled since it was distracting to the participants and made it more difficult for the producer to do her role.",
+      "program": "Public Program",
+      "view": "public-l1"
+    },
+    {
+      "quote": "Be outspoken in the break out room! We all are here to make new connections so be brave and speak your mind.",
+      "program": "Custom Program",
+      "view": "custom"
+    },
+    {
+      "quote": "Great session, helps dive into your own scores which will in turn help you do the same for your teams",
+      "program": "Custom Program",
+      "view": "custom"
+    },
+    {
+      "quote": "Communication is impactful by understanding the audience and the culture of that audience.",
+      "program": "Custom Program",
+      "view": "custom"
     }
   ]
 }

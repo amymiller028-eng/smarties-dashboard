@@ -1,72 +1,40 @@
 # Smarties Dashboard — TalentSmartEQ
 
-Interactive impact dashboard that reads from `data.json`. Update the JSON each week; the page refreshes live.
+Interactive impact dashboard that reads from `data.json`. Update the JSON each week (or run the helper script) and the page refreshes live.
 
 ## Files
 
 - `index.html` — page structure
 - `styles.css` — brand styling
-- `dashboard.js` — interactivity (tabs, chart)
-- `data.json` — **the only file you edit weekly**
+- `dashboard.js` — interactivity (tabs, drill-down, view rendering)
+- `data.json` — **what the live site reads** (the only file you need to upload to GitHub)
+- `compute-data.py` — Python script that reads your Excel and rebuilds `data.json`
+- `update-data.bat` — double-click this to run `compute-data.py`
+- `build-summary.py` — (optional) adds a Summary tab to the Excel workbook
 
-## Preview locally
+## Tab structure
 
-Just double-click `index.html` or drag it into a browser tab. If the dashboard shows a red error bar, open it via a tiny local server (browsers block `fetch` on raw files in some setups):
+- **All Programs** — combined across everything except Refresher
+- **Train the Trainer** ▾ Summary · Level 1 · Level 2 · Teams
+- **Private Program** ▾ Summary · Level 1 · Level 2
+- **Public Program**
+- **Custom Programs**
+- **Refresher** (different metrics — confidence growth and value rating)
 
-- On Windows, from the project folder in PowerShell: `py -m http.server 8000` → open http://localhost:8000
+## Weekly update workflow (~1 minute)
 
-## First-time setup on GitHub Pages
+1. Paste new survey responses into the appropriate raw sheets in `Program-Evals-2026.xlsx` (TTTL1, PrivateL1, etc.)
+2. Save and close the Excel file
+3. Double-click **`update-data.bat`** in this folder. It rebuilds `data.json` from scratch
+4. Upload the updated `data.json` to your GitHub repo:
+   - Open repo → click `data.json` → pencil icon (✏️)
+   - Delete all the existing content, paste the new file contents
+   - OR: in your repo's main page, click **Add file → Upload files**, drag `data.json` in, commit
+5. Live site updates within ~60 seconds
 
-1. Go to https://github.com/new — create a new **public** repo named something like `smarties-dashboard`.
-2. On the new repo page, click **"uploading an existing file"** (gray link near the top of the empty repo).
-3. Drag `index.html`, `styles.css`, `dashboard.js`, and `data.json` into the upload box. Click **Commit changes**.
-4. Go to the repo's **Settings → Pages** (left sidebar).
-5. Under **Source**, pick **Deploy from a branch**. Branch: `main`, folder: `/ (root)`. Click **Save**.
-6. Wait ~60 seconds, then refresh the Pages settings. You'll see your site URL (like `https://yourusername.github.io/smarties-dashboard/`).
-7. Open that URL — your dashboard is live.
-8. (Optional) Add a link to that URL on a SharePoint page so your team finds it where they already go.
+## Adding a new program type
 
-## Weekly update workflow (~2 minutes)
-
-1. Open your `Program-Evals-2026.xlsx` workbook.
-2. Recalculate the metrics for each view (All / TTT / Private). If you want, keep a hidden `Summary` sheet that computes them automatically.
-3. In your GitHub repo, click `data.json` → pencil icon (✏️ top right) to edit.
-4. Update the numbers (see field guide below). Change `meta.lastUpdated` to today's date in `YYYY-MM-DD` format.
-5. Scroll down, click **Commit changes**. Done — the live site updates within ~1 minute.
-
-## data.json field guide
-
-```
-meta.lastUpdated             The date you refreshed the numbers
-views.all                    Combined (TTT + Private) metrics
-views.ttt                    Train the Trainer only
-views.private                Private Programs only
-
-For each view:
-  nps                        Net Promoter Score (−100 to 100)
-                             = %Promoters(9-10) − %Detractors(0-6)
-  participants               Total respondents across all sessions
-  sessions                   Number of sessions delivered
-  clients                    Number of client companies
-  eiDevelopmentAttributed    Average % of EI growth participants credit
-                             to training (from the % development question)
-  confidenceInEstimate       Average of the "confidence in estimate" question
-
-  topBox: all values are the % of respondents who rated 4 or 5 on a 1–5 scale.
-    applyOnJob               "I will be able to apply what I learned on the job"
-    gainedKnowledge          "I have gained new knowledge"
-    worthwhileInvestment     "This course was a worthwhile investment of my time"
-    contentRelevant          "The program content was relevant to my job"
-    facilitatorKnowledge     "My learning was enhanced by facilitator's knowledge"
-    facilitatorEngaging      "The facilitator kept me engaged"
-
-  modality.virtual           Count of respondents in virtual sessions
-  modality.inPerson          Count of respondents in in-person sessions
-
-trend[]                      One entry per month: { label, nps }
-testimonials[]               Quotes to display. Tag program as
-                             "Train the Trainer" or "Private Program".
-```
+If you add a brand-new program with its own sheet (e.g. "TTTL3" or "Coaching"), tell Claude. The new sheet's column layout needs to be added to `compute-data.py`'s `SHEET_COLS` mapping, and a new tab needs to be added to the dashboard.
 
 ## NPS quick formula
 
@@ -74,11 +42,26 @@ testimonials[]               Quotes to display. Tag program as
 - **Passive** = 7 or 8 (ignored in the math)
 - **Detractor** = 0 through 6
 - **NPS = (Promoters ÷ Total × 100) − (Detractors ÷ Total × 100)**, rounded
+- Anything **above 70 is considered world-class**.
 
 ## Top-2-box quick formula
 
-For any 1–5 rated question:
+For any 1–5 question:
 **% Top-2-box = (count of 4s + count of 5s) ÷ total responses × 100**, rounded
+
+## Refresher metrics
+
+The Refresher survey doesn't ask the same questions, so its tab shows different stats:
+
+- **Confidence growth** — average confidence on a 4-point scale (1=Slightly · 2=Moderately · 3=Confident · 4=Fully) before vs. after
+- **% improved confidence** — share who moved up at least one level
+- **% rated valuable or extremely valuable**
+
+## Manager-expectations metric
+
+Three program types ask "Has your manager communicated their expectations about how you will apply this training on the job?" — Private L1, Private L2, and Custom Programs.
+
+The dashboard shows the **% who answered NO** as a contextual orange/gold tile on those views only. Hidden everywhere else (because the question wasn't asked).
 
 ## Safe to share
 

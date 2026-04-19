@@ -1,5 +1,5 @@
 (() => {
-  const state = { data: null, view: 'all', chart: null };
+  const state = { data: null, view: 'all' };
 
   async function loadData() {
     const res = await fetch('data.json?v=' + Date.now());
@@ -20,23 +20,48 @@
     return 'Critical';
   }
 
+  function escapeHtml(s) {
+    return String(s).replace(/[&<>"']/g, c => ({
+      '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+    }[c]));
+  }
+
+  function flashFadeIn(el) {
+    if (!el) return;
+    el.classList.remove('fade-in'); void el.offsetWidth; el.classList.add('fade-in');
+  }
+
   function render() {
     const d = state.data;
     const v = d.views[state.view];
+    if (!v) return;
 
     document.getElementById('lastUpdated').textContent = fmtDate(d.meta.lastUpdated);
     document.getElementById('footerDate').textContent = fmtDate(d.meta.lastUpdated);
+    document.getElementById('viewLabel').textContent = v.label;
 
+    if (v.type === 'refresher') {
+      document.getElementById('standardView').hidden = true;
+      document.getElementById('refresherView').hidden = false;
+      renderRefresher(v);
+    } else {
+      document.getElementById('refresherView').hidden = true;
+      document.getElementById('standardView').hidden = false;
+      renderStandard(v);
+    }
+    renderTestimonials();
+  }
+
+  function renderStandard(v) {
     const npsEl = document.getElementById('npsValue');
     npsEl.textContent = v.nps;
-    npsEl.classList.remove('fade-in'); void npsEl.offsetWidth; npsEl.classList.add('fade-in');
+    flashFadeIn(npsEl);
     document.getElementById('npsCaption').textContent = npsCaption(v.nps);
     const pct = ((v.nps + 100) / 200) * 100;
     document.getElementById('npsBar').style.width = pct + '%';
 
     document.getElementById('eiGrowth').textContent = v.eiDevelopmentAttributed;
     document.getElementById('eiConfidence').textContent = v.confidenceInEstimate;
-
     document.getElementById('participants').textContent = v.participants;
     document.getElementById('sessions').textContent = v.sessions;
     document.getElementById('clients').textContent = v.clients;
@@ -44,10 +69,22 @@
     document.querySelectorAll('[data-metric]').forEach(el => {
       const key = el.getAttribute('data-metric');
       el.textContent = v.topBox[key];
-      const card = el.closest('.kpi-card');
-      if (card) { card.classList.remove('fade-in'); void card.offsetWidth; card.classList.add('fade-in'); }
+      flashFadeIn(el.closest('.kpi-card'));
     });
 
+    // Manager-expectations tile (only shown when applicable)
+    const noManagerCard = document.getElementById('noManagerCard');
+    if (typeof v.noManagerExpectationsPct === 'number') {
+      noManagerCard.hidden = false;
+      document.getElementById('noManagerPct').textContent = v.noManagerExpectationsPct;
+      const n = v.managerExpectationsResponses;
+      document.getElementById('noManagerN').textContent = n ? ` (n=${n})` : '';
+      flashFadeIn(noManagerCard);
+    } else {
+      noManagerCard.hidden = true;
+    }
+
+    // Modality bar
     const total = v.modality.virtual + v.modality.inPerson;
     const vPct = total ? (v.modality.virtual / total) * 100 : 0;
     const iPct = total ? (v.modality.inPerson / total) * 100 : 0;
@@ -55,94 +92,84 @@
     document.getElementById('inPersonFill').style.width = iPct + '%';
     document.getElementById('virtualLabel').textContent = vPct > 8 ? `Virtual ${Math.round(vPct)}%` : '';
     document.getElementById('inPersonLabel').textContent = iPct > 8 ? `In person ${Math.round(iPct)}%` : '';
+  }
 
-    renderTestimonials();
-    renderTrend();
+  function renderRefresher(v) {
+    document.getElementById('confBefore').textContent = v.confidenceBefore.toFixed(2);
+    document.getElementById('confAfter').textContent = v.confidenceAfter.toFixed(2);
+    flashFadeIn(document.getElementById('confBefore'));
+    flashFadeIn(document.getElementById('confAfter'));
+    const growth = v.confidenceGrowth;
+    const growthEl = document.getElementById('confGrowth');
+    growthEl.textContent = growth >= 0
+      ? `+${growth.toFixed(2)} levels of growth on a 4-point scale`
+      : `${growth.toFixed(2)} levels`;
+    document.getElementById('confScale').textContent = v.confidenceScale || '';
+    document.getElementById('pctValuable').textContent = v.pctRatedValuable;
+    document.getElementById('refParticipants').textContent = v.participants;
+    document.getElementById('refSessions').textContent = v.sessions;
+    document.getElementById('pctMovedUp').textContent = v.pctMovedUpInConfidence;
   }
 
   function renderTestimonials() {
     const container = document.getElementById('testimonials');
-    const items = state.data.testimonials;
-    const filtered = state.view === 'all'
-      ? items
-      : items.filter(t => (state.view === 'ttt' && t.program.includes('Train'))
-                      || (state.view === 'private' && t.program.includes('Private')));
-    const toShow = (filtered.length ? filtered : items).slice(0, 4);
+    if (!container) return;
+    const items = state.data.testimonials || [];
+    let pool = items;
+    if (state.view !== 'all') {
+      // Match testimonials whose view matches the current view, or
+      // for summary views, anything inside that family.
+      const family = state.view.split('-')[0]; // 'ttt', 'private', etc.
+      pool = items.filter(t =>
+        t.view === state.view || (state.view.endsWith('-summary') && t.view.startsWith(family))
+      );
+    }
+    const toShow = (pool.length ? pool : items).slice(0, 4);
     container.innerHTML = toShow.map(t => `
       <div class="testimonial fade-in">
         <div class="q">&ldquo;${escapeHtml(t.quote)}&rdquo;</div>
         <div class="src">— ${escapeHtml(t.program)}</div>
       </div>
-    `).join('');
+    `).join('') || '<div class="testimonial"><div class="q" style="font-style:normal;color:#7a8699">No quotes yet for this view.</div></div>';
   }
 
-  function renderTrend() {
-    const ctx = document.getElementById('trendChart').getContext('2d');
-    const labels = state.data.trend.map(t => t.label);
-    const values = state.data.trend.map(t => t.nps);
-    if (state.chart) state.chart.destroy();
-    state.chart = new Chart(ctx, {
-      type: 'line',
-      data: {
-        labels,
-        datasets: [{
-          label: 'NPS',
-          data: values,
-          borderColor: '#0ACC8B',
-          backgroundColor: 'rgba(10,204,139,0.12)',
-          pointBackgroundColor: '#002D61',
-          pointBorderColor: '#fff',
-          pointBorderWidth: 2,
-          pointRadius: 6,
-          pointHoverRadius: 8,
-          fill: true,
-          tension: 0.3,
-          borderWidth: 3
-        }]
-      },
-      options: {
-        responsive: true,
-        plugins: {
-          legend: { display: false },
-          tooltip: {
-            backgroundColor: '#002D61',
-            padding: 12,
-            titleFont: { family: 'Montserrat', weight: '600' },
-            bodyFont: { family: 'Montserrat' }
-          }
-        },
-        scales: {
-          y: {
-            suggestedMin: 0,
-            suggestedMax: 100,
-            grid: { color: '#eef2f8' },
-            ticks: { color: '#7a8699', font: { family: 'Montserrat' } }
-          },
-          x: {
-            grid: { display: false },
-            ticks: { color: '#7a8699', font: { family: 'Montserrat' } }
-          }
-        }
+  function setActiveTab(view) {
+    state.view = view;
+
+    const primaryTabs = document.querySelectorAll('.primary-tabs .tab');
+    let activeGroup = null;
+
+    primaryTabs.forEach(btn => {
+      const isActive = btn.dataset.view === view
+        || (btn.dataset.group && view.startsWith(btn.dataset.group + '-'))
+        || (btn.dataset.group === 'ttt' && view.startsWith('ttt-'))
+        || (btn.dataset.group === 'private' && view.startsWith('private-'));
+      btn.classList.toggle('is-active', isActive);
+      btn.setAttribute('aria-selected', isActive ? 'true' : 'false');
+      if (isActive && btn.dataset.group) activeGroup = btn.dataset.group;
+    });
+
+    document.querySelectorAll('.sub-tabs').forEach(group => {
+      const show = group.dataset.group === activeGroup;
+      group.hidden = !show;
+      if (show) {
+        group.querySelectorAll('.sub-tab').forEach(st => {
+          st.classList.toggle('is-active', st.dataset.view === view);
+        });
       }
     });
   }
 
-  function escapeHtml(s) {
-    return String(s).replace(/[&<>"']/g, c => ({
-      '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
-    }[c]));
-  }
-
   function wireTabs() {
-    document.querySelectorAll('.tab').forEach(btn => {
+    document.querySelectorAll('.primary-tabs .tab').forEach(btn => {
       btn.addEventListener('click', () => {
-        document.querySelectorAll('.tab').forEach(t => {
-          t.classList.remove('is-active');
-          t.setAttribute('aria-selected', 'false');
-        });
-        btn.classList.add('is-active');
-        btn.setAttribute('aria-selected', 'true');
-        state.view = btn.dataset.view;
+        setActiveTab(btn.dataset.view);
+        render();
+      });
+    });
+    document.querySelectorAll('.sub-tab').forEach(btn => {
+      btn.addEventListener('click', () => {
+        setActiveTab(btn.dataset.view);
         render();
       });
     });
@@ -152,6 +179,7 @@
     try {
       await loadData();
       wireTabs();
+      setActiveTab('all');
       render();
     } catch (e) {
       document.body.insertAdjacentHTML('afterbegin',
