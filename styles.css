@@ -242,7 +242,19 @@ body {
   display: grid; grid-template-columns: 1fr 1fr;
   gap: 24px; margin-bottom: 48px;
 }
-.testimonials { display: flex; flex-direction: column; gap: 14px; }
+.testimonials {
+  display: flex; flex-direction: column; gap: 14px;
+  max-height: 540px; overflow-y: auto;
+  padding-right: 6px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--ink-faint) transparent;
+}
+.testimonials::-webkit-scrollbar { width: 8px; }
+.testimonials::-webkit-scrollbar-thumb {
+  background: var(--ink-faint); border-radius: 999px;
+}
+.testimonials::-webkit-scrollbar-track { background: transparent; }
+.src-fac { color: var(--gold); font-weight: 600; letter-spacing: 0.6px; }
 .testimonial {
   background: #fff; border: 1px solid var(--border);
   border-left: 4px solid var(--gold);

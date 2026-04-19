@@ -17,7 +17,7 @@ OUT = Path(__file__).parent / "data.json"
 # Per-sheet column mappings. None means the sheet doesn't have that question.
 SHEET_COLS = {
     "TTTL1": {
-        "session": "A", "modality": "S",
+        "session": "A", "modality": "S", "facilitator": "T",
         "content_relevant": "X", "fac_knowledge": "Y", "fac_engaged": "Z",
         "worthwhile": "AB", "apply_on_job": "AC", "gained_knowledge": "AD",
         "nps": "AG", "ei_dev_pct": "AJ", "confidence_pct": "AK",
@@ -26,42 +26,42 @@ SHEET_COLS = {
     "TTTTeams": {
         # NOTE: header row in this sheet is misaligned with data — data follows
         # the TTTL2 layout (one column to the left of TTTL1 headers).
-        "session": "A", "modality": "R",
+        "session": "A", "modality": "R", "facilitator": "S",
         "content_relevant": "W", "fac_knowledge": "X", "fac_engaged": "Y",
         "worthwhile": "AA", "apply_on_job": "AB", "gained_knowledge": "AC",
         "nps": "AF", "ei_dev_pct": "AI", "confidence_pct": "AJ",
         "manager_exp": None, "quote": "AK",
     },
     "TTTL2": {
-        "session": "A", "modality": "R",
+        "session": "A", "modality": "R", "facilitator": "S",
         "content_relevant": "W", "fac_knowledge": "X", "fac_engaged": "Y",
         "worthwhile": "AA", "apply_on_job": "AB", "gained_knowledge": "AC",
         "nps": "AF", "ei_dev_pct": "AI", "confidence_pct": "AJ",
         "manager_exp": None, "quote": "AK",
     },
     "PrivateL1": {
-        "session": "A", "modality": "O",
+        "session": "A", "modality": "O", "facilitator": "P",
         "content_relevant": "S", "fac_knowledge": "T", "fac_engaged": "U",
         "worthwhile": "W", "apply_on_job": "X", "gained_knowledge": "Y",
         "nps": "AB", "ei_dev_pct": "AD", "confidence_pct": "AE",
         "manager_exp": "AF", "quote": "AG",
     },
     "PrivateL2": {
-        "session": "A", "modality": "O",
+        "session": "A", "modality": "O", "facilitator": "P",
         "content_relevant": "S", "fac_knowledge": "T", "fac_engaged": "U",
         "worthwhile": "W", "apply_on_job": "X", "gained_knowledge": "Y",
         "nps": "AB", "ei_dev_pct": "AD", "confidence_pct": "AE",
         "manager_exp": "AF", "quote": "AG",
     },
     "PublicL1": {
-        "session": "A", "modality": "O",
+        "session": "A", "modality": "O", "facilitator": "P",
         "content_relevant": "S", "fac_knowledge": "T", "fac_engaged": "U",
         "worthwhile": "W", "apply_on_job": "X", "gained_knowledge": "Y",
         "nps": "AB", "ei_dev_pct": "AD", "confidence_pct": "AE",
-        "manager_exp": None, "quote": "AG",  # column AF exists but is all blank
+        "manager_exp": None, "quote": "AG",
     },
     "Custom Programs": {
-        "session": "A", "modality": "R",
+        "session": "A", "modality": "R", "facilitator": "S",
         "content_relevant": "V", "fac_knowledge": "W", "fac_engaged": "X",
         "worthwhile": "Z", "apply_on_job": "AA", "gained_knowledge": "AB",
         "nps": "AF", "ei_dev_pct": "AI", "confidence_pct": "AJ",
@@ -206,18 +206,61 @@ def refresher_view(ws):
     }
 
 
-def best_quotes(ds, program_label, max_n=4):
-    """Pick a few non-trivial quotes from a dataset."""
-    quotes = [str(q).strip() for q in ds.get("quote", []) if q]
-    # prefer 30-260 char quotes (skip "n/a", super long rambles)
-    good = [q for q in quotes if 30 <= len(q) <= 260]
-    good.sort(key=lambda q: (-len(q),))  # longer first within range
+POSITIVE_WORDS = {
+    "amazing", "appreciate", "appreciated", "authentic", "awesome", "beneficial",
+    "best", "brilliant", "captivating", "dynamic", "effective", "empowered",
+    "empowering", "engaging", "enjoyed", "enlightening", "excellent", "exceptional",
+    "fabulous", "fantastic", "genuine", "good", "grateful", "great", "happy",
+    "helpful", "highly", "impactful", "incredible", "inspired", "inspiring",
+    "insightful", "invaluable", "love", "loved", "magnificent", "meaningful",
+    "memorable", "motivated", "outstanding", "passionate", "perfect", "phenomenal",
+    "powerful", "profound", "recommend", "rich", "thank", "thoughtful", "thrilled",
+    "transformative", "valuable", "wonderful",
+    # phrases will be matched separately below
+}
+POSITIVE_PHRASES = [
+    "eye opening", "eye-opening", "must take", "must do", "must attend",
+    "best in", "highly recommend", "well worth", "go for it", "top notch",
+    "in the business",
+]
+EXCLUDE_PHRASES = [
+    "log off", "block diary", "ask organiser", "ask organizer",
+    "internal milestones", "should have been", "would have been",
+    "needs to be improved", "n/a", "na ", "none ", "no comment",
+    "wish there had been", "missed the mark", "didn't enjoy", "did not enjoy",
+]
+
+def quote_score(text):
+    t = " " + text.lower() + " "
+    if any(p in t for p in EXCLUDE_PHRASES):
+        return -99
+    pos = sum(1 for w in POSITIVE_WORDS if f" {w} " in t or f" {w}." in t or f" {w}!" in t or f" {w}," in t)
+    pos += sum(2 for p in POSITIVE_PHRASES if p in t)
+    return pos
+
+
+def best_quotes(ds, program_label, max_n=10):
+    """Pick a generous number of clearly positive quotes from a dataset, with trainer names."""
+    quotes_raw = ds.get("quote", [])
+    facilitators = ds.get("facilitator", [])
+    pairs = []
+    for i, q in enumerate(quotes_raw):
+        if not q: continue
+        text = str(q).strip()
+        if not (25 <= len(text) <= 320): continue
+        score = quote_score(text)
+        if score < 1: continue
+        fac = ""
+        if i < len(facilitators) and facilitators[i]:
+            fac = str(facilitators[i]).strip()
+        pairs.append((score, text, fac))
+    pairs.sort(key=lambda x: (-x[0], -len(x[1])))
     seen, picked = set(), []
-    for q in good:
-        key = q[:60].lower()
+    for _, text, fac in pairs:
+        key = text[:60].lower()
         if key in seen: continue
         seen.add(key)
-        picked.append({"quote": q, "program": program_label})
+        picked.append({"quote": text, "program": program_label, "facilitator": fac})
         if len(picked) >= max_n: break
     return picked
 
@@ -269,7 +312,7 @@ def main():
         "PublicL1": "public-l1", "Custom Programs": "custom",
     }
     for sheet_name, ds in raw.items():
-        for q in best_quotes(ds, label_for[sheet_name], max_n=3):
+        for q in best_quotes(ds, label_for[sheet_name], max_n=10):
             q["view"] = view_for[sheet_name]
             testimonials.append(q)
 

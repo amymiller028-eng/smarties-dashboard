@@ -124,11 +124,12 @@
         t.view === state.view || (state.view.endsWith('-summary') && t.view.startsWith(family))
       );
     }
-    const toShow = (pool.length ? pool : items).slice(0, 4);
+    const toShow = pool.length ? pool : items;
+    const facBit = (t) => t.facilitator ? ` &middot; <span class="src-fac">${escapeHtml(t.facilitator)}</span>` : '';
     container.innerHTML = toShow.map(t => `
       <div class="testimonial fade-in">
         <div class="q">&ldquo;${escapeHtml(t.quote)}&rdquo;</div>
-        <div class="src">— ${escapeHtml(t.program)}</div>
+        <div class="src">— ${escapeHtml(t.program)}${facBit(t)}</div>
       </div>
     `).join('') || '<div class="testimonial"><div class="q" style="font-style:normal;color:#7a8699">No quotes yet for this view.</div></div>';
   }
