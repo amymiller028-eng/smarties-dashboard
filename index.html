@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Program Impact Dashboard — TalentSmartEQ</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <div class="brand">
+        <div class="brand-mark">TalentSmart<span class="brand-accent">EQ</span></div>
+        <div class="brand-tag">Better EQ = Better Performance</div>
+      </div>
+      <div class="header-meta">
+        <div class="meta-label">Program Impact</div>
+        <div class="meta-date" id="lastUpdated">—</div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="intro">
+      <h1>End of Session Impact</h1>
+      <p class="lede">Real feedback from the people who completed our emotional intelligence programs. Click a tab to drill into a specific program.</p>
+    </section>
+
+    <div class="tabs" role="tablist" aria-label="Program view">
+      <button class="tab is-active" data-view="all" role="tab" aria-selected="true">All Programs</button>
+      <button class="tab" data-view="ttt" role="tab" aria-selected="false">Train the Trainer</button>
+      <button class="tab" data-view="private" role="tab" aria-selected="false">Private Programs</button>
+    </div>
+
+    <section class="hero-kpi">
+      <div class="hero-card">
+        <div class="hero-eyebrow">Net Promoter Score</div>
+        <div class="hero-number" id="npsValue">—</div>
+        <div class="hero-caption" id="npsCaption">World-class satisfaction</div>
+        <div class="hero-footnote">* Any NPS above 70 is considered world-class.</div>
+        <div class="hero-scale">
+          <span>-100</span>
+          <div class="scale-bar"><div class="scale-fill" id="npsBar"></div></div>
+          <span>+100</span>
+        </div>
+      </div>
+      <div class="hero-side">
+        <div class="side-card">
+          <div class="side-eyebrow">% of EI growth clients credit to this training</div>
+          <div class="side-number"><span id="eiGrowth">—</span><span class="unit">%</span></div>
+          <div class="side-caption"><span id="eiConfidence">—</span>% average confidence in estimate</div>
+        </div>
+        <div class="side-card">
+          <div class="side-eyebrow">Reach</div>
+          <div class="reach-grid">
+            <div><div class="reach-num" id="participants">—</div><div class="reach-label">Participants</div></div>
+            <div><div class="reach-num" id="sessions">—</div><div class="reach-label">Sessions</div></div>
+            <div><div class="reach-num" id="clients">—</div><div class="reach-label">Client companies</div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="kpi-grid">
+      <h2 class="section-title">What participants told us</h2>
+      <p class="section-sub">Share of participants who rated 4 or 5 out of 5.</p>
+      <div class="kpi-cards">
+        <div class="kpi-card"><div class="kpi-num"><span data-metric="applyOnJob">—</span>%</div><div class="kpi-label">will apply what they learned on the job</div></div>
+        <div class="kpi-card"><div class="kpi-num"><span data-metric="gainedKnowledge">—</span>%</div><div class="kpi-label">gained new knowledge</div></div>
+        <div class="kpi-card"><div class="kpi-num"><span data-metric="worthwhileInvestment">—</span>%</div><div class="kpi-label">called it a worthwhile investment of their time</div></div>
+        <div class="kpi-card"><div class="kpi-num"><span data-metric="contentRelevant">—</span>%</div><div class="kpi-label">said the content was relevant to their job</div></div>
+        <div class="kpi-card"><div class="kpi-num"><span data-metric="facilitatorKnowledge">—</span>%</div><div class="kpi-label">said facilitator knowledge enhanced their learning</div></div>
+        <div class="kpi-card"><div class="kpi-num"><span data-metric="facilitatorEngaging">—</span>%</div><div class="kpi-label">said the facilitator kept them engaged</div></div>
+      </div>
+    </section>
+
+    <section class="split">
+      <div class="split-col">
+        <h2 class="section-title">In their own words</h2>
+        <div class="testimonials" id="testimonials"></div>
+      </div>
+      <div class="split-col">
+        <h2 class="section-title">NPS over time</h2>
+        <p class="section-sub">Updated weekly as new sessions close.</p>
+        <canvas id="trendChart" height="220"></canvas>
+      </div>
+    </section>
+
+    <section class="modality">
+      <h2 class="section-title">Delivery modality</h2>
+      <div class="modality-row">
+        <div class="modality-bar">
+          <div class="modality-fill virtual" id="virtualFill"><span id="virtualLabel">—</span></div>
+          <div class="modality-fill inperson" id="inPersonFill"><span id="inPersonLabel">—</span></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div>© TalentSmartEQ · Program Impact Dashboard</div>
+      <div>Data refreshed <span id="footerDate">—</span></div>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <script src="dashboard.js"></script>
+</body>
+</html>

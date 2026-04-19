@@ -1,0 +1,91 @@
+{
+  "meta": {
+    "lastUpdated": "2026-04-19",
+    "reportingPeriod": "January 2026 – to date"
+  },
+  "views": {
+    "all": {
+      "label": "All Programs",
+      "nps": 89,
+      "participants": 27,
+      "sessions": 2,
+      "clients": 2,
+      "eiDevelopmentAttributed": 67,
+      "confidenceInEstimate": 77,
+      "topBox": {
+        "applyOnJob": 100,
+        "gainedKnowledge": 100,
+        "worthwhileInvestment": 96,
+        "contentRelevant": 96,
+        "facilitatorKnowledge": 96,
+        "facilitatorEngaging": 96
+      },
+      "modality": { "virtual": 19, "inPerson": 8 }
+    },
+    "ttt": {
+      "label": "Train the Trainer",
+      "nps": 94,
+      "participants": 16,
+      "sessions": 1,
+      "clients": 1,
+      "eiDevelopmentAttributed": 63,
+      "confidenceInEstimate": 85,
+      "topBox": {
+        "applyOnJob": 100,
+        "gainedKnowledge": 100,
+        "worthwhileInvestment": 100,
+        "contentRelevant": 100,
+        "facilitatorKnowledge": 94,
+        "facilitatorEngaging": 94
+      },
+      "modality": { "virtual": 16, "inPerson": 0 }
+    },
+    "private": {
+      "label": "Private Programs",
+      "nps": 82,
+      "participants": 11,
+      "sessions": 1,
+      "clients": 1,
+      "eiDevelopmentAttributed": 71,
+      "confidenceInEstimate": 66,
+      "topBox": {
+        "applyOnJob": 100,
+        "gainedKnowledge": 100,
+        "worthwhileInvestment": 91,
+        "contentRelevant": 91,
+        "facilitatorKnowledge": 100,
+        "facilitatorEngaging": 100
+      },
+      "modality": { "virtual": 3, "inPerson": 8 }
+    }
+  },
+  "trend": [
+    { "label": "Jan 2026", "nps": 89 }
+  ],
+  "testimonials": [
+    {
+      "quote": "Join this session, best in the business!",
+      "program": "Train the Trainer"
+    },
+    {
+      "quote": "I wasn't sure what to expect but already think this will be a huge help in daily life.",
+      "program": "Private Program"
+    },
+    {
+      "quote": "High value, good pace for learning.",
+      "program": "Train the Trainer"
+    },
+    {
+      "quote": "Emotional intelligence will allow you to understand yourself and others better, allowing you to move forward in your career.",
+      "program": "Private Program"
+    },
+    {
+      "quote": "Sharing personal stories is so impactful!",
+      "program": "Train the Trainer"
+    },
+    {
+      "quote": "Valuable to attend in person!!",
+      "program": "Private Program"
+    }
+  ]
+}
