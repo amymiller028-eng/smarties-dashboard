@@ -82,6 +82,7 @@ body {
   border-left: 3px solid var(--green);
   margin-left: 12px;
 }
+.sub-tabs[hidden] { display: none; }
 .sub-tab {
   border: 1px solid var(--border); background: #fff;
   padding: 6px 14px; font-family: inherit; font-size: 12px;
