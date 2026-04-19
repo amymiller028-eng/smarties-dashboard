@@ -228,6 +228,11 @@ EXCLUDE_PHRASES = [
     "internal milestones", "should have been", "would have been",
     "needs to be improved", "n/a", "na ", "none ", "no comment",
     "wish there had been", "missed the mark", "didn't enjoy", "did not enjoy",
+    # Advisory / cautionary tone — not testimonial material
+    "get lost", "don't get lost", "dont get lost",
+    "pay attention", "pay good attention",
+    "be ready", "you'll need", "make sure you",
+    "so you don't", "so you dont",
 ]
 
 def quote_score(text):
@@ -263,6 +268,157 @@ def best_quotes(ds, program_label, max_n=10):
         picked.append({"quote": text, "program": program_label, "facilitator": fac})
         if len(picked) >= max_n: break
     return picked
+
+
+PROGRAM_LABELS = {
+    "TTTL1": "TTT L1", "TTTL2": "TTT L2", "TTTTeams": "TTT Teams",
+    "PrivateL1": "Private L1", "PrivateL2": "Private L2",
+    "PublicL1": "Public L1", "Custom Programs": "Custom Programs",
+}
+
+
+def update_trainers_tab():
+    """Rewrites the Trainers tab. One OVERALL row per trainer plus a per-program
+    drill-down row for each program they've taught."""
+    from openpyxl.styles import Font, PatternFill, Alignment, Border, Side
+    from collections import defaultdict
+
+    wb = openpyxl.load_workbook(SRC)
+    if "Trainers" in wb.sheetnames:
+        del wb["Trainers"]
+    insert_idx = 2 if "Quarterly" in wb.sheetnames else (1 if "Summary" in wb.sheetnames else 0)
+    ws = wb.create_sheet("Trainers", insert_idx)
+    ws.sheet_view.showGridLines = False
+
+    NAVY = "002D61"
+    GOLD_LIGHT = "FFF4D6"
+    BORDER = "E5E9F0"
+
+    # Title + subtitle
+    ws.merge_cells("A1:I1")
+    ws["A1"] = "Trainer Performance — Year to Date"
+    ws["A1"].font = Font(name="Calibri", size=18, bold=True, color="FFFFFF")
+    ws["A1"].fill = PatternFill("solid", fgColor=NAVY)
+    ws["A1"].alignment = Alignment(horizontal="left", vertical="center", indent=1)
+    ws.row_dimensions[1].height = 36
+
+    ws.merge_cells("A2:I2")
+    ws["A2"] = ("OVERALL row = trainer's combined performance across all programs they've taught. "
+                "Drill-down rows beneath show the same trainer per program. "
+                "Refresh by running update-data.bat after adding survey rows.")
+    ws["A2"].font = Font(name="Calibri", size=10, italic=True, color="555555")
+    ws["A2"].alignment = Alignment(horizontal="left", vertical="center", indent=1, wrap_text=True)
+    ws.row_dimensions[2].height = 30
+
+    headers = ["Trainer", "Program / Scope", "Sessions", "Respondents",
+               "NPS", "% Apply on Job", "% Engaging",
+               "% Virtual", "% In-Person"]
+    for i, h in enumerate(headers, start=1):
+        c = ws.cell(row=4, column=i, value=h)
+        c.font = Font(name="Calibri", size=11, bold=True, color="FFFFFF")
+        c.fill = PatternFill("solid", fgColor=NAVY)
+        c.alignment = Alignment(horizontal="center", vertical="center", wrap_text=True)
+    ws.row_dimensions[4].height = 38
+
+    widths = [26, 22, 11, 13, 9, 14, 14, 12, 13]
+    for i, w in enumerate(widths, start=1):
+        ws.column_dimensions[chr(64 + i)].width = w
+
+    # Gather per-trainer × per-program data
+    # trainer_data[trainer] = {program_label: {nps, apply, engage, virtual, inperson, sessions}}
+    trainer_data = defaultdict(lambda: defaultdict(lambda: {
+        "nps": [], "apply": [], "engage": [], "modality": [], "sessions": set()
+    }))
+    for sheet_name, cols in SHEET_COLS.items():
+        if sheet_name not in wb.sheetnames or not cols.get("facilitator"):
+            continue
+        raw_ws = wb[sheet_name]
+        program_label = PROGRAM_LABELS.get(sheet_name, sheet_name)
+        for r in range(2, raw_ws.max_row + 1):
+            fac = raw_ws[f"{cols['facilitator']}{r}"].value
+            if not fac: continue
+            fac = str(fac).strip()
+            if not fac: continue
+            g = trainer_data[fac][program_label]
+            g["nps"].append(raw_ws[f"{cols['nps']}{r}"].value)
+            g["apply"].append(raw_ws[f"{cols['apply_on_job']}{r}"].value)
+            g["engage"].append(raw_ws[f"{cols['fac_engaged']}{r}"].value)
+            mod = raw_ws[f"{cols['modality']}{r}"].value
+            if mod: g["modality"].append(str(mod).strip())
+            sess = raw_ws[f"{cols['session']}{r}"].value
+            if sess: g["sessions"].add(str(sess).strip())
+
+    def aggregate(groups_dict):
+        """Combine all programs for a trainer into one row of stats."""
+        agg = {"nps": [], "apply": [], "engage": [], "modality": [], "sessions": set()}
+        for prog, g in groups_dict.items():
+            agg["nps"].extend(g["nps"])
+            agg["apply"].extend(g["apply"])
+            agg["engage"].extend(g["engage"])
+            agg["modality"].extend(g["modality"])
+            agg["sessions"] |= g["sessions"]
+        return agg
+
+    def stats_row(label_program, g):
+        n_resp = len(numeric(g["nps"]))
+        if n_resp == 0:
+            return None
+        n_virtual = sum(1 for m in g["modality"] if m.lower() == "virtual")
+        n_inperson = sum(1 for m in g["modality"] if m.lower() == "in person")
+        n_total_mod = n_virtual + n_inperson
+        v_pct = round(n_virtual / n_total_mod * 100) if n_total_mod else 0
+        i_pct = round(n_inperson / n_total_mod * 100) if n_total_mod else 0
+        return [
+            label_program,
+            len(g["sessions"]),
+            n_resp,
+            nps(g["nps"]),
+            f'{top2box(g["apply"])}%',
+            f'{top2box(g["engage"])}%',
+            f'{v_pct}%' if n_total_mod else '-',
+            f'{i_pct}%' if n_total_mod else '-',
+        ]
+
+    # Render: trainer (alpha order), OVERALL row, then per-program rows beneath.
+    excel_row = 5
+    bold_navy = Font(bold=True, color=NAVY, size=11)
+    bold = Font(bold=True, size=11)
+    light = Font(color="555555", size=11)
+    overall_fill = PatternFill("solid", fgColor=GOLD_LIGHT)
+    thin = Side(border_style="thin", color=BORDER)
+    bot = Border(bottom=Side(border_style="thin", color="CCCCCC"))
+
+    for trainer in sorted(trainer_data.keys(), key=str.lower):
+        programs = trainer_data[trainer]
+        # OVERALL row
+        agg = aggregate(programs)
+        row_vals = stats_row("OVERALL", agg)
+        if not row_vals: continue
+        ws.cell(row=excel_row, column=1, value=trainer).font = bold_navy
+        for j, v in enumerate(row_vals, start=2):
+            c = ws.cell(row=excel_row, column=j, value=v)
+            c.alignment = Alignment(horizontal="center" if j > 2 else "left", vertical="center")
+            c.font = bold
+            c.fill = overall_fill
+        ws.cell(row=excel_row, column=1).fill = overall_fill
+        excel_row += 1
+
+        # Per-program rows
+        for prog in sorted(programs.keys()):
+            row_vals = stats_row(prog, programs[prog])
+            if not row_vals: continue
+            ws.cell(row=excel_row, column=1, value="").alignment = Alignment(horizontal="left", indent=1)
+            for j, v in enumerate(row_vals, start=2):
+                c = ws.cell(row=excel_row, column=j, value=v)
+                c.alignment = Alignment(horizontal="center" if j > 2 else "left", vertical="center", indent=1 if j == 2 else 0)
+                c.font = light
+            excel_row += 1
+        # blank separator row
+        excel_row += 1
+
+    ws.freeze_panes = "A5"
+    wb.save(SRC)
+    print(f"Trainers tab updated: {len(trainer_data)} trainers")
 
 
 def main():
@@ -327,6 +483,9 @@ def main():
 
     OUT.write_text(json.dumps(payload, indent=2), encoding="utf-8")
     print(f"\nWrote: {OUT}")
+
+    # Refresh the Trainers tab in the workbook
+    update_trainers_tab()
     print("\nQuick summary of computed views:")
     for k, v in views.items():
         if v.get("type") == "refresher":

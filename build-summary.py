@@ -1,333 +1,415 @@
 """
-Adds (or rebuilds) a 'Summary' tab in Program-Evals-2026.xlsx with live
-formulas that calculate every number the smarties dashboard needs.
+Rebuilds the 'Summary' and 'Quarterly' tabs in Program-Evals-2026.xlsx with
+live formulas. Auto-recalculates as new survey responses are pasted into raw
+sheets — no Python re-run needed for routine updates.
 
-Run this once after initial setup, or again any time the workbook structure
-changes (e.g. when TTTL2 or PrivateL2 sheets get added).
+Run when:
+- Initial setup
+- A new program sheet is added (TTTL3, etc.)
+- Column layouts of existing sheets change
+- You want to reset the boss's tabs from scratch
 
-Creates a timestamped backup of the source workbook before modifying.
+Creates a timestamped backup before modifying.
 """
 import shutil
 from datetime import datetime
 from pathlib import Path
 import openpyxl
-from openpyxl.styles import Font, PatternFill, Alignment, Border, Side
-from openpyxl.utils import get_column_letter
+from openpyxl.styles import Font, PatternFill, Alignment
 
 SRC = Path(r"C:\Users\Amy Miller - TS\OneDrive - TalentSmart\Program-Evals-2026.xlsx")
+YEAR = 2026
 
-# Column letters differ between TTTL1 and PrivateL1 — map each metric.
-TTTL1_COLS = {
-    "respondent_id": "B",
-    "modality": "S",
-    "content_relevant": "X",
-    "fac_knowledge": "Y",
-    "fac_engaged": "Z",
-    "challenged": "AA",
-    "worthwhile": "AB",
-    "apply_on_job": "AC",
-    "gained_knowledge": "AD",
-    "nps": "AG",
-    "ei_dev_pct": "AJ",
-    "confidence_pct": "AK",
+# Per-sheet columns. "date" is the column we filter quarters on (Start Date).
+SHEETS = {
+    "TTTL1": {
+        "label": "TTT L1", "family": "ttt",
+        "date": "D", "respondent": "B", "modality": "S", "facilitator": "T",
+        "content_relevant": "X", "fac_knowledge": "Y", "fac_engaged": "Z",
+        "worthwhile": "AB", "apply_on_job": "AC", "gained_knowledge": "AD",
+        "nps": "AG", "ei_dev_pct": "AJ", "confidence_pct": "AK",
+        "manager_exp": None,
+    },
+    "TTTL2": {
+        "label": "TTT L2", "family": "ttt",
+        "date": "D", "respondent": "B", "modality": "R", "facilitator": "S",
+        "content_relevant": "W", "fac_knowledge": "X", "fac_engaged": "Y",
+        "worthwhile": "AA", "apply_on_job": "AB", "gained_knowledge": "AC",
+        "nps": "AF", "ei_dev_pct": "AI", "confidence_pct": "AJ",
+        "manager_exp": None,
+    },
+    "TTTTeams": {
+        "label": "TTT Teams", "family": "ttt",
+        "date": "D", "respondent": "B", "modality": "R", "facilitator": "S",
+        "content_relevant": "W", "fac_knowledge": "X", "fac_engaged": "Y",
+        "worthwhile": "AA", "apply_on_job": "AB", "gained_knowledge": "AC",
+        "nps": "AF", "ei_dev_pct": "AI", "confidence_pct": "AJ",
+        "manager_exp": None,
+    },
+    "PrivateL1": {
+        "label": "Private L1", "family": "private",
+        "date": "D", "respondent": "B", "modality": "O", "facilitator": "P",
+        "content_relevant": "S", "fac_knowledge": "T", "fac_engaged": "U",
+        "worthwhile": "W", "apply_on_job": "X", "gained_knowledge": "Y",
+        "nps": "AB", "ei_dev_pct": "AD", "confidence_pct": "AE",
+        "manager_exp": "AF",
+    },
+    "PrivateL2": {
+        "label": "Private L2", "family": "private",
+        "date": "D", "respondent": "B", "modality": "O", "facilitator": "P",
+        "content_relevant": "S", "fac_knowledge": "T", "fac_engaged": "U",
+        "worthwhile": "W", "apply_on_job": "X", "gained_knowledge": "Y",
+        "nps": "AB", "ei_dev_pct": "AD", "confidence_pct": "AE",
+        "manager_exp": "AF",
+    },
+    "PublicL1": {
+        "label": "Public L1", "family": "public",
+        "date": "D", "respondent": "B", "modality": "O", "facilitator": "P",
+        "content_relevant": "S", "fac_knowledge": "T", "fac_engaged": "U",
+        "worthwhile": "W", "apply_on_job": "X", "gained_knowledge": "Y",
+        "nps": "AB", "ei_dev_pct": "AD", "confidence_pct": "AE",
+        "manager_exp": None,
+    },
+    "Custom Programs": {
+        "label": "Custom Programs", "family": "custom",
+        "date": "D", "respondent": "B", "modality": "R", "facilitator": "S",
+        "content_relevant": "V", "fac_knowledge": "W", "fac_engaged": "X",
+        "worthwhile": "Z", "apply_on_job": "AA", "gained_knowledge": "AB",
+        "nps": "AF", "ei_dev_pct": "AI", "confidence_pct": "AJ",
+        "manager_exp": "AK",
+    },
 }
-PRIVATEL1_COLS = {
-    "respondent_id": "B",
-    "modality": "O",
-    "content_relevant": "S",
-    "fac_knowledge": "T",
-    "fac_engaged": "U",
-    "challenged": "V",
-    "worthwhile": "W",
-    "apply_on_job": "X",
-    "gained_knowledge": "Y",
-    "nps": "AB",
-    "ei_dev_pct": "AD",
-    "confidence_pct": "AE",
-}
+
+# Refresher is omitted from Summary/Quarterly because it uses different metrics.
+
+QUARTERS = [
+    ("Q1", (1, 1), (3, 31)),
+    ("Q2", (4, 1), (6, 30)),
+    ("Q3", (7, 1), (9, 30)),
+    ("Q4", (10, 1), (12, 31)),
+]
 
 NAVY = "002D61"
 GREEN = "0ACC8B"
 GOLD = "DFA351"
 BG_SOFT = "F7F8FB"
-BG_INPUT = "FFF9DB"  # soft yellow for manual-input cells
+BG_SECTION = "EEF2F8"
 
-def nps_formula(sheet, col):
-    return (
-        f'=IFERROR(ROUND((COUNTIF({sheet}!{col}:{col},">=9")'
-        f'-COUNTIF({sheet}!{col}:{col},"<=6"))'
-        f'/COUNT({sheet}!{col}:{col})*100,0),0)'
-    )
-
-def combined_nps_formula(pairs):
-    promoters = "+".join([f'COUNTIF({s}!{c}:{c},">=9")' for s, c in pairs])
-    detractors = "+".join([f'COUNTIF({s}!{c}:{c},"<=6")' for s, c in pairs])
-    total = "+".join([f'COUNT({s}!{c}:{c})' for s, c in pairs])
-    return f"=IFERROR(ROUND(({promoters}-({detractors}))/({total})*100,0),0)"
-
-def t2b_formula(sheet, col):
-    return (
-        f'=IFERROR(ROUND(COUNTIF({sheet}!{col}:{col},">=4")'
-        f'/COUNT({sheet}!{col}:{col})*100,0),0)'
-    )
-
-def combined_t2b_formula(pairs):
-    top = "+".join([f'COUNTIF({s}!{c}:{c},">=4")' for s, c in pairs])
-    total = "+".join([f'COUNT({s}!{c}:{c})' for s, c in pairs])
-    return f"=IFERROR(ROUND(({top})/({total})*100,0),0)"
-
-def avg_formula(sheet, col):
-    return f'=IFERROR(ROUND(AVERAGE({sheet}!{col}:{col}),0),0)'
-
-def combined_avg_formula(pairs):
-    total = "+".join([f'SUM({s}!{c}:{c})' for s, c in pairs])
-    n = "+".join([f'COUNT({s}!{c}:{c})' for s, c in pairs])
-    return f"=IFERROR(ROUND(({total})/({n}),0),0)"
-
-def count_formula(sheet, col):
-    return f'=COUNTA({sheet}!{col}:{col})-1'
-
-def combined_count_formula(pairs):
-    parts = "+".join([f'(COUNTA({s}!{c}:{c})-1)' for s, c in pairs])
-    return f"={parts}"
-
-def countif_text(sheet, col, value):
-    return f'=COUNTIF({sheet}!{col}:{col},"{value}")'
-
-def combined_countif_text(pairs, value):
-    parts = "+".join([f'COUNTIF({s}!{c}:{c},"{value}")' for s, c in pairs])
-    return f"={parts}"
+LIKERT_KEYS = [
+    ("apply_on_job", "% Will apply on the job (4–5)"),
+    ("gained_knowledge", "% Gained new knowledge (4–5)"),
+    ("worthwhile", "% Worthwhile investment (4–5)"),
+    ("content_relevant", "% Content relevant (4–5)"),
+    ("fac_knowledge", "% Facilitator knowledge enhanced learning (4–5)"),
+    ("fac_engaged", "% Facilitator kept me engaged (4–5)"),
+]
 
 
-def build_summary(wb):
+# ---------- Formula helpers ----------
+
+def date_range(year, quarter_idx):
+    _, (sm, sd), (em, ed) = QUARTERS[quarter_idx]
+    return f"DATE({year},{sm},{sd})", f"DATE({year},{em},{ed})"
+
+def q(sheet):
+    """Quote a sheet name for use in formulas (handles spaces)."""
+    return f"'{sheet}'" if " " in sheet else sheet
+
+def date_filter(sheet, date_col, q_idx=None):
+    """Returns the comma-separated COUNTIFS args for the date filter (or empty for YTD)."""
+    if q_idx is None:
+        return ""
+    start, end = date_range(YEAR, q_idx)
+    sn = q(sheet)
+    return f',{sn}!{date_col}:{date_col},">="&{start},{sn}!{date_col}:{date_col},"<="&{end}'
+
+def nps_formula_combined(sheets_subset, q_idx=None):
+    proms, detrs, totals = [], [], []
+    for sn, sc in sheets_subset.items():
+        d, n = sc["date"], sc["nps"]
+        df = date_filter(sn, d, q_idx)
+        sq = q(sn)
+        proms.append(f'COUNTIFS({sq}!{n}:{n},">=9"{df})')
+        detrs.append(f'COUNTIFS({sq}!{n}:{n},"<=6"{df})')
+        totals.append(f'COUNTIFS({sq}!{n}:{n},">=0"{df})')
+    p, dn, t = "+".join(proms), "+".join(detrs), "+".join(totals)
+    return f'=IFERROR(ROUND(({p}-({dn}))/({t})*100,0),"-")'
+
+def t2b_formula_combined(sheets_subset, key, q_idx=None):
+    tops, totals = [], []
+    for sn, sc in sheets_subset.items():
+        col = sc[key]
+        d = sc["date"]
+        df = date_filter(sn, d, q_idx)
+        sq = q(sn)
+        tops.append(f'COUNTIFS({sq}!{col}:{col},">=4"{df})')
+        totals.append(f'COUNTIFS({sq}!{col}:{col},">=0"{df})')
+    return f'=IFERROR(ROUND(({"+".join(tops)})/({"+".join(totals)})*100,0),"-")'
+
+def participants_formula_combined(sheets_subset, q_idx=None):
+    parts = []
+    for sn, sc in sheets_subset.items():
+        d, r = sc["date"], sc["respondent"]
+        df = date_filter(sn, d, q_idx)
+        sq = q(sn)
+        parts.append(f'COUNTIFS({sq}!{r}:{r},"<>"{df})')
+    return f'={"+".join(parts)}'
+
+def avg_pct_formula_combined(sheets_subset, key, q_idx=None):
+    sums, counts = [], []
+    for sn, sc in sheets_subset.items():
+        col = sc[key]
+        d = sc["date"]
+        sq = q(sn)
+        if q_idx is None:
+            sums.append(f'SUM({sq}!{col}:{col})')
+            counts.append(f'COUNT({sq}!{col}:{col})')
+        else:
+            start, end = date_range(YEAR, q_idx)
+            sums.append(f'SUMIFS({sq}!{col}:{col},'
+                        f'{sq}!{d}:{d},">="&{start},'
+                        f'{sq}!{d}:{d},"<="&{end})')
+            counts.append(f'COUNTIFS({sq}!{col}:{col},">=0",'
+                          f'{sq}!{d}:{d},">="&{start},'
+                          f'{sq}!{d}:{d},"<="&{end})')
+    return f'=IFERROR(ROUND(({"+".join(sums)})/({"+".join(counts)}),0),"-")'
+
+def no_manager_formula(sheets_with_q, q_idx=None):
+    """Sheets must have manager_exp column. Returns % NO."""
+    nos, totals = [], []
+    for sn, sc in sheets_with_q.items():
+        col = sc["manager_exp"]
+        if not col: continue
+        d = sc["date"]
+        df = date_filter(sn, d, q_idx)
+        sq = q(sn)
+        nos.append(f'COUNTIFS({sq}!{col}:{col},"No"{df})')
+        totals.append(f'(COUNTIFS({sq}!{col}:{col},"No"{df})+COUNTIFS({sq}!{col}:{col},"Yes"{df}))')
+    if not nos:
+        return '"-"'
+    return f'=IFERROR(ROUND(({"+".join(nos)})/({"+".join(totals)})*100,0),"-")'
+
+def sessions_distinct_formula(sheets_subset):
+    """Distinct session names across the given sheets, using SUMPRODUCT for compatibility."""
+    parts = []
+    for sn, sc in sheets_subset.items():
+        sq = q(sn)
+        parts.append(f'SUMPRODUCT(({sq}!A2:A1000<>"")/COUNTIF({sq}!A2:A1000,{sq}!A2:A1000&""))')
+    return f'=IFERROR(ROUND({"+".join(parts)},0),0)'
+
+def modality_count_formula(sheets_subset, value):
+    parts = []
+    for sn, sc in sheets_subset.items():
+        sq = q(sn)
+        parts.append(f'COUNTIF({sq}!{sc["modality"]}:{sc["modality"]},"{value}")')
+    return f'={"+".join(parts)}'
+
+
+# ---------- Tab builders ----------
+
+def style_title(ws, cell_ref, text, span_cols):
+    last_col = chr(ord(cell_ref[0]) + span_cols - 1)
+    ws.merge_cells(f"{cell_ref}:{last_col}{cell_ref[1:]}")
+    cell = ws[cell_ref]
+    cell.value = text
+    cell.font = Font(name="Calibri", size=18, bold=True, color="FFFFFF")
+    cell.fill = PatternFill("solid", fgColor=NAVY)
+    cell.alignment = Alignment(horizontal="left", vertical="center", indent=1)
+    ws.row_dimensions[int(cell_ref[1:])].height = 36
+
+def style_subtitle(ws, cell_ref, text, span_cols):
+    last_col = chr(ord(cell_ref[0]) + span_cols - 1)
+    ws.merge_cells(f"{cell_ref}:{last_col}{cell_ref[1:]}")
+    cell = ws[cell_ref]
+    cell.value = text
+    cell.font = Font(name="Calibri", size=10, italic=True, color="555555")
+    cell.alignment = Alignment(horizontal="left", vertical="center", indent=1)
+    ws.row_dimensions[int(cell_ref[1:])].height = 22
+
+def style_section(ws, row, text, ncols):
+    ws.cell(row=row, column=1, value=text).font = Font(name="Calibri", size=11, bold=True, color=NAVY)
+    for col in range(1, ncols + 1):
+        ws.cell(row=row, column=col).fill = PatternFill("solid", fgColor=BG_SECTION)
+    ws.row_dimensions[row].height = 22
+
+def style_header(ws, row, headers):
+    for i, h in enumerate(headers, start=1):
+        c = ws.cell(row=row, column=i, value=h)
+        c.font = Font(name="Calibri", size=11, bold=True, color="FFFFFF")
+        c.fill = PatternFill("solid", fgColor=NAVY)
+        c.alignment = Alignment(horizontal="center", vertical="center")
+    ws.row_dimensions[row].height = 24
+
+
+def build_summary_tab(wb):
     if "Summary" in wb.sheetnames:
         del wb["Summary"]
-
     ws = wb.create_sheet("Summary", 0)
     ws.sheet_view.showGridLines = False
 
-    # Column widths
-    widths = {"A": 42, "B": 14, "C": 14, "D": 14, "E": 2, "F": 42, "G": 16}
-    for col, w in widths.items():
-        ws.column_dimensions[col].width = w
-
-    bold = Font(name="Calibri", size=11, bold=True, color="FFFFFF")
-    section_font = Font(name="Calibri", size=11, bold=True, color=NAVY)
-    label_font = Font(name="Calibri", size=11, color="333333")
-    value_font = Font(name="Calibri", size=11, bold=True, color="000000")
-    input_font = Font(name="Calibri", size=11, bold=True, color="8B6F00")
-    title_font = Font(name="Calibri", size=18, bold=True, color="FFFFFF")
-    sub_font = Font(name="Calibri", size=10, italic=True, color="555555")
-    center = Alignment(horizontal="center", vertical="center")
-    left = Alignment(horizontal="left", vertical="center")
-    navy_fill = PatternFill("solid", fgColor=NAVY)
-    soft_fill = PatternFill("solid", fgColor=BG_SOFT)
-    input_fill = PatternFill("solid", fgColor=BG_INPUT)
-
-    # Title
-    ws.merge_cells("A1:G1")
-    ws["A1"] = "Program Impact — Summary"
-    ws["A1"].font = title_font
-    ws["A1"].alignment = Alignment(horizontal="left", vertical="center", indent=1)
-    ws["A1"].fill = navy_fill
-    ws.row_dimensions[1].height = 38
-
-    ws.merge_cells("A2:G2")
-    ws["A2"] = (
-        "Auto-calculated from the raw response sheets. Yellow cells are manual inputs. "
-        "Copy the data.json values on the right into GitHub each week."
-    )
-    ws["A2"].font = sub_font
-    ws["A2"].alignment = Alignment(horizontal="left", vertical="center", indent=1)
-    ws.row_dimensions[2].height = 22
-
-    # Headers row
-    header_row = 4
-    headers = ["Metric", "TTT L1", "Private L1", "Combined"]
-    for i, h in enumerate(headers):
-        c = ws.cell(row=header_row, column=i + 1, value=h)
-        c.font = bold
-        c.fill = navy_fill
-        c.alignment = center
-    ws.row_dimensions[header_row].height = 24
-
-    pairs_all = [("TTTL1", TTTL1_COLS["nps"]), ("PrivateL1", PRIVATEL1_COLS["nps"])]
-
-    json_entries = []  # (label, cell ref, json path)
-
-    def write_section(title, start_row):
-        ws.cell(row=start_row, column=1, value=title).font = section_font
-        ws.cell(row=start_row, column=1).fill = soft_fill
-        for col in range(2, 5):
-            ws.cell(row=start_row, column=col).fill = soft_fill
-        ws.row_dimensions[start_row].height = 20
-        return start_row + 1
-
-    def write_metric(row, label, ttt_val, priv_val, comb_val, is_input=False, json_paths=None):
-        ws.cell(row=row, column=1, value=label).font = label_font
-        ws.cell(row=row, column=1).alignment = left
-        for col, val in ((2, ttt_val), (3, priv_val), (4, comb_val)):
-            cell = ws.cell(row=row, column=col, value=val)
-            cell.alignment = center
-            if is_input and val is None:
-                cell.fill = input_fill
-                cell.font = input_font
-            else:
-                cell.font = value_font
-        if json_paths:
-            # json_paths is dict like {"ttt": "views.ttt.participants", ...}
-            for key, path in json_paths.items():
-                col_letter = {"ttt": "B", "private": "C", "all": "D"}[key]
-                json_entries.append((path, f"{col_letter}{row}"))
-
-    r = write_section("OVERVIEW", 5)
-    # Respondent counts (auto)
-    write_metric(r, "Respondents",
-                 count_formula("TTTL1", TTTL1_COLS["respondent_id"]),
-                 count_formula("PrivateL1", PRIVATEL1_COLS["respondent_id"]),
-                 combined_count_formula([("TTTL1", TTTL1_COLS["respondent_id"]),
-                                         ("PrivateL1", PRIVATEL1_COLS["respondent_id"])]),
-                 json_paths={"ttt": "views.ttt.participants",
-                             "private": "views.private.participants",
-                             "all": "views.all.participants"})
-    r += 1
-    # Manual: sessions
-    write_metric(r, "Sessions delivered (enter manually)", None, None, "=B{0}+C{0}".format(r),
-                 is_input=True,
-                 json_paths={"ttt": "views.ttt.sessions",
-                             "private": "views.private.sessions",
-                             "all": "views.all.sessions"})
-    ws.cell(row=r, column=2).value = 1   # seed values
-    ws.cell(row=r, column=3).value = 1
-    ws.cell(row=r, column=2).fill = input_fill
-    ws.cell(row=r, column=3).fill = input_fill
-    ws.cell(row=r, column=2).font = input_font
-    ws.cell(row=r, column=3).font = input_font
-    r += 1
-    # Manual: clients
-    write_metric(r, "Client companies (enter manually)", None, None, "=B{0}+C{0}".format(r),
-                 is_input=True,
-                 json_paths={"ttt": "views.ttt.clients",
-                             "private": "views.private.clients",
-                             "all": "views.all.clients"})
-    ws.cell(row=r, column=2).value = 1
-    ws.cell(row=r, column=3).value = 1
-    ws.cell(row=r, column=2).fill = input_fill
-    ws.cell(row=r, column=3).fill = input_fill
-    ws.cell(row=r, column=2).font = input_font
-    ws.cell(row=r, column=3).font = input_font
-    r += 1
-    # Modality
-    write_metric(r, "Virtual respondents",
-                 countif_text("TTTL1", TTTL1_COLS["modality"], "Virtual"),
-                 countif_text("PrivateL1", PRIVATEL1_COLS["modality"], "Virtual"),
-                 combined_countif_text([("TTTL1", TTTL1_COLS["modality"]),
-                                        ("PrivateL1", PRIVATEL1_COLS["modality"])], "Virtual"),
-                 json_paths={"ttt": "views.ttt.modality.virtual",
-                             "private": "views.private.modality.virtual",
-                             "all": "views.all.modality.virtual"})
-    r += 1
-    write_metric(r, "In person respondents",
-                 countif_text("TTTL1", TTTL1_COLS["modality"], "In person"),
-                 countif_text("PrivateL1", PRIVATEL1_COLS["modality"], "In person"),
-                 combined_countif_text([("TTTL1", TTTL1_COLS["modality"]),
-                                        ("PrivateL1", PRIVATEL1_COLS["modality"])], "In person"),
-                 json_paths={"ttt": "views.ttt.modality.inPerson",
-                             "private": "views.private.modality.inPerson",
-                             "all": "views.all.modality.inPerson"})
-    r += 2
-
-    r = write_section("NPS", r)
-    write_metric(r, "Net Promoter Score",
-                 nps_formula("TTTL1", TTTL1_COLS["nps"]),
-                 nps_formula("PrivateL1", PRIVATEL1_COLS["nps"]),
-                 combined_nps_formula([("TTTL1", TTTL1_COLS["nps"]),
-                                       ("PrivateL1", PRIVATEL1_COLS["nps"])]),
-                 json_paths={"ttt": "views.ttt.nps",
-                             "private": "views.private.nps",
-                             "all": "views.all.nps"})
-    r += 2
-
-    r = write_section("TOP-2-BOX % (rated 4 or 5 out of 5)", r)
-    t2b_metrics = [
-        ("Content was relevant to my job", "content_relevant", "contentRelevant"),
-        ("Facilitator's knowledge enhanced learning", "fac_knowledge", "facilitatorKnowledge"),
-        ("Facilitator kept me engaged", "fac_engaged", "facilitatorEngaging"),
-        ("Appropriately challenged", "challenged", None),
-        ("Worthwhile investment of time", "worthwhile", "worthwhileInvestment"),
-        ("Will apply on the job", "apply_on_job", "applyOnJob"),
-        ("Gained new knowledge", "gained_knowledge", "gainedKnowledge"),
+    # Programs across the top: each individual program + family summaries + All
+    program_cols = [
+        ("All Programs", SHEETS),
+        ("TTT Summary", {k: v for k, v in SHEETS.items() if v["family"] == "ttt"}),
+        ("TTT L1", {"TTTL1": SHEETS["TTTL1"]}),
+        ("TTT L2", {"TTTL2": SHEETS["TTTL2"]}),
+        ("TTT Teams", {"TTTTeams": SHEETS["TTTTeams"]}),
+        ("Private Summary", {k: v for k, v in SHEETS.items() if v["family"] == "private"}),
+        ("Private L1", {"PrivateL1": SHEETS["PrivateL1"]}),
+        ("Private L2", {"PrivateL2": SHEETS["PrivateL2"]}),
+        ("Public L1", {"PublicL1": SHEETS["PublicL1"]}),
+        ("Custom Programs", {"Custom Programs": SHEETS["Custom Programs"]}),
     ]
-    for label, key, json_key in t2b_metrics:
-        paths = None
-        if json_key:
-            paths = {
-                "ttt": f"views.ttt.topBox.{json_key}",
-                "private": f"views.private.topBox.{json_key}",
-                "all": f"views.all.topBox.{json_key}",
-            }
-        write_metric(r, label,
-                     t2b_formula("TTTL1", TTTL1_COLS[key]),
-                     t2b_formula("PrivateL1", PRIVATEL1_COLS[key]),
-                     combined_t2b_formula([("TTTL1", TTTL1_COLS[key]),
-                                           ("PrivateL1", PRIVATEL1_COLS[key])]),
-                     json_paths=paths)
+    ncols = 1 + len(program_cols)
+
+    # Column widths
+    ws.column_dimensions["A"].width = 44
+    for i in range(2, ncols + 1):
+        ws.column_dimensions[chr(ord("A") + i - 1)].width = 14
+
+    style_title(ws, "A1", "Program Impact — Summary (Year to Date)", ncols)
+    style_subtitle(ws, "A2", "Auto-calculated from the raw response sheets. Refresh by adding rows there.", ncols)
+
+    header_row = 4
+    style_header(ws, header_row, ["Metric"] + [p[0] for p in program_cols])
+
+    r = 5
+    style_section(ws, r, "OVERVIEW", ncols)
+    r += 1
+    ws.cell(row=r, column=1, value="Respondents (EOS completed)")
+    for i, (_, sheets_subset) in enumerate(program_cols, start=2):
+        ws.cell(row=r, column=i, value=participants_formula_combined(sheets_subset)).alignment = Alignment(horizontal="center")
+    r += 1
+    ws.cell(row=r, column=1, value="Sessions delivered (distinct)")
+    for i, (_, sheets_subset) in enumerate(program_cols, start=2):
+        ws.cell(row=r, column=i, value=sessions_distinct_formula(sheets_subset)).alignment = Alignment(horizontal="center")
+    r += 1
+    ws.cell(row=r, column=1, value="Virtual respondents")
+    for i, (_, sheets_subset) in enumerate(program_cols, start=2):
+        ws.cell(row=r, column=i, value=modality_count_formula(sheets_subset, "Virtual")).alignment = Alignment(horizontal="center")
+    r += 1
+    ws.cell(row=r, column=1, value="In-person respondents")
+    for i, (_, sheets_subset) in enumerate(program_cols, start=2):
+        ws.cell(row=r, column=i, value=modality_count_formula(sheets_subset, "In person")).alignment = Alignment(horizontal="center")
+    r += 2
+
+    style_section(ws, r, "NPS", ncols); r += 1
+    ws.cell(row=r, column=1, value="Net Promoter Score")
+    for i, (_, sheets_subset) in enumerate(program_cols, start=2):
+        ws.cell(row=r, column=i, value=nps_formula_combined(sheets_subset)).alignment = Alignment(horizontal="center")
+        ws.cell(row=r, column=i).font = Font(bold=True)
+    r += 2
+
+    style_section(ws, r, "TOP-2-BOX % (rated 4 or 5)", ncols); r += 1
+    for key, label in LIKERT_KEYS:
+        ws.cell(row=r, column=1, value=label)
+        for i, (_, sheets_subset) in enumerate(program_cols, start=2):
+            ws.cell(row=r, column=i, value=t2b_formula_combined(sheets_subset, key)).alignment = Alignment(horizontal="center")
         r += 1
     r += 1
 
-    r = write_section("EI DEVELOPMENT ATTRIBUTION", r)
-    write_metric(r, "Avg % of EI growth credited to training",
-                 avg_formula("TTTL1", TTTL1_COLS["ei_dev_pct"]),
-                 avg_formula("PrivateL1", PRIVATEL1_COLS["ei_dev_pct"]),
-                 combined_avg_formula([("TTTL1", TTTL1_COLS["ei_dev_pct"]),
-                                       ("PrivateL1", PRIVATEL1_COLS["ei_dev_pct"])]),
-                 json_paths={"ttt": "views.ttt.eiDevelopmentAttributed",
-                             "private": "views.private.eiDevelopmentAttributed",
-                             "all": "views.all.eiDevelopmentAttributed"})
+    style_section(ws, r, "EI DEVELOPMENT ATTRIBUTION", ncols); r += 1
+    ws.cell(row=r, column=1, value="Avg % EI growth credited to training")
+    for i, (_, sheets_subset) in enumerate(program_cols, start=2):
+        ws.cell(row=r, column=i, value=avg_pct_formula_combined(sheets_subset, "ei_dev_pct")).alignment = Alignment(horizontal="center")
     r += 1
-    write_metric(r, "Avg confidence in estimate",
-                 avg_formula("TTTL1", TTTL1_COLS["confidence_pct"]),
-                 avg_formula("PrivateL1", PRIVATEL1_COLS["confidence_pct"]),
-                 combined_avg_formula([("TTTL1", TTTL1_COLS["confidence_pct"]),
-                                       ("PrivateL1", PRIVATEL1_COLS["confidence_pct"])]),
-                 json_paths={"ttt": "views.ttt.confidenceInEstimate",
-                             "private": "views.private.confidenceInEstimate",
-                             "all": "views.all.confidenceInEstimate"})
+    ws.cell(row=r, column=1, value="Avg confidence in estimate")
+    for i, (_, sheets_subset) in enumerate(program_cols, start=2):
+        ws.cell(row=r, column=i, value=avg_pct_formula_combined(sheets_subset, "confidence_pct")).alignment = Alignment(horizontal="center")
     r += 2
 
-    # data.json copy-paste panel (column F/G)
-    panel_start = 4
-    ws.cell(row=panel_start, column=6, value="data.json value").font = bold
-    ws.cell(row=panel_start, column=6).fill = navy_fill
-    ws.cell(row=panel_start, column=6).alignment = center
-    ws.cell(row=panel_start, column=7, value="Paste this").font = bold
-    ws.cell(row=panel_start, column=7).fill = navy_fill
-    ws.cell(row=panel_start, column=7).alignment = center
+    style_section(ws, r, "MANAGER EXPECTATIONS (where asked)", ncols); r += 1
+    ws.cell(row=r, column=1, value="% who said NO (manager did not set expectations)")
+    for i, (_, sheets_subset) in enumerate(program_cols, start=2):
+        applicable = {k: v for k, v in sheets_subset.items() if v.get("manager_exp")}
+        if applicable:
+            ws.cell(row=r, column=i, value=no_manager_formula(applicable)).alignment = Alignment(horizontal="center")
+        else:
+            ws.cell(row=r, column=i, value="n/a").alignment = Alignment(horizontal="center")
 
-    for i, (path, cell_ref) in enumerate(json_entries):
-        row_i = panel_start + 1 + i
-        ws.cell(row=row_i, column=6, value=path).font = label_font
-        v = ws.cell(row=row_i, column=7, value=f"={cell_ref}")
-        v.font = value_font
-        v.alignment = center
+    ws.freeze_panes = "B5"
 
-    # Freeze top two rows + header
-    ws.freeze_panes = "A5"
+
+def build_quarterly_tab(wb):
+    if "Quarterly" in wb.sheetnames:
+        del wb["Quarterly"]
+    ws = wb.create_sheet("Quarterly", 1)
+    ws.sheet_view.showGridLines = False
+
+    cols = ["Metric", "Q1", "Q2", "Q3", "Q4", "YTD"]
+    ws.column_dimensions["A"].width = 50
+    for i, c in enumerate("BCDEF", start=2):
+        ws.column_dimensions[c].width = 12
+
+    style_title(ws, "A1", f"Quarterly Breakdown — {YEAR}", 6)
+    style_subtitle(ws, "A2", "All numbers auto-recalculate from the raw response sheets. Quarter is determined by Start Date.", 6)
+
+    style_header(ws, 4, cols)
+
+    program_groups = [
+        ("All Programs", SHEETS),
+        ("TTT Summary", {k: v for k, v in SHEETS.items() if v["family"] == "ttt"}),
+        ("TTT L1", {"TTTL1": SHEETS["TTTL1"]}),
+        ("TTT L2", {"TTTL2": SHEETS["TTTL2"]}),
+        ("TTT Teams", {"TTTTeams": SHEETS["TTTTeams"]}),
+        ("Private Summary", {k: v for k, v in SHEETS.items() if v["family"] == "private"}),
+        ("Private L1", {"PrivateL1": SHEETS["PrivateL1"]}),
+        ("Private L2", {"PrivateL2": SHEETS["PrivateL2"]}),
+        ("Public L1", {"PublicL1": SHEETS["PublicL1"]}),
+        ("Custom Programs", {"Custom Programs": SHEETS["Custom Programs"]}),
+    ]
+
+    r = 5
+    for prog_label, subset in program_groups:
+        style_section(ws, r, prog_label.upper(), 6); r += 1
+
+        def write_row(label, formula_fn):
+            ws.cell(row=r, column=1, value=label)
+            for q in range(4):
+                cell = ws.cell(row=r, column=2 + q, value=formula_fn(subset, q_idx=q))
+                cell.alignment = Alignment(horizontal="center")
+            ws.cell(row=r, column=6, value=formula_fn(subset, q_idx=None)).alignment = Alignment(horizontal="center")
+            ws.cell(row=r, column=6).font = Font(bold=True)
+
+        write_row("Participants", participants_formula_combined)
+        r += 1
+        write_row("NPS", nps_formula_combined)
+        r += 1
+        for key, label in LIKERT_KEYS:
+            ws.cell(row=r, column=1, value=label)
+            for q in range(4):
+                ws.cell(row=r, column=2 + q, value=t2b_formula_combined(subset, key, q_idx=q)).alignment = Alignment(horizontal="center")
+            ws.cell(row=r, column=6, value=t2b_formula_combined(subset, key, q_idx=None)).alignment = Alignment(horizontal="center")
+            ws.cell(row=r, column=6).font = Font(bold=True)
+            r += 1
+
+        # manager exp where applicable
+        applicable = {k: v for k, v in subset.items() if v.get("manager_exp")}
+        if applicable:
+            ws.cell(row=r, column=1, value="% who said NO their manager set expectations")
+            for q in range(4):
+                ws.cell(row=r, column=2 + q, value=no_manager_formula(applicable, q_idx=q)).alignment = Alignment(horizontal="center")
+            ws.cell(row=r, column=6, value=no_manager_formula(applicable, q_idx=None)).alignment = Alignment(horizontal="center")
+            ws.cell(row=r, column=6).font = Font(bold=True)
+            r += 1
+        r += 1  # blank row between programs
+
+    ws.freeze_panes = "B5"
 
 
 def main():
     if not SRC.exists():
         raise SystemExit(f"Source file not found: {SRC}")
-
     ts = datetime.now().strftime("%Y%m%d-%H%M%S")
     backup = SRC.with_name(SRC.stem + f"-backup-{ts}.xlsx")
     shutil.copy2(SRC, backup)
     print(f"Backup created: {backup.name}")
 
     wb = openpyxl.load_workbook(SRC)
-    build_summary(wb)
+    build_summary_tab(wb)
+    build_quarterly_tab(wb)
     wb.save(SRC)
-    print(f"Summary tab added to: {SRC.name}")
+    print(f"Summary + Quarterly tabs rebuilt in: {SRC.name}")
 
 
 if __name__ == "__main__":

@@ -194,6 +194,7 @@ body {
   display: grid; grid-template-columns: repeat(3, 1fr);
   gap: 10px; margin-top: 8px;
 }
+.reach-grid-2 { grid-template-columns: repeat(2, 1fr); }
 .reach-num {
   font-size: 28px; font-weight: 800; color: var(--navy); line-height: 1;
 }

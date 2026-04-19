@@ -64,7 +64,6 @@
     document.getElementById('eiConfidence').textContent = v.confidenceInEstimate;
     document.getElementById('participants').textContent = v.participants;
     document.getElementById('sessions').textContent = v.sessions;
-    document.getElementById('clients').textContent = v.clients;
 
     document.querySelectorAll('[data-metric]').forEach(el => {
       const key = el.getAttribute('data-metric');
