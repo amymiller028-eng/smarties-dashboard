@@ -44,10 +44,12 @@
       document.getElementById('standardView').hidden = true;
       document.getElementById('refresherView').hidden = false;
       renderRefresher(v);
+      renderShareSnippets(v, 'shareGridRefresher');
     } else {
       document.getElementById('refresherView').hidden = true;
       document.getElementById('standardView').hidden = false;
       renderStandard(v);
+      renderShareSnippets(v, 'shareGrid');
     }
     renderTestimonials();
   }
@@ -131,6 +133,142 @@
         <div class="src">— ${escapeHtml(t.program)}${facBit(t)}</div>
       </div>
     `).join('') || '<div class="testimonial"><div class="q" style="font-style:normal;color:#7a8699">No quotes yet for this view.</div></div>';
+  }
+
+  function bestTestimonialForView() {
+    const items = state.data.testimonials || [];
+    let pool = items;
+    if (state.view !== 'all') {
+      const family = state.view.split('-')[0];
+      pool = items.filter(t =>
+        t.view === state.view || (state.view.endsWith('-summary') && t.view.startsWith(family))
+      );
+    }
+    if (!pool.length) pool = items;
+    // Prefer shorter, punchier quotes (under 180 chars) for shareability
+    const short = pool.filter(t => t.quote.length <= 180);
+    const chosen = (short.length ? short : pool);
+    return chosen[Math.floor(Math.random() * chosen.length)];
+  }
+
+  function buildStandardSnippets(v) {
+    const label = v.label;
+    const tb = v.topBox || {};
+    const snippets = [];
+
+    snippets.push({
+      channel: 'linkedin',
+      chip: 'LinkedIn post',
+      text:
+`${v.nps} NPS. ${tb.applyOnJob}% say they'll apply it on the job. ${v.participants} participants across ${v.clients} client companies can't be wrong.
+
+Our ${label} delivers emotional intelligence training that actually sticks.
+
+#EmotionalIntelligence #LeadershipDevelopment #TalentSmartEQ`
+    });
+
+    snippets.push({
+      channel: 'email',
+      chip: 'Client email',
+      text:
+`Quick proof point: in our latest ${label} data, ${tb.worthwhileInvestment}% of participants called it a worthwhile investment of their time, and ${tb.applyOnJob}% said they'll apply what they learned on the job. Happy to walk you through what that looks like for a team like yours.`
+    });
+
+    snippets.push({
+      channel: 'pitch',
+      chip: 'Pitch / proposal line',
+      text:
+`Participants credit ${v.eiDevelopmentAttributed}% of their emotional intelligence growth to our ${label} — with ${v.confidenceInEstimate}% average confidence in that estimate. (n=${v.participants} participants, ${v.sessions} sessions.)`
+    });
+
+    const quote = bestTestimonialForView();
+    if (quote) {
+      snippets.push({
+        channel: 'quote',
+        chip: 'Shareable quote',
+        text:
+`"${quote.quote}"
+
+— ${quote.program} participant`
+      });
+    }
+
+    return snippets;
+  }
+
+  function buildRefresherSnippets(v) {
+    const before = v.confidenceBefore.toFixed(2);
+    const after = v.confidenceAfter.toFixed(2);
+    const growth = v.confidenceGrowth.toFixed(2);
+    return [
+      {
+        channel: 'linkedin',
+        chip: 'LinkedIn post',
+        text:
+`Before: ${before}. After: ${after}. That's a +${growth} jump in facilitator confidence after a single Refresher session.
+
+${v.pctMovedUpInConfidence}% of facilitators improved. ${v.pctRatedValuable}% rated the session valuable.
+
+Certification doesn't end at Level 2. #TrainTheTrainer #TalentSmartEQ`
+      },
+      {
+        channel: 'email',
+        chip: 'Client email',
+        text:
+`Our certified facilitators don't just stay sharp — they get sharper. After our latest Refresher, ${v.pctMovedUpInConfidence}% of facilitators moved up on our 4-point confidence scale, with ${v.pctRatedValuable}% rating the session "very" or "extremely" valuable.`
+      },
+      {
+        channel: 'pitch',
+        chip: 'Pitch / proposal line',
+        text:
+`Facilitator confidence rose from ${before} to ${after} on a 4-point scale (+${growth}) after one Refresher session — a measurable, ongoing investment in delivery quality. (n=${v.participants} facilitators.)`
+      }
+    ];
+  }
+
+  function renderShareSnippets(v, targetId) {
+    const grid = document.getElementById(targetId);
+    if (!grid) return;
+    const snippets = v.type === 'refresher' ? buildRefresherSnippets(v) : buildStandardSnippets(v);
+    grid.innerHTML = snippets.map(s => `
+      <div class="share-card fade-in" data-channel="${s.channel}">
+        <div class="share-head-row">
+          <span class="share-chip">${escapeHtml(s.chip)}</span>
+        </div>
+        <p class="share-text">${escapeHtml(s.text)}</p>
+        <div class="share-actions">
+          <button class="copy-btn" type="button" data-copy="${encodeURIComponent(s.text)}">Copy</button>
+        </div>
+      </div>
+    `).join('');
+    grid.querySelectorAll('.copy-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const text = decodeURIComponent(btn.getAttribute('data-copy'));
+        copyToClipboard(text).then(() => {
+          btn.classList.add('is-copied');
+          btn.textContent = 'Copied!';
+          setTimeout(() => {
+            btn.classList.remove('is-copied');
+            btn.textContent = 'Copy';
+          }, 1800);
+        });
+      });
+    });
+  }
+
+  function copyToClipboard(text) {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      return navigator.clipboard.writeText(text);
+    }
+    return new Promise(resolve => {
+      const ta = document.createElement('textarea');
+      ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+      document.body.appendChild(ta);
+      ta.select();
+      try { document.execCommand('copy'); } catch (_) {}
+      document.body.removeChild(ta);
+      resolve();
+    });
   }
 
   function setActiveTab(view) {
