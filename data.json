@@ -1,32 +1,32 @@
 {
   "meta": {
-    "lastUpdated": "2026-04-23",
+    "lastUpdated": "2026-05-04",
     "reportingPeriod": "Q1 2026 to date"
   },
   "views": {
     "all": {
       "label": "All Programs",
       "type": "standard",
-      "nps": 73,
-      "participants": 246,
-      "sessions": 21,
-      "clients": 21,
+      "nps": 72,
+      "participants": 281,
+      "sessions": 23,
+      "clients": 23,
       "eiDevelopmentAttributed": 67,
       "confidenceInEstimate": 80,
       "topBox": {
         "applyOnJob": 98,
-        "gainedKnowledge": 98,
-        "worthwhileInvestment": 96,
+        "gainedKnowledge": 97,
+        "worthwhileInvestment": 97,
         "contentRelevant": 99,
         "facilitatorKnowledge": 98,
-        "facilitatorEngaging": 98
+        "facilitatorEngaging": 99
       },
       "modality": {
-        "virtual": 200,
-        "inPerson": 50
+        "virtual": 214,
+        "inPerson": 73
       },
-      "noManagerExpectationsPct": 59,
-      "managerExpectationsResponses": 145
+      "noManagerExpectationsPct": 66,
+      "managerExpectationsResponses": 180
     },
     "ttt-summary": {
       "label": "Train the Trainer \u2014 Summary",
@@ -120,49 +120,49 @@
       "label": "Private Program \u2014 Summary",
       "type": "standard",
       "nps": 65,
-      "participants": 118,
-      "sessions": 9,
-      "clients": 9,
-      "eiDevelopmentAttributed": 66,
+      "participants": 153,
+      "sessions": 11,
+      "clients": 11,
+      "eiDevelopmentAttributed": 67,
       "confidenceInEstimate": 79,
       "topBox": {
-        "applyOnJob": 98,
-        "gainedKnowledge": 98,
-        "worthwhileInvestment": 95,
+        "applyOnJob": 97,
+        "gainedKnowledge": 97,
+        "worthwhileInvestment": 96,
         "contentRelevant": 99,
         "facilitatorKnowledge": 99,
         "facilitatorEngaging": 99
       },
       "modality": {
-        "virtual": 108,
-        "inPerson": 13
+        "virtual": 122,
+        "inPerson": 36
       },
-      "noManagerExpectationsPct": 53,
-      "managerExpectationsResponses": 117
+      "noManagerExpectationsPct": 63,
+      "managerExpectationsResponses": 152
     },
     "private-l1": {
       "label": "Private Program \u2014 Level 1",
       "type": "standard",
-      "nps": 61,
-      "participants": 85,
-      "sessions": 8,
-      "clients": 8,
+      "nps": 62,
+      "participants": 120,
+      "sessions": 10,
+      "clients": 10,
       "eiDevelopmentAttributed": 67,
-      "confidenceInEstimate": 76,
+      "confidenceInEstimate": 77,
       "topBox": {
-        "applyOnJob": 98,
-        "gainedKnowledge": 99,
-        "worthwhileInvestment": 95,
+        "applyOnJob": 97,
+        "gainedKnowledge": 98,
+        "worthwhileInvestment": 96,
         "contentRelevant": 99,
         "facilitatorKnowledge": 99,
         "facilitatorEngaging": 100
       },
       "modality": {
-        "virtual": 73,
-        "inPerson": 13
+        "virtual": 87,
+        "inPerson": 36
       },
-      "noManagerExpectationsPct": 50,
-      "managerExpectationsResponses": 84
+      "noManagerExpectationsPct": 64,
+      "managerExpectationsResponses": 119
     },
     "private-l2": {
       "label": "Private Program \u2014 Level 2",
@@ -357,6 +357,12 @@
       "view": "private-l1"
     },
     {
+      "quote": "Truly eye opening way to cross examine our motives , driving forces and daily interactions that affect not only us but those around us as well.",
+      "program": "Private Program L1",
+      "facilitator": "Dimyas Perdue",
+      "view": "private-l1"
+    },
+    {
       "quote": "Dr. Sheri,  Thank you for your time, explaination and sharing your experiencie and guidance.    You were fantastic!",
       "program": "Private Program L1",
       "facilitator": "Dr. Sheri Duchock & Josh Rosenthal",
@@ -372,6 +378,12 @@
       "quote": "I thought the session was impactful. I disagreed with some of the results even though I am the one who took the assessment. Through discussion, I realized that the results were spot on. I am excited to learn how to up my game in all relationships.",
       "program": "Private Program L1",
       "facilitator": "Josh Rosenthal",
+      "view": "private-l1"
+    },
+    {
+      "quote": "I would recommend taking the EQ test closer to the time of the training. I had forgotten when and where I was when completing the survey, and that can greatly affect the results. However, I do agree that the results were accurate.",
+      "program": "Private Program L1",
+      "facilitator": "Dimyas Perdue",
       "view": "private-l1"
     },
     {
@@ -394,18 +406,6 @@
     },
     {
       "quote": "It's a good opportunity to think more deeply about EQ, something we don't usually think about.",
-      "program": "Private Program L1",
-      "facilitator": "Dr. Sheri Duchock",
-      "view": "private-l1"
-    },
-    {
-      "quote": "Its a good course, but its way too long (6hrs). Please, please condense this into 2-4hrs",
-      "program": "Private Program L1",
-      "facilitator": "Dr. Sheri Duchock",
-      "view": "private-l1"
-    },
-    {
-      "quote": "Good insights , nice post training documenta to review, real experts",
       "program": "Private Program L1",
       "facilitator": "Dr. Sheri Duchock",
       "view": "private-l1"
