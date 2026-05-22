@@ -1,52 +1,52 @@
 {
   "meta": {
-    "lastUpdated": "2026-05-04",
+    "lastUpdated": "2026-05-22",
     "reportingPeriod": "Q1 2026 to date"
   },
   "views": {
     "all": {
       "label": "All Programs",
       "type": "standard",
-      "nps": 72,
-      "participants": 281,
-      "sessions": 23,
-      "clients": 23,
-      "eiDevelopmentAttributed": 67,
-      "confidenceInEstimate": 80,
+      "nps": 71,
+      "participants": 356,
+      "sessions": 29,
+      "clients": 29,
+      "eiDevelopmentAttributed": 68,
+      "confidenceInEstimate": 81,
       "topBox": {
         "applyOnJob": 98,
         "gainedKnowledge": 97,
-        "worthwhileInvestment": 97,
+        "worthwhileInvestment": 96,
         "contentRelevant": 99,
-        "facilitatorKnowledge": 98,
-        "facilitatorEngaging": 99
+        "facilitatorKnowledge": 99,
+        "facilitatorEngaging": 98
       },
       "modality": {
-        "virtual": 214,
-        "inPerson": 73
+        "virtual": 239,
+        "inPerson": 124
       },
-      "noManagerExpectationsPct": 66,
-      "managerExpectationsResponses": 180
+      "noManagerExpectationsPct": 58,
+      "managerExpectationsResponses": 231
     },
     "ttt-summary": {
       "label": "Train the Trainer \u2014 Summary",
       "type": "standard",
-      "nps": 83,
-      "participants": 83,
-      "sessions": 8,
-      "clients": 8,
-      "eiDevelopmentAttributed": 70,
-      "confidenceInEstimate": 85,
+      "nps": 84,
+      "participants": 107,
+      "sessions": 11,
+      "clients": 11,
+      "eiDevelopmentAttributed": 71,
+      "confidenceInEstimate": 84,
       "topBox": {
         "applyOnJob": 99,
-        "gainedKnowledge": 96,
+        "gainedKnowledge": 97,
         "worthwhileInvestment": 98,
         "contentRelevant": 100,
-        "facilitatorKnowledge": 96,
+        "facilitatorKnowledge": 97,
         "facilitatorEngaging": 96
       },
       "modality": {
-        "virtual": 47,
+        "virtual": 72,
         "inPerson": 37
       }
     },
@@ -54,33 +54,33 @@
       "label": "Train the Trainer \u2014 Level 1",
       "type": "standard",
       "nps": 81,
-      "participants": 53,
-      "sessions": 4,
-      "clients": 4,
-      "eiDevelopmentAttributed": 68,
-      "confidenceInEstimate": 84,
+      "participants": 68,
+      "sessions": 5,
+      "clients": 5,
+      "eiDevelopmentAttributed": 71,
+      "confidenceInEstimate": 85,
       "topBox": {
-        "applyOnJob": 98,
-        "gainedKnowledge": 94,
-        "worthwhileInvestment": 96,
+        "applyOnJob": 99,
+        "gainedKnowledge": 96,
+        "worthwhileInvestment": 97,
         "contentRelevant": 100,
-        "facilitatorKnowledge": 94,
+        "facilitatorKnowledge": 96,
         "facilitatorEngaging": 94
       },
       "modality": {
-        "virtual": 30,
+        "virtual": 46,
         "inPerson": 23
       }
     },
     "ttt-l2": {
       "label": "Train the Trainer \u2014 Level 2",
       "type": "standard",
-      "nps": 86,
-      "participants": 22,
-      "sessions": 3,
-      "clients": 3,
-      "eiDevelopmentAttributed": 76,
-      "confidenceInEstimate": 86,
+      "nps": 89,
+      "participants": 27,
+      "sessions": 4,
+      "clients": 4,
+      "eiDevelopmentAttributed": 77,
+      "confidenceInEstimate": 87,
       "topBox": {
         "applyOnJob": 100,
         "gainedKnowledge": 100,
@@ -90,19 +90,19 @@
         "facilitatorEngaging": 100
       },
       "modality": {
-        "virtual": 9,
+        "virtual": 14,
         "inPerson": 14
       }
     },
     "ttt-teams": {
       "label": "Train the Trainer \u2014 Teams",
       "type": "standard",
-      "nps": 88,
-      "participants": 8,
-      "sessions": 1,
-      "clients": 1,
-      "eiDevelopmentAttributed": 65,
-      "confidenceInEstimate": 87,
+      "nps": 92,
+      "participants": 12,
+      "sessions": 2,
+      "clients": 2,
+      "eiDevelopmentAttributed": 58,
+      "confidenceInEstimate": 75,
       "topBox": {
         "applyOnJob": 100,
         "gainedKnowledge": 100,
@@ -112,81 +112,81 @@
         "facilitatorEngaging": 100
       },
       "modality": {
-        "virtual": 8,
+        "virtual": 12,
         "inPerson": 0
       }
     },
     "private-summary": {
       "label": "Private Program \u2014 Summary",
       "type": "standard",
-      "nps": 65,
-      "participants": 153,
-      "sessions": 11,
-      "clients": 11,
-      "eiDevelopmentAttributed": 67,
-      "confidenceInEstimate": 79,
+      "nps": 64,
+      "participants": 204,
+      "sessions": 14,
+      "clients": 14,
+      "eiDevelopmentAttributed": 68,
+      "confidenceInEstimate": 80,
       "topBox": {
-        "applyOnJob": 97,
+        "applyOnJob": 98,
         "gainedKnowledge": 97,
+        "worthwhileInvestment": 95,
+        "contentRelevant": 100,
+        "facilitatorKnowledge": 100,
+        "facilitatorEngaging": 99
+      },
+      "modality": {
+        "virtual": 122,
+        "inPerson": 87
+      },
+      "noManagerExpectationsPct": 54,
+      "managerExpectationsResponses": 203
+    },
+    "private-l1": {
+      "label": "Private Program \u2014 Level 1",
+      "type": "standard",
+      "nps": 61,
+      "participants": 161,
+      "sessions": 12,
+      "clients": 12,
+      "eiDevelopmentAttributed": 69,
+      "confidenceInEstimate": 78,
+      "topBox": {
+        "applyOnJob": 98,
+        "gainedKnowledge": 98,
         "worthwhileInvestment": 96,
         "contentRelevant": 99,
         "facilitatorKnowledge": 99,
         "facilitatorEngaging": 99
       },
       "modality": {
-        "virtual": 122,
-        "inPerson": 36
-      },
-      "noManagerExpectationsPct": 63,
-      "managerExpectationsResponses": 152
-    },
-    "private-l1": {
-      "label": "Private Program \u2014 Level 1",
-      "type": "standard",
-      "nps": 62,
-      "participants": 120,
-      "sessions": 10,
-      "clients": 10,
-      "eiDevelopmentAttributed": 67,
-      "confidenceInEstimate": 77,
-      "topBox": {
-        "applyOnJob": 97,
-        "gainedKnowledge": 98,
-        "worthwhileInvestment": 96,
-        "contentRelevant": 99,
-        "facilitatorKnowledge": 99,
-        "facilitatorEngaging": 100
-      },
-      "modality": {
         "virtual": 87,
-        "inPerson": 36
+        "inPerson": 77
       },
-      "noManagerExpectationsPct": 64,
-      "managerExpectationsResponses": 119
+      "noManagerExpectationsPct": 52,
+      "managerExpectationsResponses": 160
     },
     "private-l2": {
       "label": "Private Program \u2014 Level 2",
       "type": "standard",
-      "nps": 76,
-      "participants": 33,
-      "sessions": 1,
-      "clients": 1,
-      "eiDevelopmentAttributed": 64,
-      "confidenceInEstimate": 87,
+      "nps": 74,
+      "participants": 43,
+      "sessions": 2,
+      "clients": 2,
+      "eiDevelopmentAttributed": 67,
+      "confidenceInEstimate": 88,
       "topBox": {
         "applyOnJob": 100,
-        "gainedKnowledge": 97,
-        "worthwhileInvestment": 94,
+        "gainedKnowledge": 93,
+        "worthwhileInvestment": 93,
         "contentRelevant": 100,
         "facilitatorKnowledge": 100,
-        "facilitatorEngaging": 97
+        "facilitatorEngaging": 98
       },
       "modality": {
         "virtual": 35,
-        "inPerson": 0
+        "inPerson": 10
       },
-      "noManagerExpectationsPct": 61,
-      "managerExpectationsResponses": 33
+      "noManagerExpectationsPct": 63,
+      "managerExpectationsResponses": 43
     },
     "public-l1": {
       "label": "Public Program",
@@ -303,16 +303,40 @@
       "view": "ttt-l1"
     },
     {
-      "quote": "You get out what you put in. The material is great.",
+      "quote": "Use the book! It\u2019s awesome.  Read emotional intelligence 2.0 prior to class.  Felt super prepared and had some insight.",
       "program": "Train the Trainer L1",
-      "facilitator": "David Brzozowski",
+      "facilitator": "Dr. Sheri Duchock",
       "view": "ttt-l1"
+    },
+    {
+      "quote": "With the trend shifting from focusing on individual leadership development to team development this is a great tool and framework that equips facilitators to not get left behind and show up with relevant approaches to organizational development.",
+      "program": "TTT for Teams",
+      "facilitator": "David Brzozowski",
+      "view": "ttt-teams"
+    },
+    {
+      "quote": "I thought it was great, honestly. I don\u2019t know that I would need anything to change for it to have been better.",
+      "program": "TTT for Teams",
+      "facilitator": "David Brzozowski",
+      "view": "ttt-teams"
     },
     {
       "quote": "Great practical ways to improve team performance.",
       "program": "TTT for Teams",
       "facilitator": "Dr. Sheri Duchock",
       "view": "ttt-teams"
+    },
+    {
+      "quote": "Really enjoyed the overall program.",
+      "program": "TTT for Teams",
+      "facilitator": "David Brzozowski",
+      "view": "ttt-teams"
+    },
+    {
+      "quote": "No notes.  Awesome content, materials, set up.  I have appreciated Dimyas\u2019s tech.  Sound and video quality were amazing.",
+      "program": "Train the Trainer L2",
+      "facilitator": "Dimyas Perdue",
+      "view": "ttt-l2"
     },
     {
       "quote": "I would share the VALUE of doing a multi tater assessment over a self assessment. The self assessment is valuable but knowing how others perceive you is priceless in the ability to change your own behavior.",
@@ -351,7 +375,31 @@
       "view": "ttt-l2"
     },
     {
+      "quote": "It is super helpful to see the feedback and how much you overestimate or underestimate your EQ.",
+      "program": "Train the Trainer L2",
+      "facilitator": "Dimyas Perdue",
+      "view": "ttt-l2"
+    },
+    {
+      "quote": "This class was insightful and the activities Crete a space of reflection.",
+      "program": "Train the Trainer L2",
+      "facilitator": "Dimyas Perdue",
+      "view": "ttt-l2"
+    },
+    {
+      "quote": "This is a great session to gut check yourself on your ability to not only be empathetic but also impactful and effective in the work you do. Human connection is so important and how we show up and use our EQ can help us be even more intentional in our relationships.",
+      "program": "Private Program L1",
+      "facilitator": "Dr. Sheri Duchock",
+      "view": "private-l1"
+    },
+    {
       "quote": "This session is valuable because it brings clear structure to a topic I already felt confident in. Even with a high EQ, I found the framework and reflections helpful in sharpening how I apply emotional intelligence in both professional and personal situations.",
+      "program": "Private Program L1",
+      "facilitator": "Dr. Sheri Duchock",
+      "view": "private-l1"
+    },
+    {
+      "quote": "This is an amazing session to be more in tune with your emotions. It makes you think critically and puts you in real like stress situations. 10/10 recommend",
       "program": "Private Program L1",
       "facilitator": "Dr. Sheri Duchock",
       "view": "private-l1"
@@ -366,6 +414,12 @@
       "quote": "Dr. Sheri,  Thank you for your time, explaination and sharing your experiencie and guidance.    You were fantastic!",
       "program": "Private Program L1",
       "facilitator": "Dr. Sheri Duchock & Josh Rosenthal",
+      "view": "private-l1"
+    },
+    {
+      "quote": "I would recommend to anyone! Great material to learn in career development.",
+      "program": "Private Program L1",
+      "facilitator": "Dr. Sheri Duchock",
       "view": "private-l1"
     },
     {
@@ -388,24 +442,6 @@
     },
     {
       "quote": "Expectations from the session (expected to be highly engaged and will be regularly going into break out groups or 1:1s), the time commitment so they don't schedule other meetings to pop in and out",
-      "program": "Private Program L1",
-      "facilitator": "Dr. Sheri Duchock",
-      "view": "private-l1"
-    },
-    {
-      "quote": "EQ is the cornerstone of great leadership and successful relationships. Use this course as a great opportunity for growth!",
-      "program": "Private Program L1",
-      "facilitator": "Dr. Sheri Duchock & Josh Rosenthal",
-      "view": "private-l1"
-    },
-    {
-      "quote": "Show up to the session with honesty and be authentic to deeply engage and learn about your EQ strengths and weaknesses",
-      "program": "Private Program L1",
-      "facilitator": "Dr. Sheri Duchock",
-      "view": "private-l1"
-    },
-    {
-      "quote": "It's a good opportunity to think more deeply about EQ, something we don't usually think about.",
       "program": "Private Program L1",
       "facilitator": "Dr. Sheri Duchock",
       "view": "private-l1"
@@ -438,6 +474,18 @@
       "quote": "Participating in the small groups is quite powerful. We really do not know what we can give or get, until we speak.",
       "program": "Private Program L2",
       "facilitator": "Dimyas Perdue",
+      "view": "private-l2"
+    },
+    {
+      "quote": "This course can be extremely beneficial if you are looking to advance in your life, professionally and personally.",
+      "program": "Private Program L2",
+      "facilitator": "Dr. Sheri Duchock",
+      "view": "private-l2"
+    },
+    {
+      "quote": "Do it !! It\u2019s a breath of fresh air and helps make meaningful connections",
+      "program": "Private Program L2",
+      "facilitator": "Dr. Sheri Duchock",
       "view": "private-l2"
     },
     {
