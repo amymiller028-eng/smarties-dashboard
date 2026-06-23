@@ -78,6 +78,11 @@
 
     document.getElementById('eiGrowth').textContent = v.eiDevelopmentAttributed;
     document.getElementById('eiConfidence').textContent = v.confidenceInEstimate;
+    const talk = document.getElementById('eiTalkTrack');
+    if (talk) {
+      talk.textContent =
+        `Say it like this: “Participants credit ${v.eiDevelopmentAttributed}% of their emotional-intelligence growth directly to this program — and they’re ${v.confidenceInEstimate}% confident in that.” Most training can’t put a number on its own impact. This can.`;
+    }
     document.getElementById('participants').textContent = v.participants;
     document.getElementById('sessions').textContent = v.sessions;
 

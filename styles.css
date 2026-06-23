@@ -190,6 +190,34 @@ body {
 }
 .side-number .unit { font-size: 24px; color: var(--ink-faint); margin-left: 4px; }
 .side-caption { margin-top: 8px; font-size: 13px; color: var(--ink-soft); }
+
+/* Info dot + "how to use this" popover (sales/marketing talk track) */
+.info-dot {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 16px; height: 16px; margin-left: 7px; border-radius: 50%;
+  background: var(--gold); color: #fff; font-size: 11px; font-weight: 700;
+  font-style: italic; font-family: Georgia, 'Times New Roman', serif;
+  cursor: help; position: relative; vertical-align: middle;
+  text-transform: none; letter-spacing: 0; outline: none;
+}
+.info-pop {
+  position: absolute; left: 50%; bottom: 150%; transform: translateX(-50%) translateY(6px);
+  width: 270px; max-width: 78vw; background: var(--navy); color: #fff;
+  font-size: 12.5px; font-weight: 400; line-height: 1.55; letter-spacing: 0.2px;
+  text-transform: none; padding: 13px 15px; border-radius: 12px;
+  box-shadow: 0 14px 34px rgba(0,0,0,0.22);
+  opacity: 0; visibility: hidden; transition: opacity .16s ease, transform .16s ease;
+  z-index: 30; text-align: left; pointer-events: none;
+}
+.info-pop::after {
+  content: ''; position: absolute; top: 100%; left: 50%; transform: translateX(-50%);
+  border: 7px solid transparent; border-top-color: var(--navy);
+}
+.info-dot:hover .info-pop,
+.info-dot:focus .info-pop,
+.info-dot:focus-within .info-pop {
+  opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0);
+}
 .reach-grid {
   display: grid; grid-template-columns: repeat(3, 1fr);
   gap: 10px; margin-top: 8px;
