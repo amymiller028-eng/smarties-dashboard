@@ -1,74 +1,74 @@
 {
   "meta": {
-    "lastUpdated": "2026-05-22",
+    "lastUpdated": "2026-06-23",
     "reportingPeriod": "Q1 2026 to date"
   },
   "views": {
     "all": {
       "label": "All Programs",
       "type": "standard",
-      "nps": 71,
-      "participants": 356,
-      "sessions": 29,
-      "clients": 29,
-      "eiDevelopmentAttributed": 68,
-      "confidenceInEstimate": 81,
+      "nps": 73,
+      "participants": 399,
+      "sessions": 31,
+      "clients": 31,
+      "eiDevelopmentAttributed": 69,
+      "confidenceInEstimate": 80,
       "topBox": {
-        "applyOnJob": 98,
+        "applyOnJob": 99,
         "gainedKnowledge": 97,
-        "worthwhileInvestment": 96,
-        "contentRelevant": 99,
+        "worthwhileInvestment": 97,
+        "contentRelevant": 100,
         "facilitatorKnowledge": 99,
-        "facilitatorEngaging": 98
+        "facilitatorEngaging": 99
       },
       "modality": {
-        "virtual": 239,
-        "inPerson": 124
+        "virtual": 254,
+        "inPerson": 152
       },
-      "noManagerExpectationsPct": 58,
-      "managerExpectationsResponses": 231
+      "noManagerExpectationsPct": 65,
+      "managerExpectationsResponses": 259
     },
     "ttt-summary": {
       "label": "Train the Trainer \u2014 Summary",
       "type": "standard",
-      "nps": 84,
-      "participants": 107,
-      "sessions": 11,
-      "clients": 11,
+      "nps": 85,
+      "participants": 122,
+      "sessions": 12,
+      "clients": 12,
       "eiDevelopmentAttributed": 71,
       "confidenceInEstimate": 84,
       "topBox": {
         "applyOnJob": 99,
-        "gainedKnowledge": 97,
+        "gainedKnowledge": 98,
         "worthwhileInvestment": 98,
         "contentRelevant": 100,
-        "facilitatorKnowledge": 97,
-        "facilitatorEngaging": 96
+        "facilitatorKnowledge": 98,
+        "facilitatorEngaging": 97
       },
       "modality": {
-        "virtual": 72,
+        "virtual": 87,
         "inPerson": 37
       }
     },
     "ttt-l1": {
       "label": "Train the Trainer \u2014 Level 1",
       "type": "standard",
-      "nps": 81,
-      "participants": 68,
-      "sessions": 5,
-      "clients": 5,
+      "nps": 83,
+      "participants": 83,
+      "sessions": 6,
+      "clients": 6,
       "eiDevelopmentAttributed": 71,
-      "confidenceInEstimate": 85,
+      "confidenceInEstimate": 84,
       "topBox": {
         "applyOnJob": 99,
         "gainedKnowledge": 96,
-        "worthwhileInvestment": 97,
+        "worthwhileInvestment": 98,
         "contentRelevant": 100,
         "facilitatorKnowledge": 96,
-        "facilitatorEngaging": 94
+        "facilitatorEngaging": 95
       },
       "modality": {
-        "virtual": 46,
+        "virtual": 61,
         "inPerson": 23
       }
     },
@@ -119,10 +119,10 @@
     "private-summary": {
       "label": "Private Program \u2014 Summary",
       "type": "standard",
-      "nps": 64,
-      "participants": 204,
-      "sessions": 14,
-      "clients": 14,
+      "nps": 66,
+      "participants": 232,
+      "sessions": 15,
+      "clients": 15,
       "eiDevelopmentAttributed": 68,
       "confidenceInEstimate": 80,
       "topBox": {
@@ -135,18 +135,18 @@
       },
       "modality": {
         "virtual": 122,
-        "inPerson": 87
+        "inPerson": 115
       },
-      "noManagerExpectationsPct": 54,
-      "managerExpectationsResponses": 203
+      "noManagerExpectationsPct": 63,
+      "managerExpectationsResponses": 231
     },
     "private-l1": {
       "label": "Private Program \u2014 Level 1",
       "type": "standard",
-      "nps": 61,
-      "participants": 161,
-      "sessions": 12,
-      "clients": 12,
+      "nps": 64,
+      "participants": 189,
+      "sessions": 13,
+      "clients": 13,
       "eiDevelopmentAttributed": 69,
       "confidenceInEstimate": 78,
       "topBox": {
@@ -159,10 +159,10 @@
       },
       "modality": {
         "virtual": 87,
-        "inPerson": 77
+        "inPerson": 105
       },
-      "noManagerExpectationsPct": 52,
-      "managerExpectationsResponses": 160
+      "noManagerExpectationsPct": 63,
+      "managerExpectationsResponses": 188
     },
     "private-l2": {
       "label": "Private Program \u2014 Level 2",
@@ -249,297 +249,2179 @@
   },
   "testimonials": [
     {
+      "quote": "Dimyas was knowledgeable and engaging. He had that \"just right\" combination of keeping the training session fun and moving along while also taking the content seriously and ensuring an impactful experience for all. I loved that he shared about himself personally and his energy and knowledge was just fantastic. He is a gift!",
+      "program": "Train the Trainer L1",
+      "facilitator": "Dimyas Perdue",
+      "name": "Amy",
+      "company": "",
+      "view": "ttt-l1"
+    },
+    {
+      "quote": "Fantastic presenter. He was engaging, extremely knowledgeable and so helpful. He provided clear instructions, guidance and expectations. Really enjoyed being a part of David's training.",
+      "program": "Train the Trainer L1",
+      "facilitator": "David Brzozowski",
+      "name": "Anna",
+      "company": "",
+      "view": "ttt-l1"
+    },
+    {
       "quote": "Join this session, best in the business!",
       "program": "Train the Trainer L1",
       "facilitator": "Dimyas Perdue",
+      "name": "Katie",
+      "company": "",
+      "view": "ttt-l1"
+    },
+    {
+      "quote": "Amazing presenter and facilitator. I love his use of stories to illustrate the content. Additionally he commands respect with his credibility but also his humor is endearing. Dimyas is one  of the most dynamic facilitators I have seen in a long time!",
+      "program": "Train the Trainer L1",
+      "facilitator": "Dimyas Perdue",
+      "name": "Katie",
+      "company": "",
+      "view": "ttt-l1"
+    },
+    {
+      "quote": "Engaging, knowledgeable.  Feedback was excellent.  Good energy.  David did a good job of choosing when to go deep and stay above the noise.",
+      "program": "Train the Trainer L1",
+      "facilitator": "David Brzozowski",
+      "name": "Scott",
+      "company": "",
+      "view": "ttt-l1"
+    },
+    {
+      "quote": "Sheri is a master at psychological safety.  I felt a sense of belonging, cared for, and respected.  She has an engaging delivery style, passionate about the subject, and such depth of knowledge.",
+      "program": "Train the Trainer L1",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "Jennifer",
+      "company": "",
+      "view": "ttt-l1"
+    },
+    {
+      "quote": "Engaging, knowledgeable about the material. Energetic and I could tell David was passionate about the material. I want to be like David when I grow up as an EQ facilitator!",
+      "program": "Train the Trainer L1",
+      "facilitator": "David Brzozowski",
+      "name": "Rebecca",
+      "company": "",
+      "view": "ttt-l1"
+    },
+    {
+      "quote": "She was friendly, engaging as well as authentic and gave us practical tips to be better facilitators.  Sheri was a model of Emotional Intelligence!",
+      "program": "Train the Trainer L1",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "",
+      "company": "",
+      "view": "ttt-l1"
+    },
+    {
+      "quote": "Course is effective virtually however would of loved to have been in person. The movie clips were great to explore the material.",
+      "program": "Train the Trainer L1",
+      "facilitator": "Dimyas Perdue",
+      "name": "Wendy",
+      "company": "",
+      "view": "ttt-l1"
+    },
+    {
+      "quote": "Dynamic facilitator, with amazing energy. Dimyas was able to keep the participants engaged and created an inclusive environment.",
+      "program": "Train the Trainer L1",
+      "facilitator": "Dimyas Perdue",
+      "name": "",
+      "company": "",
+      "view": "ttt-l1"
+    },
+    {
+      "quote": "Great flow, excellent patience and accommodations. I appreciated the facilitators tips throughout and the sincere feedback.",
+      "program": "Train the Trainer L1",
+      "facilitator": "David Brzozowski",
+      "name": "Rachel",
+      "company": "",
+      "view": "ttt-l1"
+    },
+    {
+      "quote": "Engaging, good story telling, good feedback, positive, helpful",
+      "program": "Train the Trainer L1",
+      "facilitator": "David Brzozowski",
+      "name": "Secret",
+      "company": "",
+      "view": "ttt-l1"
+    },
+    {
+      "quote": "Sheri cares about the content she presents, and it is prevalent in the way she teaches. She has an innate ability at reading the mood of the room, ensuring there are enough breaks, that people are engaged, and that the content is presented in a way that makes sense to everyone present. She is one of the best facilitators I have ever had the pleasure of meeting and learning from.",
+      "program": "Train the Trainer L1",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "Hannah",
+      "company": "",
+      "view": "ttt-l1"
+    },
+    {
+      "quote": "David was incredible with navigating the content, reinforcing and supporting everyone\u2019s facilitation style, and brilliantly managed the teach backs. He has a unique talent understanding this subject matter and could not have asked for a better master trainer. One of the better trainings I have attended.",
+      "program": "Train the Trainer L1",
+      "facilitator": "David Brzozowski",
+      "name": "",
+      "company": "",
       "view": "ttt-l1"
     },
     {
       "quote": "Appreciated the individual 1:1 breakout rooms, Appreciated the vastness of resources. The uniqueness of the teachback was great. I appreciated that this material was maintained to it's Fidelity and didn't try to link or overlap with other models or modalities.",
       "program": "Train the Trainer L1",
       "facilitator": "David Brzozowski",
+      "name": "Rachel",
+      "company": "",
+      "view": "ttt-l1"
+    },
+    {
+      "quote": "Our facilitator was engaging. He made the material relevant to our work and personal lives. His ability to connect theory to practice is invaluable. He is such an asset to the team.",
+      "program": "Train the Trainer L1",
+      "facilitator": "Dimyas Perdue",
+      "name": "",
+      "company": "",
       "view": "ttt-l1"
     },
     {
       "quote": "I gained a better insight of myself immediately and how I manage my own emotions while facilitating the conversation of self management so it\u2019s eye opening and worrisome",
       "program": "Train the Trainer L1",
       "facilitator": "David Brzozowski",
+      "name": "",
+      "company": "",
       "view": "ttt-l1"
     },
     {
-      "quote": "It was good. I enjoyed it a lot. Was looking for more or a full day.",
-      "program": "Train the Trainer L1",
-      "facilitator": "David Brzozowski",
-      "view": "ttt-l1"
-    },
-    {
-      "quote": "Loved the material and course overall. I'd really like to see this spread out over a few days, though. We were fire hosed with tons of information to process and two days just isn't enough. To add, if you tact on Level 2, another two days of information. It's just too much.",
-      "program": "Train the Trainer L1",
-      "facilitator": "Dr. Sheri Duchock",
-      "view": "ttt-l1"
-    },
-    {
-      "quote": "I appreciate the facilitation of the content. The knowledge and skills the facilitator had were not only strong in facilitation, but also in her own self awareness. I feel she modeled EQ throughout the training.",
-      "program": "Train the Trainer L1",
-      "facilitator": "Dr. Sheri Duchock",
-      "view": "ttt-l1"
-    },
-    {
-      "quote": "Sharing personal stories is so impactful!    Also- When attending breakout sessions I was often in the room with some of the same people. It would be enhanced to have been with different people each breakout.",
+      "quote": "Engaging, good connection with participants especially in a virtual setting, charismatic, picked up on non verbal cues from participants and did a temperature check.",
       "program": "Train the Trainer L1",
       "facilitator": "Dimyas Perdue",
+      "name": "Diana",
+      "company": "",
       "view": "ttt-l1"
     },
     {
       "quote": "Dimyas was great! I could see him being a great resource for our company. We are heavy in retired military leaders, so his stories would be very relatable to them.",
       "program": "Train the Trainer L1",
       "facilitator": "Dimyas Perdue",
+      "name": "",
+      "company": "",
+      "view": "ttt-l1"
+    },
+    {
+      "quote": "Great time management and ability to engage and motivate participation. Very good at what he does! He also gave adequate breaks which helped me stay engaged.",
+      "program": "Train the Trainer L1",
+      "facilitator": "David Brzozowski",
+      "name": "",
+      "company": "",
+      "view": "ttt-l1"
+    },
+    {
+      "quote": "David was very engaging and demonstrated strong command of the content.  He also used humor and storytelling effectively. He made it enjoyable!",
+      "program": "Train the Trainer L1",
+      "facilitator": "David Brzozowski",
+      "name": "Christina",
+      "company": "",
+      "view": "ttt-l1"
+    },
+    {
+      "quote": "Engagement, energy, meaningful and impactful stories to deepen learning and understanding, allowed everyone an opportunity to participate",
+      "program": "Train the Trainer L1",
+      "facilitator": "Dimyas Perdue",
+      "name": "Jordan",
+      "company": "",
+      "view": "ttt-l1"
+    },
+    {
+      "quote": "Fantastic facilitation skills. Clear/organized communication. Excellent time management. Expert model of the 4 core skills.",
+      "program": "Train the Trainer L1",
+      "facilitator": "David Brzozowski",
+      "name": "Katlin",
+      "company": "",
+      "view": "ttt-l1"
+    },
+    {
+      "quote": "You can tell Dr. Duchock is a very experienced and knowledgeable facilitator. Really enjoyed her insight and vulnerability",
+      "program": "Train the Trainer L1",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "",
+      "company": "",
+      "view": "ttt-l1"
+    },
+    {
+      "quote": "Engaging, kept the days lively. Used great examples to help us see how we might facilitate content in different ways.",
+      "program": "Train the Trainer L1",
+      "facilitator": "David Brzozowski",
+      "name": "Maigen",
+      "company": "",
+      "view": "ttt-l1"
+    },
+    {
+      "quote": "The training helped me visualize myself leading impactful and engaging EQ sessions.",
+      "program": "Train the Trainer L1",
+      "facilitator": "Dimyas Perdue",
+      "name": "Amy",
+      "company": "",
+      "view": "ttt-l1"
+    },
+    {
+      "quote": "Great presentation. Very informative and passionate about the subject.",
+      "program": "Train the Trainer L1",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "",
+      "company": "",
+      "view": "ttt-l1"
+    },
+    {
+      "quote": "It was good. I enjoyed it a lot. Was looking for more or a full day.",
+      "program": "Train the Trainer L1",
+      "facilitator": "David Brzozowski",
+      "name": "",
+      "company": "",
+      "view": "ttt-l1"
+    },
+    {
+      "quote": "Excellent speaker! Very engaging and knows his material well.",
+      "program": "Train the Trainer L1",
+      "facilitator": "Dimyas Perdue",
+      "name": "",
+      "company": "",
+      "view": "ttt-l1"
+    },
+    {
+      "quote": "Great speaker and engaging story teller.",
+      "program": "Train the Trainer L1",
+      "facilitator": "Dimyas Perdue",
+      "name": "",
+      "company": "",
+      "view": "ttt-l1"
+    },
+    {
+      "quote": "Very engaging, great storytelling",
+      "program": "Train the Trainer L1",
+      "facilitator": "Dimyas Perdue",
+      "name": "",
+      "company": "",
+      "view": "ttt-l1"
+    },
+    {
+      "quote": "Sheri has many strengths   1. Instantly connects and builds rapport   2. Very welcoming  3. Personable and profesional  4. Read the room extremely well and pivoted when needed  5. Managed time well  6. Inspirational and encouraging  7.  Very knowledgable with EQ and able to simplify the training with real life scenarios that helped each person in the training understand  8. Made each person feel heard, seen, and valued",
+      "program": "Train the Trainer L1",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "Donyeh",
+      "company": "",
+      "view": "ttt-l1"
+    },
+    {
+      "quote": "This training is NECESSARY for every workplace. I have attended many trainings across my 12 years in learning and development and this rates right up there as one of the best! From a personal perspective, I immediately recognized where I can improve using the self-management strategies. Professionally, I recognize that while I manage relationships well, there is still room for improvement. Practice makes permanent!",
+      "program": "Train the Trainer L1",
+      "facilitator": "Dimyas Perdue",
+      "name": "Ericka",
+      "company": "",
+      "view": "ttt-l1"
+    },
+    {
+      "quote": "Loved the material and course overall. I'd really like to see this spread out over a few days, though. We were fire hosed with tons of information to process and two days just isn't enough. To add, if you tact on Level 2, another two days of information. It's just too much.",
+      "program": "Train the Trainer L1",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "",
+      "company": "",
+      "view": "ttt-l1"
+    },
+    {
+      "quote": "Reading Emotional Intelligence 2.0 prior to the course was extremely helpful in my engagement. Instead of surface level learning and just learning the content - I was able to spend a lot of the session focused on how to deliver the content and what discussions arose.",
+      "program": "Train the Trainer L1",
+      "facilitator": "Dimyas Perdue",
+      "name": "",
+      "company": "",
+      "view": "ttt-l1"
+    },
+    {
+      "quote": "She did an amazing job of providing examples/stories to make the learning relevant. She had additional knowledge beyond what was in the facilitator model to enhance the learning. I felt for a two day training, the pace was appropriate of each part of the training.",
+      "program": "Train the Trainer L1",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "",
+      "company": "",
+      "view": "ttt-l1"
+    },
+    {
+      "quote": "I appreciate the facilitation of the content. The knowledge and skills the facilitator had were not only strong in facilitation, but also in her own self awareness. I feel she modeled EQ throughout the training.",
+      "program": "Train the Trainer L1",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "",
+      "company": "",
+      "view": "ttt-l1"
+    },
+    {
+      "quote": "Sharing personal stories is so impactful!    Also- When attending breakout sessions I was often in the room with some of the same people. It would be enhanced to have been with different people each breakout.",
+      "program": "Train the Trainer L1",
+      "facilitator": "Dimyas Perdue",
+      "name": "Diana",
+      "company": "",
       "view": "ttt-l1"
     },
     {
       "quote": "The value gained is equally professional as personal.  The more personal you make the material, the more impactful you will be as a facilitator.",
       "program": "Train the Trainer L1",
       "facilitator": "Dr. Sheri Duchock",
+      "name": "Jennifer",
+      "company": "",
+      "view": "ttt-l1"
+    },
+    {
+      "quote": "Dive into the different generations of people from the great generation to Gen Z and how these strategies or techniques may differ.",
+      "program": "Train the Trainer L1",
+      "facilitator": "Dimyas Perdue",
+      "name": "Kevin",
+      "company": "",
       "view": "ttt-l1"
     },
     {
       "quote": "Use the book! It\u2019s awesome.  Read emotional intelligence 2.0 prior to class.  Felt super prepared and had some insight.",
       "program": "Train the Trainer L1",
       "facilitator": "Dr. Sheri Duchock",
+      "name": "",
+      "company": "",
       "view": "ttt-l1"
+    },
+    {
+      "quote": "He did an excellent job of keeping people engaged and sharing real life examples and applications as a Trainer.",
+      "program": "Train the Trainer L1",
+      "facilitator": "Dimyas Perdue",
+      "name": "",
+      "company": "",
+      "view": "ttt-l1"
+    },
+    {
+      "quote": "Clear Delivery of the overall message.  Great job at running the call   Displayed a true passion on the subject",
+      "program": "Train the Trainer L1",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "Jonathan",
+      "company": "",
+      "view": "ttt-l1"
+    },
+    {
+      "quote": "His wealth of knowledge with the material, engaging the class and sharing tips and trick in leading a course.",
+      "program": "Train the Trainer L1",
+      "facilitator": "David Brzozowski",
+      "name": "Corinne",
+      "company": "",
+      "view": "ttt-l1"
+    },
+    {
+      "quote": "Good engagement and ideas throughout. He really made it easy to understand how to facilitate the class.",
+      "program": "Train the Trainer L1",
+      "facilitator": "David Brzozowski",
+      "name": "Karen",
+      "company": "",
+      "view": "ttt-l1"
+    },
+    {
+      "quote": "Communication skills and patience while being asked all kinds of questions. David made it make sense!",
+      "program": "Train the Trainer L1",
+      "facilitator": "David Brzozowski",
+      "name": "Chris",
+      "company": "",
+      "view": "ttt-l1"
+    },
+    {
+      "quote": "Engaging, funny, incorporated stories throughout, made everyone feel welcomed, expert on the topics.",
+      "program": "Train the Trainer L1",
+      "facilitator": "David Brzozowski",
+      "name": "",
+      "company": "",
+      "view": "ttt-l1"
+    },
+    {
+      "quote": "Easy to follow, understanding and patient.  Gave good constructive feedback.  Was respectful of all",
+      "program": "Train the Trainer L1",
+      "facilitator": "David Brzozowski",
+      "name": "Malcolm",
+      "company": "",
+      "view": "ttt-l1"
+    },
+    {
+      "quote": "Very inspiring, asking questions to trigger participant's thoughts & reflections.",
+      "program": "Train the Trainer L1",
+      "facilitator": "Dimyas Perdue",
+      "name": "Sabina",
+      "company": "",
+      "view": "ttt-l1"
+    },
+    {
+      "quote": "Engaging, actively listened to participants, made material relevant to real life",
+      "program": "Train the Trainer L1",
+      "facilitator": "Dimyas Perdue",
+      "name": "Ken",
+      "company": "",
+      "view": "ttt-l1"
+    },
+    {
+      "quote": "Very engaging and knowledgeable with the content which greatly impacted learning",
+      "program": "Train the Trainer L1",
+      "facilitator": "Dimyas Perdue",
+      "name": "",
+      "company": "",
+      "view": "ttt-l1"
+    },
+    {
+      "quote": "He personalized the content. Easy to understand. Thoughtful to all of us",
+      "program": "Train the Trainer L1",
+      "facilitator": "Dimyas Perdue",
+      "name": "",
+      "company": "",
+      "view": "ttt-l1"
+    },
+    {
+      "quote": "Great personality, very knowledgeable, kept the audience engaged.",
+      "program": "Train the Trainer L1",
+      "facilitator": "David Brzozowski",
+      "name": "",
+      "company": "",
+      "view": "ttt-l1"
+    },
+    {
+      "quote": "Everything! Engaging, clear communicator, a granted and calm.",
+      "program": "Train the Trainer L1",
+      "facilitator": "Dimyas Perdue",
+      "name": "Alleyne",
+      "company": "",
+      "view": "ttt-l1"
+    },
+    {
+      "quote": "Passionate about the subject matter! Extremely knowledgable!",
+      "program": "Train the Trainer L1",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "",
+      "company": "",
+      "view": "ttt-l1"
+    },
+    {
+      "quote": "Engaging, humorous and able to navigate the material.",
+      "program": "Train the Trainer L1",
+      "facilitator": "David Brzozowski",
+      "name": "",
+      "company": "",
+      "view": "ttt-l1"
+    },
+    {
+      "quote": "Great engagement, read the room, knowledge, openness",
+      "program": "Train the Trainer L1",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "",
+      "company": "",
+      "view": "ttt-l1"
+    },
+    {
+      "quote": "You get out what you put in. The material is great.",
+      "program": "Train the Trainer L1",
+      "facilitator": "David Brzozowski",
+      "name": "",
+      "company": "",
+      "view": "ttt-l1"
+    },
+    {
+      "quote": "Great examples and strong inclusion of everyone.",
+      "program": "Train the Trainer L1",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "",
+      "company": "",
+      "view": "ttt-l1"
+    },
+    {
+      "quote": "Knowledge. Relatable examples. Engaging energy.",
+      "program": "Train the Trainer L1",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "Jenny",
+      "company": "",
+      "view": "ttt-l1"
+    },
+    {
+      "quote": "Engaging, funny, kept us focused and active.",
+      "program": "Train the Trainer L1",
+      "facilitator": "David Brzozowski",
+      "name": "Debbie",
+      "company": "",
+      "view": "ttt-l1"
+    },
+    {
+      "quote": "Everything! He is an excellent facilitator!",
+      "program": "Train the Trainer L1",
+      "facilitator": "Dimyas Perdue",
+      "name": "",
+      "company": "",
+      "view": "ttt-l1"
+    },
+    {
+      "quote": "Dr. Sheri acknowledged us as individuals.",
+      "program": "Train the Trainer L1",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "",
+      "company": "",
+      "view": "ttt-l1"
+    },
+    {
+      "quote": "High value, good pace for learning",
+      "program": "Train the Trainer L1",
+      "facilitator": "Dimyas Perdue",
+      "name": "Ken",
+      "company": "",
+      "view": "ttt-l1"
+    },
+    {
+      "quote": "Humor, knowledgeable and engaging",
+      "program": "Train the Trainer L1",
+      "facilitator": "David Brzozowski",
+      "name": "Trinh",
+      "company": "",
+      "view": "ttt-l1"
+    },
+    {
+      "quote": "Great energy. Clear facilitation",
+      "program": "Train the Trainer L1",
+      "facilitator": "Dimyas Perdue",
+      "name": "",
+      "company": "",
+      "view": "ttt-l1"
+    },
+    {
+      "quote": "David was great overall! Really appreciated how he facilitated our session.",
+      "program": "TTT for Teams",
+      "facilitator": "David Brzozowski",
+      "name": "Virtual",
+      "company": "",
+      "view": "ttt-teams"
     },
     {
       "quote": "With the trend shifting from focusing on individual leadership development to team development this is a great tool and framework that equips facilitators to not get left behind and show up with relevant approaches to organizational development.",
       "program": "TTT for Teams",
       "facilitator": "David Brzozowski",
+      "name": "Virtual",
+      "company": "",
+      "view": "ttt-teams"
+    },
+    {
+      "quote": "Nothing, it was a long day because i was on the East Coast and worked all morning before the session started, but the time went by very quickly because the class was engaging",
+      "program": "TTT for Teams",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "Virtual",
+      "company": "",
       "view": "ttt-teams"
     },
     {
       "quote": "I thought it was great, honestly. I don\u2019t know that I would need anything to change for it to have been better.",
       "program": "TTT for Teams",
       "facilitator": "David Brzozowski",
+      "name": "Virtual",
+      "company": "",
+      "view": "ttt-teams"
+    },
+    {
+      "quote": "I loves his stories, maybe more of those? But I Lu because they were so good I just wanted to hear more!",
+      "program": "TTT for Teams",
+      "facilitator": "David Brzozowski",
+      "name": "Virtual",
+      "company": "",
+      "view": "ttt-teams"
+    },
+    {
+      "quote": "I can't think of anything, she was/is an amazing facilitator!!",
+      "program": "TTT for Teams",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "Virtual",
+      "company": "",
       "view": "ttt-teams"
     },
     {
       "quote": "Great practical ways to improve team performance.",
       "program": "TTT for Teams",
       "facilitator": "Dr. Sheri Duchock",
+      "name": "Virtual",
+      "company": "",
       "view": "ttt-teams"
     },
     {
       "quote": "Really enjoyed the overall program.",
       "program": "TTT for Teams",
       "facilitator": "David Brzozowski",
+      "name": "Virtual",
+      "company": "",
       "view": "ttt-teams"
+    },
+    {
+      "quote": "Very engaging and energetic. Love the participant method then facilitator method. Tips/options very helpful. Appreciated drawing comparisons from L1 vs L2 energy and facilitation.",
+      "program": "Train the Trainer L2",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "Melinda",
+      "company": "",
+      "view": "ttt-l2"
     },
     {
       "quote": "No notes.  Awesome content, materials, set up.  I have appreciated Dimyas\u2019s tech.  Sound and video quality were amazing.",
       "program": "Train the Trainer L2",
       "facilitator": "Dimyas Perdue",
+      "name": "",
+      "company": "",
       "view": "ttt-l2"
     },
     {
-      "quote": "I would share the VALUE of doing a multi tater assessment over a self assessment. The self assessment is valuable but knowing how others perceive you is priceless in the ability to change your own behavior.",
+      "quote": "Everything! Excellent class. Dimyas is a well rounded instructor. His touch of professionalism and personal experiences co-existed which created an authentic learning experience.",
+      "program": "Train the Trainer L2",
+      "facilitator": "Dimyas Perdue",
+      "name": "Fareiza",
+      "company": "",
+      "view": "ttt-l2"
+    },
+    {
+      "quote": "Good energy, i appreciated frequent check ins to ask for clarification and thoughtful responses to those questions.",
       "program": "Train the Trainer L2",
       "facilitator": "David Brzozowski",
+      "name": "Kamila",
+      "company": "",
+      "view": "ttt-l2"
+    },
+    {
+      "quote": "Dimyas was a very engaging speaker and gave great examples",
+      "program": "Train the Trainer L2",
+      "facilitator": "Dimyas Perdue",
+      "name": "",
+      "company": "",
       "view": "ttt-l2"
     },
     {
       "quote": "David is very knowledgeable and really knows how to help us all get to where we need to be by the end of the two days. He shows compassion, understanding, and provides great feedback.",
       "program": "Train the Trainer L2",
       "facilitator": "David Brzozowski",
+      "name": "Joan",
+      "company": "",
+      "view": "ttt-l2"
+    },
+    {
+      "quote": "David brings in a lot of helpful examples of each section of the program. He also showed us different ways to adjust the program depending on audience and also for a virtual  Setting",
+      "program": "Train the Trainer L2",
+      "facilitator": "David Brzozowski",
+      "name": "",
+      "company": "",
+      "view": "ttt-l2"
+    },
+    {
+      "quote": "David was knowledgeable about the material and engaging! I could tell he knew what he was teaching and also how to help us navigate our own facilitations.",
+      "program": "Train the Trainer L2",
+      "facilitator": "David Brzozowski",
+      "name": "Becca",
+      "company": "",
+      "view": "ttt-l2"
+    },
+    {
+      "quote": "He is an amazing facilitator!!!! I have completed many classes online that would bore me. He kept me engaged the entire time and has awesome energy",
+      "program": "Train the Trainer L2",
+      "facilitator": "David Brzozowski",
+      "name": "Sandi",
+      "company": "",
+      "view": "ttt-l2"
+    },
+    {
+      "quote": "David showed great strength in facilitating, keeping us engaged, and promoting us with questions to help us better understand things.",
+      "program": "Train the Trainer L2",
+      "facilitator": "David Brzozowski",
+      "name": "Joan",
+      "company": "",
+      "view": "ttt-l2"
+    },
+    {
+      "quote": "He\u2019s dynamic, sensitive and extremely intelligent. I loved his Real world examples.",
+      "program": "Train the Trainer L2",
+      "facilitator": "Dimyas Perdue",
+      "name": "",
+      "company": "",
+      "view": "ttt-l2"
+    },
+    {
+      "quote": "Engaging the audience. David was very knowledgeable about the topics.",
+      "program": "Train the Trainer L2",
+      "facilitator": "David Brzozowski",
+      "name": "",
+      "company": "",
+      "view": "ttt-l2"
+    },
+    {
+      "quote": "David was amazing! He was very welcoming, knowledgeable, & funny.",
+      "program": "Train the Trainer L2",
+      "facilitator": "David Brzozowski",
+      "name": "",
+      "company": "",
+      "view": "ttt-l2"
+    },
+    {
+      "quote": "The training gave us a time to reflect on ourselves, developing our own emotional intelligence and providing us with all the resources necessary to be successful in facilitating the program on our own. I cannot wait to improve my emotional intelligence in my personal and professional life, ultimately leading to a more fulfilling and happy life.",
+      "program": "Train the Trainer L2",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "Hannah",
+      "company": "",
+      "view": "ttt-l2"
+    },
+    {
+      "quote": "I would share the VALUE of doing a multi tater assessment over a self assessment. The self assessment is valuable but knowing how others perceive you is priceless in the ability to change your own behavior.",
+      "program": "Train the Trainer L2",
+      "facilitator": "David Brzozowski",
+      "name": "Becca",
+      "company": "",
+      "view": "ttt-l2"
+    },
+    {
+      "quote": "She had a plethora of experience, was observant and knew when the group needed a break, was able to thoughtfully answer all questions, and used amazing examples to drive the main points home.",
+      "program": "Train the Trainer L2",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "Hannah",
+      "company": "",
+      "view": "ttt-l2"
+    },
+    {
+      "quote": "Wow wow wow. Every moment for the last two days were an aha moment. Dimyas is a true master of the material but more importantly a true human who knows a my s understands life. My Hero.",
+      "program": "Train the Trainer L2",
+      "facilitator": "Dimyas Perdue",
+      "name": "David",
+      "company": "",
       "view": "ttt-l2"
     },
     {
       "quote": "This course is worth your time and valuable to a company that care about its employees. If you want to improve your work environment and foster teams, this is the course.",
       "program": "Train the Trainer L2",
       "facilitator": "David Brzozowski",
+      "name": "Sandi",
+      "company": "",
       "view": "ttt-l2"
     },
     {
       "quote": "I loved the in person training since we won\u2019t be doing virtual. Going through the exercises as a participant is key to thinking through how to facilitate effectively.",
       "program": "Train the Trainer L2",
       "facilitator": "Dr. Sheri Duchock",
+      "name": "Melinda",
+      "company": "",
+      "view": "ttt-l2"
+    },
+    {
+      "quote": "Kept everyone sooo engaged! Kept us in the loop.  If someone was kind of on the back burner he was great at making sure they got to be heard.",
+      "program": "Train the Trainer L2",
+      "facilitator": "Dimyas Perdue",
+      "name": "",
+      "company": "",
       "view": "ttt-l2"
     },
     {
       "quote": "I loved the ability to create a development plan with specific skills and actionable steps to work on my EQ.",
       "program": "Train the Trainer L2",
       "facilitator": "David Brzozowski",
+      "name": "",
+      "company": "",
       "view": "ttt-l2"
     },
     {
       "quote": "I would have appreciated consistency in how material is delivered. Either refer to leader guide or don\u2019t.",
       "program": "Train the Trainer L2",
       "facilitator": "David Brzozowski",
+      "name": "",
+      "company": "",
       "view": "ttt-l2"
     },
     {
       "quote": "It is super helpful to see the feedback and how much you overestimate or underestimate your EQ.",
       "program": "Train the Trainer L2",
       "facilitator": "Dimyas Perdue",
+      "name": "",
+      "company": "",
+      "view": "ttt-l2"
+    },
+    {
+      "quote": "Very authentic tic and relatable. Breaks down the content with ample time to absorb.",
+      "program": "Train the Trainer L2",
+      "facilitator": "David Brzozowski",
+      "name": "",
+      "company": "",
+      "view": "ttt-l2"
+    },
+    {
+      "quote": "Created psychological safety , super supportive, very knowledgeable and engaging.",
+      "program": "Train the Trainer L2",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "Jennifer",
+      "company": "",
       "view": "ttt-l2"
     },
     {
       "quote": "This class was insightful and the activities Crete a space of reflection.",
       "program": "Train the Trainer L2",
       "facilitator": "Dimyas Perdue",
+      "name": "Fareiza",
+      "company": "",
       "view": "ttt-l2"
+    },
+    {
+      "quote": "Charmastic, good examples of how EQ shows up in his workplace",
+      "program": "Train the Trainer L2",
+      "facilitator": "David Brzozowski",
+      "name": "",
+      "company": "",
+      "view": "ttt-l2"
+    },
+    {
+      "quote": "Very engaging and very in tune with the needs of the group.",
+      "program": "Train the Trainer L2",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "",
+      "company": "",
+      "view": "ttt-l2"
+    },
+    {
+      "quote": "Expertise and knowledge. Sharing best practices.",
+      "program": "Train the Trainer L2",
+      "facilitator": "David Brzozowski",
+      "name": "",
+      "company": "",
+      "view": "ttt-l2"
+    },
+    {
+      "quote": "Sheri delivered an engaging and highly effective session. It was truly impressive that, despite starting her facilitation at 3 a.m. her local time, she maintained outstanding energy and presence throughout. No one would have guessed the early hour. She demonstrated deep expertise in the subject matter and shared practical, valuable tips that will be useful in applying emotional intelligence in our day\u2011to\u2011day work. Overall, an excellent and impactful session.",
+      "program": "Private Program L1",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "Tiago",
+      "company": "",
+      "view": "private-l1"
+    },
+    {
+      "quote": "Dr. Duchock was incredibly engaging throughout the entire session. Maintaining a group's focus for four hours is no small feat, but she made the time both enjoyable and highly productive. I walked away with several practical insights that are directly applicable to both my professional role and my personal life. I would jump at the chance to attend more of her sessions in the future.",
+      "program": "Private Program L1",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "Tanya",
+      "company": "",
+      "view": "private-l1"
     },
     {
       "quote": "This is a great session to gut check yourself on your ability to not only be empathetic but also impactful and effective in the work you do. Human connection is so important and how we show up and use our EQ can help us be even more intentional in our relationships.",
       "program": "Private Program L1",
       "facilitator": "Dr. Sheri Duchock",
+      "name": "",
+      "company": "",
       "view": "private-l1"
     },
     {
-      "quote": "This session is valuable because it brings clear structure to a topic I already felt confident in. Even with a high EQ, I found the framework and reflections helpful in sharpening how I apply emotional intelligence in both professional and personal situations.",
+      "quote": "She was very engaging and could always help connect the content with a good example to put everything into perspective. She was amazing!!",
       "program": "Private Program L1",
       "facilitator": "Dr. Sheri Duchock",
-      "view": "private-l1"
-    },
-    {
-      "quote": "This is an amazing session to be more in tune with your emotions. It makes you think critically and puts you in real like stress situations. 10/10 recommend",
-      "program": "Private Program L1",
-      "facilitator": "Dr. Sheri Duchock",
-      "view": "private-l1"
-    },
-    {
-      "quote": "Truly eye opening way to cross examine our motives , driving forces and daily interactions that affect not only us but those around us as well.",
-      "program": "Private Program L1",
-      "facilitator": "Dimyas Perdue",
+      "name": "",
+      "company": "",
       "view": "private-l1"
     },
     {
       "quote": "Dr. Sheri,  Thank you for your time, explaination and sharing your experiencie and guidance.    You were fantastic!",
       "program": "Private Program L1",
       "facilitator": "Dr. Sheri Duchock & Josh Rosenthal",
+      "name": "Rodolfo",
+      "company": "",
+      "view": "private-l1"
+    },
+    {
+      "quote": "Exceptional. Sheri is fantastic. Very intuitive. Person centered. Paid close attention.",
+      "program": "Private Program L1",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "Tamara",
+      "company": "",
+      "view": "private-l1"
+    },
+    {
+      "quote": "This session is valuable because it brings clear structure to a topic I already felt confident in. Even with a high EQ, I found the framework and reflections helpful in sharpening how I apply emotional intelligence in both professional and personal situations.",
+      "program": "Private Program L1",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "Tiago",
+      "company": "",
+      "view": "private-l1"
+    },
+    {
+      "quote": "Very engaging and building good rapport with the group in a virtual set-up. Very good oversight, smooth transitions and appropriate speed as well as good explanations for non native speakers",
+      "program": "Private Program L1",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "",
+      "company": "",
+      "view": "private-l1"
+    },
+    {
+      "quote": "This is an amazing session to be more in tune with your emotions. It makes you think critically and puts you in real like stress situations. 10/10 recommend",
+      "program": "Private Program L1",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "Megan",
+      "company": "",
+      "view": "private-l1"
+    },
+    {
+      "quote": "Truly eye opening way to cross examine our motives , driving forces and daily interactions that affect not only us but those around us as well.",
+      "program": "Private Program L1",
+      "facilitator": "Dimyas Perdue",
+      "name": "Sonja",
+      "company": "",
+      "view": "private-l1"
+    },
+    {
+      "quote": "Engaging. Charismatic. Good story teller. Entertaining. Knowledge. And able to respond quickly and swiftly to both comments and challenges",
+      "program": "Private Program L1",
+      "facilitator": "Dimyas Perdue",
+      "name": "Jackie",
+      "company": "",
+      "view": "private-l1"
+    },
+    {
+      "quote": "The course was very engaging and informative. I enjoyed how it can be applied to both work and real life. It felt very easy to understand.",
+      "program": "Private Program L1",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "",
+      "company": "",
+      "view": "private-l1"
+    },
+    {
+      "quote": "Dr Sheri Duchock was very engaging, mixing in humor with theory, giving relevant examples, and inviting collaboration.",
+      "program": "Private Program L1",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "",
+      "company": "",
+      "view": "private-l1"
+    },
+    {
+      "quote": "Clear communicator, great storyteller and engaging instructor who put everyone at ease to open up and share or reflect",
+      "program": "Private Program L1",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "Katie",
+      "company": "",
+      "view": "private-l1"
+    },
+    {
+      "quote": "Both facilitators were engaging even though one was fighting bronchitis! The 66 strategies will also be very helpful.",
+      "program": "Private Program L1",
+      "facilitator": "Dr. Sheri Duchock & Josh Rosenthal",
+      "name": "",
+      "company": "",
+      "view": "private-l1"
+    },
+    {
+      "quote": "Dimyas was able to keep the learning engaging and light while also allowing for vulnerability and challenging.",
+      "program": "Private Program L1",
+      "facilitator": "Dimyas Perdue",
+      "name": "",
+      "company": "",
+      "view": "private-l1"
+    },
+    {
+      "quote": "Sheri was very engaging with the group, knowledgeable in the material, and encouraged questions throughout.",
+      "program": "Private Program L1",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "Justin",
+      "company": "",
+      "view": "private-l1"
+    },
+    {
+      "quote": "Very engaging. I appreciated the variety of content and breaking up our time together. The time flew by.",
+      "program": "Private Program L1",
+      "facilitator": "Dimyas Perdue",
+      "name": "",
+      "company": "",
+      "view": "private-l1"
+    },
+    {
+      "quote": "Engaging, activities throughout the course, gave perfect breaks, asked intriguing questions to the group",
+      "program": "Private Program L1",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "Caroline",
+      "company": "",
+      "view": "private-l1"
+    },
+    {
+      "quote": "He was very engaging. He kept everyone paying attention. The speed of his speaking was perfect.",
+      "program": "Private Program L1",
+      "facilitator": "Dimyas Perdue",
+      "name": "",
+      "company": "",
+      "view": "private-l1"
+    },
+    {
+      "quote": "Great orration and fantastic engagement of the audience. Also domain knowledge",
+      "program": "Private Program L1",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "",
+      "company": "",
       "view": "private-l1"
     },
     {
       "quote": "I would recommend to anyone! Great material to learn in career development.",
       "program": "Private Program L1",
       "facilitator": "Dr. Sheri Duchock",
+      "name": "Caroline",
+      "company": "",
+      "view": "private-l1"
+    },
+    {
+      "quote": "Engaging, knowledgeable, high energy level, great job overall",
+      "program": "Private Program L1",
+      "facilitator": "Josh Rosenthal",
+      "name": "",
+      "company": "",
+      "view": "private-l1"
+    },
+    {
+      "quote": "I enjoyed that he was engaging as well as easy to understand",
+      "program": "Private Program L1",
+      "facilitator": "Josh Rosenthal",
+      "name": "",
+      "company": "",
+      "view": "private-l1"
+    },
+    {
+      "quote": "Very engaging.  Relatable.  Good energy.  Thought provoking.",
+      "program": "Private Program L1",
+      "facilitator": "Dimyas Perdue",
+      "name": "Chris",
+      "company": "",
+      "view": "private-l1"
+    },
+    {
+      "quote": "Josh was very engaging and connected well with our team.",
+      "program": "Private Program L1",
+      "facilitator": "Josh Rosenthal",
+      "name": "Devon",
+      "company": "",
+      "view": "private-l1"
+    },
+    {
+      "quote": "Extremely engaging. Love his personal stories and humor.",
+      "program": "Private Program L1",
+      "facilitator": "Dimyas Perdue",
+      "name": "Brandon",
+      "company": "",
+      "view": "private-l1"
+    },
+    {
+      "quote": "This was eye opening to learn and grow with in yourself",
+      "program": "Private Program L1",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "Vera",
+      "company": "",
+      "view": "private-l1"
+    },
+    {
+      "quote": "So amazing. Great communication and personal skills.",
+      "program": "Private Program L1",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "",
+      "company": "",
+      "view": "private-l1"
+    },
+    {
+      "quote": "Knowledge, engaging and great sense of her audience",
+      "program": "Private Program L1",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "Liz",
+      "company": "",
+      "view": "private-l1"
+    },
+    {
+      "quote": "Very engaging , great personality.  Very intuitive",
+      "program": "Private Program L1",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "Damien",
+      "company": "",
       "view": "private-l1"
     },
     {
       "quote": "Take it, it's well worth your time and future",
       "program": "Private Program L1",
       "facilitator": "Dr. Sheri Duchock & Josh Rosenthal",
+      "name": "Jeff",
+      "company": "",
+      "view": "private-l1"
+    },
+    {
+      "quote": "Extremely engaging and pulls great examples",
+      "program": "Private Program L1",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "",
+      "company": "",
+      "view": "private-l1"
+    },
+    {
+      "quote": "Engaging and passionate about the material.",
+      "program": "Private Program L1",
+      "facilitator": "Dimyas Perdue",
+      "name": "",
+      "company": "",
+      "view": "private-l1"
+    },
+    {
+      "quote": "Engaging, great examples.  Lead us well",
+      "program": "Private Program L1",
+      "facilitator": "Josh Rosenthal",
+      "name": "",
+      "company": "",
+      "view": "private-l1"
+    },
+    {
+      "quote": "She was great at keeping it engaging",
+      "program": "Private Program L1",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "Kristi",
+      "company": "",
+      "view": "private-l1"
+    },
+    {
+      "quote": "Engaging, real, used good examples",
+      "program": "Private Program L1",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "",
+      "company": "",
+      "view": "private-l1"
+    },
+    {
+      "quote": "Great speaker. Good timing.",
+      "program": "Private Program L1",
+      "facilitator": "Josh Rosenthal",
+      "name": "",
+      "company": "",
       "view": "private-l1"
     },
     {
       "quote": "I thought the session was impactful. I disagreed with some of the results even though I am the one who took the assessment. Through discussion, I realized that the results were spot on. I am excited to learn how to up my game in all relationships.",
       "program": "Private Program L1",
       "facilitator": "Josh Rosenthal",
+      "name": "",
+      "company": "",
       "view": "private-l1"
     },
     {
       "quote": "I would recommend taking the EQ test closer to the time of the training. I had forgotten when and where I was when completing the survey, and that can greatly affect the results. However, I do agree that the results were accurate.",
       "program": "Private Program L1",
       "facilitator": "Dimyas Perdue",
+      "name": "Brandon",
+      "company": "",
       "view": "private-l1"
     },
     {
       "quote": "Expectations from the session (expected to be highly engaged and will be regularly going into break out groups or 1:1s), the time commitment so they don't schedule other meetings to pop in and out",
       "program": "Private Program L1",
       "facilitator": "Dr. Sheri Duchock",
+      "name": "",
+      "company": "",
       "view": "private-l1"
     },
     {
-      "quote": "This is a great training. It\u2019s perfect for anyone to learn more.",
+      "quote": "Brought the group into the session in engaging manners and interactive ways.  The time flew by without realizing it has passed.  Also, kept up timely breaks while covering the material well.",
+      "program": "Private Program L1",
+      "facilitator": "Dimyas Perdue",
+      "name": "Regina",
+      "company": "",
+      "view": "private-l1"
+    },
+    {
+      "quote": "Strongly engaging  Understanding of our level of knowledge   Understanding how learning this information can benefit us personally and professionally",
+      "program": "Private Program L1",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "Matt",
+      "company": "",
+      "view": "private-l1"
+    },
+    {
+      "quote": "Keeping the class engaged, could tell she enjoys this topic and is passionate about passing knowledge onto others to better their day to day life's.",
+      "program": "Private Program L1",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "",
+      "company": "",
+      "view": "private-l1"
+    },
+    {
+      "quote": "Sheri and Josh were both very nice and welcoming they made me feel very comfortable which made it easier to open up in the class",
+      "program": "Private Program L1",
+      "facilitator": "Dr. Sheri Duchock & Josh Rosenthal",
+      "name": "",
+      "company": "",
+      "view": "private-l1"
+    },
+    {
+      "quote": "EQ is the cornerstone of great leadership and successful relationships. Use this course as a great opportunity for growth!",
+      "program": "Private Program L1",
+      "facilitator": "Dr. Sheri Duchock & Josh Rosenthal",
+      "name": "Brian",
+      "company": "",
+      "view": "private-l1"
+    },
+    {
+      "quote": "Show up to the session with honesty and be authentic to deeply engage and learn about your EQ strengths and weaknesses",
+      "program": "Private Program L1",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "Katie",
+      "company": "",
+      "view": "private-l1"
+    },
+    {
+      "quote": "He kept the course work interesting and funny. I enjoyed the enguagement he did with the group throughout the course.",
+      "program": "Private Program L1",
+      "facilitator": "Dimyas Perdue",
+      "name": "",
+      "company": "",
+      "view": "private-l1"
+    },
+    {
+      "quote": "Sheri communicated in a clear and comfortable tone and pace, and checked for understanding throughout the session",
+      "program": "Private Program L1",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "Junichi",
+      "company": "",
+      "view": "private-l1"
+    },
+    {
+      "quote": "Engaging, intelligent, knew how to respond to questions with empathy and knowledge, entertaining, kind, patient",
+      "program": "Private Program L1",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "Hunter",
+      "company": "",
+      "view": "private-l1"
+    },
+    {
+      "quote": "Friendliness but also firmness to ensure the class understood the content.  Energy - awesome vibes !!",
+      "program": "Private Program L1",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "",
+      "company": "",
+      "view": "private-l1"
+    },
+    {
+      "quote": "Great comunicaci\u00f3n skills, easy to understand and maintain out attentios in spiite of the long hours",
+      "program": "Private Program L1",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "Iria",
+      "company": "",
+      "view": "private-l1"
+    },
+    {
+      "quote": "It's a good opportunity to think more deeply about EQ, something we don't usually think about.",
+      "program": "Private Program L1",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "",
+      "company": "",
+      "view": "private-l1"
+    },
+    {
+      "quote": "Engaged with the public  Friendly   Emphatetic  Kind and helpful  Positive vine  Knowledgable",
+      "program": "Private Program L1",
+      "facilitator": "Dr. Sheri Duchock & Josh Rosenthal",
+      "name": "Rodolfo",
+      "company": "",
+      "view": "private-l1"
+    },
+    {
+      "quote": "Very engaging, knowledgeable, applied humor and personal experience to drive home the points.",
+      "program": "Private Program L1",
+      "facilitator": "Dimyas Perdue",
+      "name": "",
+      "company": "",
+      "view": "private-l1"
+    },
+    {
+      "quote": "very easy going, clear and impactful with real life talk. Felt safe to share our experiences",
+      "program": "Private Program L1",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "",
+      "company": "",
+      "view": "private-l1"
+    },
+    {
+      "quote": "Very engaging in a virtual environment, used practical examples to bring home key concepts.",
+      "program": "Private Program L1",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "",
+      "company": "",
+      "view": "private-l1"
+    },
+    {
+      "quote": "Its a good course, but its way too long (6hrs). Please, please condense this into 2-4hrs",
+      "program": "Private Program L1",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "",
+      "company": "",
+      "view": "private-l1"
+    },
+    {
+      "quote": "Keeping people engaged, using the right words, giving good examples through storytelling",
+      "program": "Private Program L1",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "",
+      "company": "",
+      "view": "private-l1"
+    },
+    {
+      "quote": "Great at communicating and recognizing when we needed to be engaged instead of spoken to",
+      "program": "Private Program L1",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "Tori",
+      "company": "",
+      "view": "private-l1"
+    },
+    {
+      "quote": "Very engaging and observant. Brought new material more relatable to our field of work",
+      "program": "Private Program L1",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "",
+      "company": "",
+      "view": "private-l1"
+    },
+    {
+      "quote": "Confident and well prepared, engaging presenter and presented in a new and fun way!",
+      "program": "Private Program L1",
+      "facilitator": "Josh Rosenthal",
+      "name": "Clara",
+      "company": "",
+      "view": "private-l1"
+    },
+    {
+      "quote": "Engaging, reads room well, strong knowledge understanding of material and our needs",
+      "program": "Private Program L1",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "",
+      "company": "",
+      "view": "private-l1"
+    },
+    {
+      "quote": "She was engaging and made sure everyone was comfortable with the conversation.",
+      "program": "Private Program L1",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "",
+      "company": "",
+      "view": "private-l1"
+    },
+    {
+      "quote": "Very engaging in a virtual setting and shared personal experiences to connect",
+      "program": "Private Program L1",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "",
+      "company": "",
+      "view": "private-l1"
+    },
+    {
+      "quote": "Knowledgeable and experienced. Great feedback and read the room very well.",
+      "program": "Private Program L1",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "Natalie",
+      "company": "",
+      "view": "private-l1"
+    },
+    {
+      "quote": "Very good apeech, 100% understanding for not native english participants",
+      "program": "Private Program L1",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "Aleksei",
+      "company": "",
+      "view": "private-l1"
+    },
+    {
+      "quote": "Very bubbly and engaging. Knew her content intimately! Clearly an expert",
+      "program": "Private Program L1",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "Christina",
+      "company": "",
+      "view": "private-l1"
+    },
+    {
+      "quote": "Everything! She is amazing at reading people and it really helped learn",
+      "program": "Private Program L1",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "Megan",
+      "company": "",
+      "view": "private-l1"
+    },
+    {
+      "quote": "Good insights , nice post training documenta to review, real experts",
+      "program": "Private Program L1",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "Juan",
+      "company": "",
+      "view": "private-l1"
+    },
+    {
+      "quote": "GREAT job remembering names and details about us, keeping us engaged",
+      "program": "Private Program L1",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "",
+      "company": "",
+      "view": "private-l1"
+    },
+    {
+      "quote": "She was very engaging, and encouraged participation from the class.",
+      "program": "Private Program L1",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "",
+      "company": "",
+      "view": "private-l1"
+    },
+    {
+      "quote": "Engaging presentation. Depth of knowledge and ease of communication",
+      "program": "Private Program L1",
+      "facilitator": "Dimyas Perdue",
+      "name": "Sonja",
+      "company": "",
+      "view": "private-l1"
+    },
+    {
+      "quote": "This is more engaging and informative than I thought it would be.",
+      "program": "Private Program L1",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "Liz",
+      "company": "",
+      "view": "private-l1"
+    },
+    {
+      "quote": "nicely facilitating entire course. good at fascinating people",
+      "program": "Private Program L1",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "Kazuki",
+      "company": "",
+      "view": "private-l1"
+    },
+    {
+      "quote": "It's good to know more about yourself so you can better lead",
+      "program": "Private Program L1",
+      "facilitator": "Dimyas Perdue",
+      "name": "",
+      "company": "",
+      "view": "private-l1"
+    },
+    {
+      "quote": "Be open and ficus on the training because it is really good",
+      "program": "Private Program L1",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "Iria",
+      "company": "",
+      "view": "private-l1"
+    },
+    {
+      "quote": "Very dynamic, nice energy and allowing active participation",
+      "program": "Private Program L1",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "Juan",
+      "company": "",
+      "view": "private-l1"
+    },
+    {
+      "quote": "Energy, engagement, vast knowledge and gave great examples",
+      "program": "Private Program L1",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "",
+      "company": "",
+      "view": "private-l1"
+    },
+    {
+      "quote": "Engaging, knowledgeable, considerate of participants needs",
+      "program": "Private Program L1",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "",
+      "company": "",
+      "view": "private-l1"
+    },
+    {
+      "quote": "Engaging, relatable, in touch with pulse of room, sincere",
+      "program": "Private Program L1",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "",
+      "company": "",
+      "view": "private-l1"
+    },
+    {
+      "quote": "great explanation of EQ and pragmatic approaches",
+      "program": "Private Program L1",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "",
+      "company": "",
+      "view": "private-l1"
+    },
+    {
+      "quote": "I love that she engages with the entire class.",
+      "program": "Private Program L1",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "Kacey",
+      "company": "",
+      "view": "private-l1"
+    },
+    {
+      "quote": "Excellent communication skills and experience",
+      "program": "Private Program L1",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "Caro",
+      "company": "",
+      "view": "private-l1"
+    },
+    {
+      "quote": "It is wonderful for both real life and work.",
+      "program": "Private Program L1",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "",
+      "company": "",
+      "view": "private-l1"
+    },
+    {
+      "quote": "Engaging,  authenticity, person experience",
+      "program": "Private Program L1",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "Will",
+      "company": "",
+      "view": "private-l1"
+    },
+    {
+      "quote": "Very engaging, held attention of the group",
+      "program": "Private Program L1",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "Denisr",
+      "company": "",
+      "view": "private-l1"
+    },
+    {
+      "quote": "Take this course!! I absolutely loved it!",
+      "program": "Private Program L1",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "",
+      "company": "",
+      "view": "private-l1"
+    },
+    {
+      "quote": "Enthusiasm , great speaker and motivator",
+      "program": "Private Program L1",
+      "facilitator": "Josh Rosenthal",
+      "name": "Kalissa",
+      "company": "",
+      "view": "private-l1"
+    },
+    {
+      "quote": "Active listening, engaging the audience.",
+      "program": "Private Program L1",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "",
+      "company": "",
+      "view": "private-l1"
+    },
+    {
+      "quote": "Listen you will take something good away",
+      "program": "Private Program L1",
+      "facilitator": "Dimyas Perdue",
+      "name": "Paul",
+      "company": "",
+      "view": "private-l1"
+    },
+    {
+      "quote": "Engage, the information is very valuable",
+      "program": "Private Program L1",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "",
+      "company": "",
+      "view": "private-l1"
+    },
+    {
+      "quote": "Keep an open mind. It\u2019s a great course",
+      "program": "Private Program L1",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "",
+      "company": "",
+      "view": "private-l1"
+    },
+    {
+      "quote": "She was very engaging and forthcoming",
+      "program": "Private Program L1",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "",
+      "company": "",
+      "view": "private-l1"
+    },
+    {
+      "quote": "Clear presentation, good facilitation",
+      "program": "Private Program L1",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "Ichiro",
+      "company": "",
+      "view": "private-l1"
+    },
+    {
+      "quote": "She speaks very well and is engaging.",
+      "program": "Private Program L1",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "Kaylee",
+      "company": "",
+      "view": "private-l1"
+    },
+    {
+      "quote": "Great training and excited for future",
+      "program": "Private Program L1",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "Natalie",
+      "company": "",
+      "view": "private-l1"
+    },
+    {
+      "quote": "She was great at keeping me engaged.",
+      "program": "Private Program L1",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "Haley",
+      "company": "",
+      "view": "private-l1"
+    },
+    {
+      "quote": "Effective communication, Engagement",
+      "program": "Private Program L1",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "Trevor",
+      "company": "",
+      "view": "private-l1"
+    },
+    {
+      "quote": "Keeping it interesting and engaging",
+      "program": "Private Program L1",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "",
+      "company": "",
+      "view": "private-l1"
+    },
+    {
+      "quote": "Extremely engaging and charismatic",
+      "program": "Private Program L1",
+      "facilitator": "Dimyas Perdue",
+      "name": "",
+      "company": "",
+      "view": "private-l1"
+    },
+    {
+      "quote": "Engaging, funny, commands the room",
+      "program": "Private Program L1",
+      "facilitator": "Dimyas Perdue",
+      "name": "Grant",
+      "company": "",
+      "view": "private-l1"
+    },
+    {
+      "quote": "Very knowledgeable and engaging",
+      "program": "Private Program L1",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "Ann",
+      "company": "",
+      "view": "private-l1"
+    },
+    {
+      "quote": "Valuable to attend in person!!",
+      "program": "Private Program L1",
+      "facilitator": "Josh Rosenthal",
+      "name": "Clara",
+      "company": "",
+      "view": "private-l1"
+    },
+    {
+      "quote": "Engaging with the class/group.",
+      "program": "Private Program L1",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "",
+      "company": "",
+      "view": "private-l1"
+    },
+    {
+      "quote": "Great presence, very organized",
+      "program": "Private Program L1",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "Joseph",
+      "company": "",
+      "view": "private-l1"
+    },
+    {
+      "quote": "Clear explanation and good EQ",
+      "program": "Private Program L1",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "",
+      "company": "",
+      "view": "private-l1"
+    },
+    {
+      "quote": "Very engaging and attentive.",
+      "program": "Private Program L1",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "",
+      "company": "",
+      "view": "private-l1"
+    },
+    {
+      "quote": "Knowledgeable and engaging",
+      "program": "Private Program L1",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "",
+      "company": "",
+      "view": "private-l1"
+    },
+    {
+      "quote": "Mr. Dimyas was an amazing facilitator. Great Job!!!!",
       "program": "Private Program L2",
       "facilitator": "Dimyas Perdue",
+      "name": "Vera",
+      "company": "",
       "view": "private-l2"
     },
     {
-      "quote": "This session is incredibly eye-opening especially for leaders.",
+      "quote": "Everything. He was engaging. Had so much personal experiences. Helped us see how the material works for us. He was an amazing instructor.",
       "program": "Private Program L2",
       "facilitator": "Dimyas Perdue",
-      "view": "private-l2"
-    },
-    {
-      "quote": "This is a great course that allows a lot of self-reflection. If you take it seriously and put the work in, you will learn a lot about yourself.",
-      "program": "Private Program L2",
-      "facilitator": "Dimyas Perdue",
+      "name": "Sarah",
+      "company": "",
       "view": "private-l2"
     },
     {
       "quote": "That even if you've done Level 1, that Level 2 helps to fine tune those skills.  Also, that Dimyas is a phenomenal trainer!!",
       "program": "Private Program L2",
       "facilitator": "Dimyas Perdue",
+      "name": "",
+      "company": "",
+      "view": "private-l2"
+    },
+    {
+      "quote": "Dimyas is a phenomenal facilitator, very engaged, knowledgeable, and just an absolute pleasure overall.",
+      "program": "Private Program L2",
+      "facilitator": "Dimyas Perdue",
+      "name": "",
+      "company": "",
+      "view": "private-l2"
+    },
+    {
+      "quote": "Making your feel comfortable and heard, cunning and engaging. Great at reading the room",
+      "program": "Private Program L2",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "",
+      "company": "",
+      "view": "private-l2"
+    },
+    {
+      "quote": "This is a great training. It\u2019s perfect for anyone to learn more.",
+      "program": "Private Program L2",
+      "facilitator": "Dimyas Perdue",
+      "name": "",
+      "company": "",
+      "view": "private-l2"
+    },
+    {
+      "quote": "This session is incredibly eye-opening especially for leaders.",
+      "program": "Private Program L2",
+      "facilitator": "Dimyas Perdue",
+      "name": "Alicia",
+      "company": "",
+      "view": "private-l2"
+    },
+    {
+      "quote": "Extremely engaging, well-versed, highly competent",
+      "program": "Private Program L2",
+      "facilitator": "Dimyas Perdue",
+      "name": "",
+      "company": "",
+      "view": "private-l2"
+    },
+    {
+      "quote": "Very engaging,  calm,  good time management",
+      "program": "Private Program L2",
+      "facilitator": "Dimyas Perdue",
+      "name": "Amber",
+      "company": "",
+      "view": "private-l2"
+    },
+    {
+      "quote": "Carrying the energy and mood in the class. I actually mentioned it to my team during break that he was a great facilitator and if there is a training that could benefit from that",
+      "program": "Private Program L2",
+      "facilitator": "Dimyas Perdue",
+      "name": "Nakeya",
+      "company": "",
+      "view": "private-l2"
+    },
+    {
+      "quote": "His ability to connect with the group and keep us engaged. He also did a wonderful job making sure we understood our tasks and that we felt heard.",
+      "program": "Private Program L2",
+      "facilitator": "Dimyas Perdue",
+      "name": "",
+      "company": "",
+      "view": "private-l2"
+    },
+    {
+      "quote": "This is a great course that allows a lot of self-reflection. If you take it seriously and put the work in, you will learn a lot about yourself.",
+      "program": "Private Program L2",
+      "facilitator": "Dimyas Perdue",
+      "name": "Michael",
+      "company": "",
+      "view": "private-l2"
+    },
+    {
+      "quote": "Keeping people engaged, providing relevant examples, stepping into conversations to facilitate positive engagement, and being a great person",
+      "program": "Private Program L2",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "Noah",
+      "company": "",
+      "view": "private-l2"
+    },
+    {
+      "quote": "Very engaging, explained everything perfectly, and just made the whole training fun to participate in and share and made it a safe space",
+      "program": "Private Program L2",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "",
+      "company": "",
       "view": "private-l2"
     },
     {
       "quote": "Participating in the small groups is quite powerful. We really do not know what we can give or get, until we speak.",
       "program": "Private Program L2",
       "facilitator": "Dimyas Perdue",
+      "name": "",
+      "company": "",
       "view": "private-l2"
     },
     {
       "quote": "This course can be extremely beneficial if you are looking to advance in your life, professionally and personally.",
       "program": "Private Program L2",
       "facilitator": "Dr. Sheri Duchock",
+      "name": "Noah",
+      "company": "",
+      "view": "private-l2"
+    },
+    {
+      "quote": "engaging, injected participant names to personalize, gave credit and positive feedback",
+      "program": "Private Program L2",
+      "facilitator": "Dimyas Perdue",
+      "name": "",
+      "company": "",
       "view": "private-l2"
     },
     {
       "quote": "Do it !! It\u2019s a breath of fresh air and helps make meaningful connections",
       "program": "Private Program L2",
       "facilitator": "Dr. Sheri Duchock",
+      "name": "",
+      "company": "",
+      "view": "private-l2"
+    },
+    {
+      "quote": "Engaging with the People on the zoom and sense of humor.",
+      "program": "Private Program L2",
+      "facilitator": "Dimyas Perdue",
+      "name": "Raven",
+      "company": "",
+      "view": "private-l2"
+    },
+    {
+      "quote": "Overall knowledge and engaging personality",
+      "program": "Private Program L2",
+      "facilitator": "Dimyas Perdue",
+      "name": "Matthew",
+      "company": "",
+      "view": "private-l2"
+    },
+    {
+      "quote": "Story telling and keeping things engaging",
+      "program": "Private Program L2",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "Bree",
+      "company": "",
+      "view": "private-l2"
+    },
+    {
+      "quote": "Communicator .... excellent facilitator",
+      "program": "Private Program L2",
+      "facilitator": "Dimyas Perdue",
+      "name": "Darren",
+      "company": "",
       "view": "private-l2"
     },
     {
       "quote": "wonderful class that was well delivered",
       "program": "Private Program L2",
       "facilitator": "Dimyas Perdue",
+      "name": "",
+      "company": "",
+      "view": "private-l2"
+    },
+    {
+      "quote": "Very engaging and appropriately funny",
+      "program": "Private Program L2",
+      "facilitator": "Dimyas Perdue",
+      "name": "Christopher",
+      "company": "",
+      "view": "private-l2"
+    },
+    {
+      "quote": "Engaging and upbeat and knowledgeable",
+      "program": "Private Program L2",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "",
+      "company": "",
+      "view": "private-l2"
+    },
+    {
+      "quote": "Energetic.  Great stories.",
+      "program": "Private Program L2",
+      "facilitator": "Dimyas Perdue",
+      "name": "Tamie",
+      "company": "",
       "view": "private-l2"
     },
     {
       "quote": "Enjoyed the activities as they helped with taking a deeper dive into the core skills. Especially the \u201cexperts\u201d activity, I found that one to be a great way to engage the group! everyday. I found it helpful and look forward to working on the opportunities identified during the couse.",
       "program": "Public Program",
       "facilitator": "David Brzozowski",
+      "name": "Massiel",
+      "company": "",
+      "view": "public-l1"
+    },
+    {
+      "quote": "David has a great personality which helped with keeping the group engaged. His pacing was solid and he was patient with waiting on responses.",
+      "program": "Public Program",
+      "facilitator": "David Brzozowski",
+      "name": "",
+      "company": "",
+      "view": "public-l1"
+    },
+    {
+      "quote": "Very engaging and did a great job getting participation. The personal stories were a great touch.",
+      "program": "Public Program",
+      "facilitator": "David Brzozowski",
+      "name": "",
+      "company": "",
       "view": "public-l1"
     },
     {
       "quote": "Overall you can work on your emotional intelligence to improve. Provide a handout. So we can take away from slide presentation. Love the interaction but wish I could have seen the group again.",
       "program": "Public Program",
       "facilitator": "David Brzozowski",
+      "name": "Deon",
+      "company": "",
+      "view": "public-l1"
+    },
+    {
+      "quote": "Engaging the group and creating a space where everyone got to share. Made sure to pronounce everyone\u2019s name accurately. Overall created a very welcoming environment.",
+      "program": "Public Program",
+      "facilitator": "David Brzozowski",
+      "name": "Massiel",
+      "company": "",
+      "view": "public-l1"
+    },
+    {
+      "quote": "Keep the room engaged.  Great at story telling.  Was respectful to all.",
+      "program": "Public Program",
+      "facilitator": "David Brzozowski",
+      "name": "Karis",
+      "company": "",
       "view": "public-l1"
     },
     {
       "quote": "follow on reassessment opportunity is great",
       "program": "Public Program",
       "facilitator": "David Brzozowski",
+      "name": "",
+      "company": "",
       "view": "public-l1"
     },
     {
-      "quote": "Great session, helps dive into your own scores which will in turn help you do the same for your teams",
+      "quote": "She was friendly, approachable and engaging. I really enjoyed listening to her. Great smile and had a way of making everyone feel comfortable in the virtual setting.",
+      "program": "Custom Program",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "",
+      "company": "",
+      "view": "custom"
+    },
+    {
+      "quote": "Excellent time management, positive energy, small groups and changing the groups up. Sheri was absolutely AMAZING",
+      "program": "Custom Program",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "",
+      "company": "",
+      "view": "custom"
+    },
+    {
+      "quote": "Josh was able to create space for personal insight and did a good job balancing the experiential aspect of the material, while preparing us to facilitate at the conference. It was well thought out and well presented with overall good pacing.",
       "program": "Custom Program",
       "facilitator": "Josh Rosenthal",
+      "name": "",
+      "company": "",
       "view": "custom"
     },
     {
-      "quote": "Communication is impactful by understanding the audience and the culture of that audience.",
+      "quote": "Sheri was very engaging. Broke up our session by spreading out the break out room sessions which kept me actively involved.",
       "program": "Custom Program",
       "facilitator": "Dr. Sheri Duchock",
+      "name": "",
+      "company": "",
       "view": "custom"
     },
     {
-      "quote": "Dor. Worry that it's 3 hours. It's engaging and fun. It flew by",
+      "quote": "Josh had great energy and engagement. He has a calm aura and creates a space with no pressure",
       "program": "Custom Program",
-      "facilitator": "Dr. Sheri Duchock",
+      "facilitator": "Josh Rosenthal",
+      "name": "",
+      "company": "",
       "view": "custom"
     },
     {
-      "quote": "Take it very seriously, it was very insightful",
+      "quote": "Engaging, pacing was good, activity placement was good",
       "program": "Custom Program",
-      "facilitator": "Dr. Sheri Duchock",
+      "facilitator": "Josh Rosenthal",
+      "name": "",
+      "company": "",
       "view": "custom"
     },
     {
       "quote": "Thank you, Josh for your time and expertise!",
       "program": "Custom Program",
       "facilitator": "Josh Rosenthal",
+      "name": "Kendra",
+      "company": "",
+      "view": "custom"
+    },
+    {
+      "quote": "She was fantastic and engaging!!",
+      "program": "Custom Program",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "Kacey",
+      "company": "",
+      "view": "custom"
+    },
+    {
+      "quote": "The ability to connect to keep me engaged and to get me to speak publicly. I love that we had discussions weighing our breakout rooms with no judgment.",
+      "program": "Custom Program",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "Neequa",
+      "company": "",
+      "view": "custom"
+    },
+    {
+      "quote": "Great job breaking it down and getting us engaged in the conversation. I really opened my thought process up to understanding my audience better",
+      "program": "Custom Program",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "",
+      "company": "",
+      "view": "custom"
+    },
+    {
+      "quote": "Great session, helps dive into your own scores which will in turn help you do the same for your teams",
+      "program": "Custom Program",
+      "facilitator": "Josh Rosenthal",
+      "name": "Megan",
+      "company": "",
+      "view": "custom"
+    },
+    {
+      "quote": "Stopping throughout to ask if we have questions. Answering those thoroughly with great insights",
+      "program": "Custom Program",
+      "facilitator": "Josh Rosenthal",
+      "name": "Megan",
+      "company": "",
+      "view": "custom"
+    },
+    {
+      "quote": "She was very engaging and enthusiastic about what she said. She was confident and approachable.",
+      "program": "Custom Program",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "Tanya",
+      "company": "",
+      "view": "custom"
+    },
+    {
+      "quote": "Communication is impactful by understanding the audience and the culture of that audience.",
+      "program": "Custom Program",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "",
+      "company": "",
+      "view": "custom"
+    },
+    {
+      "quote": "Dor. Worry that it's 3 hours. It's engaging and fun. It flew by",
+      "program": "Custom Program",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "Joseph",
+      "company": "",
+      "view": "custom"
+    },
+    {
+      "quote": "Very positive, helpful and encouraged everyone to participate",
+      "program": "Custom Program",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "",
+      "company": "",
+      "view": "custom"
+    },
+    {
+      "quote": "She\u2019s a great communicator, friendly , captures her audience",
+      "program": "Custom Program",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "Andrea",
+      "company": "",
+      "view": "custom"
+    },
+    {
+      "quote": "Great communication, very structured, personable",
+      "program": "Custom Program",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "Joseph",
+      "company": "",
+      "view": "custom"
+    },
+    {
+      "quote": "Take it very seriously, it was very insightful",
+      "program": "Custom Program",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "",
+      "company": "",
+      "view": "custom"
+    },
+    {
+      "quote": "I felt they was very Personable and Genuine",
+      "program": "Custom Program",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "Rafael",
+      "company": "",
+      "view": "custom"
+    },
+    {
+      "quote": "Delivery of content in an engaging manner.",
+      "program": "Custom Program",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "",
+      "company": "",
+      "view": "custom"
+    },
+    {
+      "quote": "Very effective and maintained my interest",
+      "program": "Custom Program",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "",
+      "company": "",
+      "view": "custom"
+    },
+    {
+      "quote": "Very engaged and excellent communicator",
+      "program": "Custom Program",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "",
+      "company": "",
+      "view": "custom"
+    },
+    {
+      "quote": "Very engaging, knowledgeable and fun.",
+      "program": "Custom Program",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "",
+      "company": "",
+      "view": "custom"
+    },
+    {
+      "quote": "Engaging, way to follow, personable",
+      "program": "Custom Program",
+      "facilitator": "Josh Rosenthal",
+      "name": "",
+      "company": "",
+      "view": "custom"
+    },
+    {
+      "quote": "Being very engaging with the class.",
+      "program": "Custom Program",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "",
+      "company": "",
+      "view": "custom"
+    },
+    {
+      "quote": "She was engaging and inclusive",
+      "program": "Custom Program",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "Will",
+      "company": "",
       "view": "custom"
     }
   ]

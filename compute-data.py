@@ -77,6 +77,31 @@ CONFIDENCE_MAP = {
 }
 VALUABLE_TOP = {"very valuable", "extremely valuable"}
 
+# --- Quote attribution (participant name + company) ---------------------------
+# How names render on quotes: "first" → "Jane", "first_initial" → "Jane S.",
+# "full" → "Jane Smith". On a public site "first" keeps exposure low; switch
+# this one value to show fuller names.
+NAME_STYLE = "first"
+
+# Email domains that are personal, not a company — never shown as a "company" tag.
+GENERIC_EMAIL_DOMAINS = {
+    "gmail", "googlemail", "yahoo", "ymail", "rocketmail", "hotmail", "outlook",
+    "live", "msn", "icloud", "me", "mac", "aol", "aim", "proton", "protonmail",
+    "gmx", "mail", "zoho", "yandex", "comcast", "verizon", "att", "sbcglobal",
+    "bellsouth", "cox", "charter",
+}
+
+# Header text used to locate the name/email/strengths columns per sheet.
+# Detected by header (not fixed letters) so it survives the per-sheet column
+# shifts. First match wins, so list more-specific needles first.
+EXTRA_HEADER_NEEDLES = {
+    "email": ["email address", "email"],
+    "first": ["first name"],
+    "last": ["last name"],
+    "name_optional": ["name (optional)"],
+    "strengths": ["facilitator's strengths", "facilitator strengths", "strengths"],
+}
+
 
 def col_values(ws, col):
     return [ws[f"{col}{r}"].value for r in range(2, ws.max_row + 1)]
@@ -244,29 +269,130 @@ def quote_score(text):
     return pos
 
 
-def best_quotes(ds, program_label, max_n=10):
-    """Pick a generous number of clearly positive quotes from a dataset, with trainer names."""
+def mentions_facilitator(text, facilitator):
+    """True if the quote text mentions any token of the facilitator's name (>=3 chars)."""
+    if not facilitator:
+        return False
+    t = text.lower()
+    tokens = [tok for tok in facilitator.lower().split() if len(tok) >= 3]
+    return any(tok in t for tok in tokens)
+
+
+def company_from_email(email):
+    """Derive a short company tag from an email's domain, e.g. jane@syf.com -> 'SYF'.
+    Returns '' for blank/personal/generic domains (gmail, yahoo, ...)."""
+    if not email or "@" not in str(email):
+        return ""
+    domain = str(email).split("@")[-1].strip().lower().strip(".")
+    if "." not in domain:
+        return ""
+    label = domain.split(".")[0]
+    if not label or label in GENERIC_EMAIL_DOMAINS:
+        return ""
+    return label.upper()
+
+
+def _clean_name_token(s):
+    """Keep letters/hyphens/apostrophes; drop stray punctuation and mojibake."""
+    return "".join(ch for ch in s if ch.isalpha() or ch in "-'").strip("-'")
+
+
+def display_name(first, last, name_optional):
+    """Build the display name per NAME_STYLE. Falls back to the free-text
+    'Name (optional)' field when First/Last aren't filled in. '' if unknown."""
+    first = str(first).strip() if first else ""
+    last = str(last).strip() if last else ""
+    if not first and name_optional:
+        parts = str(name_optional).strip().split()
+        if parts:
+            first = parts[0]
+            last = parts[-1] if len(parts) > 1 else ""
+    first = _clean_name_token(first)
+    last = _clean_name_token(last)
+    if not first:
+        return ""
+    if NAME_STYLE == "full":
+        return (first + " " + last).strip()
+    if NAME_STYLE == "first_initial" and last:
+        return f"{first} {last[0]}."
+    return first
+
+
+def detect_extra_cols(ws):
+    """Locate name/email/strengths columns by header text. Returns {key: 'G', ...}."""
+    from openpyxl.utils import get_column_letter
+    found = {}
+    for c in range(1, min(ws.max_column, 60) + 1):
+        h = ws.cell(row=1, column=c).value
+        if not h:
+            continue
+        hl = str(h).strip().lower()
+        for key, needles in EXTRA_HEADER_NEEDLES.items():
+            if key in found:
+                continue
+            if any(n in hl for n in needles):
+                found[key] = get_column_letter(c)
+    return found
+
+
+def best_quotes(ds, program_label, max_n=None):
+    """Collect all quotes that are either clearly positive OR name the trainer.
+
+    Pulls from two free-text sources: "share with future facilitators" and
+    "facilitator's strengths". Each qualifying answer becomes a testimonial,
+    attributed with the respondent's name (+ company when a corporate email
+    is on file). No cap by default; excluded only on an EXCLUDE_PHRASES marker.
+    """
     quotes_raw = ds.get("quote", [])
+    strengths_raw = ds.get("strengths", [])
     facilitators = ds.get("facilitator", [])
+    emails = ds.get("email", [])
+    firsts = ds.get("first", [])
+    lasts = ds.get("last", [])
+    names_opt = ds.get("name_optional", [])
+
+    def at(lst, i):
+        return lst[i] if i < len(lst) else None
+
+    n_rows = max((len(x) for x in (quotes_raw, strengths_raw, facilitators,
+                                   emails, firsts, lasts, names_opt)), default=0)
+
     pairs = []
-    for i, q in enumerate(quotes_raw):
-        if not q: continue
-        text = str(q).strip()
-        if not (25 <= len(text) <= 320): continue
-        score = quote_score(text)
-        if score < 1: continue
+    for i in range(n_rows):
         fac = ""
-        if i < len(facilitators) and facilitators[i]:
-            fac = str(facilitators[i]).strip()
-        pairs.append((score, text, fac))
-    pairs.sort(key=lambda x: (-x[0], -len(x[1])))
+        f = at(facilitators, i)
+        if f:
+            fac = str(f).strip()
+        name = display_name(at(firsts, i), at(lasts, i), at(names_opt, i))
+        company = company_from_email(at(emails, i))
+
+        for src in (at(quotes_raw, i), at(strengths_raw, i)):
+            if not src:
+                continue
+            text = str(src).strip()
+            if not (25 <= len(text) <= 500): continue
+            score = quote_score(text)
+            if score == -99: continue  # killed by exclude phrases
+
+            names_trainer = mentions_facilitator(text, fac)
+
+            # Include if positive OR names the trainer (the two "good ones" criteria)
+            if score < 1 and not names_trainer:
+                continue
+
+            pairs.append((score, text, fac, names_trainer, name, company))
+
+    # Sort: positivity desc, with name-mentioning quotes promoted slightly
+    pairs.sort(key=lambda x: (-(x[0] + (1 if x[3] else 0)), -len(x[1])))
     seen, picked = set(), []
-    for _, text, fac in pairs:
+    for _, text, fac, _, name, company in pairs:
         key = text[:60].lower()
         if key in seen: continue
         seen.add(key)
-        picked.append({"quote": text, "program": program_label, "facilitator": fac})
-        if len(picked) >= max_n: break
+        picked.append({"quote": text, "program": program_label, "facilitator": fac,
+                       "name": name, "company": company})
+        if max_n is not None and len(picked) >= max_n:
+            break
     return picked
 
 
@@ -429,7 +555,13 @@ def main():
         if sheet_name not in wb.sheetnames:
             print(f"  skipping missing sheet: {sheet_name}")
             continue
-        raw[sheet_name] = collect_sheet(wb[sheet_name], cols)
+        ws = wb[sheet_name]
+        ds = collect_sheet(ws, cols)
+        # Attribution + extra quote source, located by header text.
+        extra = detect_extra_cols(ws)
+        for key in ("email", "first", "last", "name_optional", "strengths"):
+            ds[key] = col_values(ws, extra[key]) if extra.get(key) else []
+        raw[sheet_name] = ds
 
     views = {}
 
@@ -468,7 +600,7 @@ def main():
         "PublicL1": "public-l1", "Custom Programs": "custom",
     }
     for sheet_name, ds in raw.items():
-        for q in best_quotes(ds, label_for[sheet_name], max_n=10):
+        for q in best_quotes(ds, label_for[sheet_name]):
             q["view"] = view_for[sheet_name]
             testimonials.append(q)
 

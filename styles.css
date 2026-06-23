@@ -256,6 +256,7 @@ body {
 }
 .testimonials::-webkit-scrollbar-track { background: transparent; }
 .src-fac { color: var(--gold); font-weight: 600; letter-spacing: 0.6px; }
+.src-person { color: var(--ink); font-weight: 700; letter-spacing: 0.6px; }
 .testimonial {
   background: #fff; border: 1px solid var(--border);
   border-left: 4px solid var(--gold);

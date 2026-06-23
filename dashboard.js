@@ -26,6 +26,20 @@
     }[c]));
   }
 
+  // "Jane, SYF" / "Jane" / "" depending on what's on file for the quote.
+  function personLabel(t) {
+    const name = (t.name || '').trim();
+    const company = (t.company || '').trim();
+    if (name && company) return `${name}, ${company}`;
+    return name || company || '';
+  }
+
+  // Leading "<name> · " for a quote's source line (empty when no name on file).
+  function personBit(t) {
+    const label = personLabel(t);
+    return label ? `<span class="src-person">${escapeHtml(label)}</span> &middot; ` : '';
+  }
+
   function flashFadeIn(el) {
     if (!el) return;
     el.classList.remove('fade-in'); void el.offsetWidth; el.classList.add('fade-in');
@@ -130,7 +144,7 @@
     container.innerHTML = toShow.map(t => `
       <div class="testimonial fade-in">
         <div class="q">&ldquo;${escapeHtml(t.quote)}&rdquo;</div>
-        <div class="src">— ${escapeHtml(t.program)}${facBit(t)}</div>
+        <div class="src">— ${personBit(t)}${escapeHtml(t.program)}${facBit(t)}</div>
       </div>
     `).join('') || '<div class="testimonial"><div class="q" style="font-style:normal;color:#7a8699">No quotes yet for this view.</div></div>';
   }
@@ -183,13 +197,14 @@ Our ${label} delivers emotional intelligence training that actually sticks.
 
     const quote = bestTestimonialForView();
     if (quote) {
+      const who = personLabel(quote) || `${quote.program} participant`;
       snippets.push({
         channel: 'quote',
         chip: 'Shareable quote',
         text:
 `"${quote.quote}"
 
-— ${quote.program} participant`
+— ${who}`
       });
     }
 
