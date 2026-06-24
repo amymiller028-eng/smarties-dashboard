@@ -218,6 +218,19 @@ body {
 .info-dot:focus-within .info-pop {
   opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0);
 }
+/* Drops below the dot instead of above — used where the card clips overflow (NPS hero). */
+.info-pop.below {
+  bottom: auto; top: 160%; transform: translateX(-50%) translateY(-6px);
+}
+.info-pop.below::after {
+  top: auto; bottom: 100%;
+  border-top-color: transparent; border-bottom-color: var(--navy);
+}
+.info-dot:hover .info-pop.below,
+.info-dot:focus .info-pop.below,
+.info-dot:focus-within .info-pop.below {
+  transform: translateX(-50%) translateY(0);
+}
 .reach-grid {
   display: grid; grid-template-columns: repeat(3, 1fr);
   gap: 10px; margin-top: 8px;
