@@ -111,46 +111,23 @@
     document.getElementById('inPersonLabel').textContent = iPct > 8 ? `In person ${Math.round(iPct)}%` : '';
   }
 
-  // A client-facing "how to use this number" line for each stat, built live.
+  // The EQ-growth card's "how to use this" popover: explains the two numbers
+  // and gives one conservative, client-ready line (attribution × confidence).
   function talkTrack(key, v) {
-    const tb = v.topBox || {};
-    const tracks = {
-      nps: `An NPS of ${v.nps} is world-class — most companies sit at 30–50. With a client: “Participants don’t just like this program, they vouch for it. A net ${v.nps} would recommend it to a colleague.”`,
-      ei: `Say it like this: “Participants credit ${v.eiDevelopmentAttributed}% of their emotional-intelligence growth directly to this program — and they’re ${v.confidenceInEstimate}% confident in that.” Most training can’t put a number on its own impact. This can.`,
-      applyOnJob: `${tb.applyOnJob}% will apply it on the job. For a client focused on ROI: “This isn’t training people forget by Monday — ${tb.applyOnJob}% leave ready to use it at work.”`,
-      gainedKnowledge: `${tb.gainedKnowledge}% gained new knowledge. When a buyer says “our people already know this”: “Even experienced teams learn something new — ${tb.gainedKnowledge}% did.”`,
-      worthwhileInvestment: `${tb.worthwhileInvestment}% called it a worthwhile investment of their time. For a time-strapped buyer: “${tb.worthwhileInvestment}% say the hours were well spent.”`,
-      contentRelevant: `${tb.contentRelevant}% found the content relevant to their job. To answer “is this generic?”: “${tb.contentRelevant}% said it spoke directly to their actual role.”`,
-      facilitatorKnowledge: `${tb.facilitatorKnowledge}% say our facilitator’s knowledge deepened their learning. When they ask who’s teaching: “${tb.facilitatorKnowledge}% credit our facilitators’ expertise.”`,
-      facilitatorEngaging: `${tb.facilitatorEngaging}% say the facilitator kept them engaged. For the “will my people tune out?” worry: “${tb.facilitatorEngaging}% stayed engaged start to finish.”`,
-    };
-    return tracks[key] || '';
+    if (key !== 'ei') return '';
+    const ei = v.eiDevelopmentAttributed;
+    const conf = v.confidenceInEstimate;
+    const adj = Math.round(ei * conf / 100);
+    return (
+      `<span class="pop-body">How do you put a number on something as soft as emotional intelligence? You ask participants two things — how much of their growth they credit to the program (<strong>${ei}%</strong>), and how confident they are in that estimate (<strong>${conf}%</strong>) — then multiply the two for a <em>confidence-adjusted</em> figure of about <strong>${adj}%</strong>.<br><br>` +
+      `This isn’t something we invented. Multiplying an estimate by its confidence level is a standard step in the <strong>Phillips ROI Methodology</strong> — the framework L&amp;D and HR teams across the industry (Fortune 500s, government, universities) use to credibly isolate the impact of training. It’s how the field puts defensible numbers on “soft” skills.</span>` +
+      `<span class="pop-key">Bottom line: lead with “<strong>${ei}% of their EQ growth is credited to this program.</strong>” Most clients are happy with that. Keep the ${adj}% in your back pocket for anyone who wants the conservative math.</span>`
+    );
   }
 
   function renderTalkTracks(v) {
-    // Fixed popovers (NPS, EI) — filled by their data-track key.
     document.querySelectorAll('#standardView .info-pop[data-track]').forEach(el => {
-      el.textContent = talkTrack(el.getAttribute('data-track'), v);
-    });
-    // Inject an info dot into each participant-stat card once, then keep it current.
-    document.querySelectorAll('#kpiCards .kpi-card').forEach(card => {
-      const span = card.querySelector('[data-metric]');
-      if (!span) return; // skip the manager-expectations warning card
-      const key = span.getAttribute('data-metric');
-      let dot = card.querySelector('.info-dot');
-      if (!dot) {
-        dot = document.createElement('span');
-        dot.className = 'info-dot';
-        dot.tabIndex = 0;
-        dot.setAttribute('role', 'note');
-        dot.setAttribute('aria-label', 'How to use this stat');
-        dot.textContent = 'i';
-        const pop = document.createElement('span');
-        pop.className = 'info-pop';
-        dot.appendChild(pop);
-        card.querySelector('.kpi-label').appendChild(dot);
-      }
-      dot.querySelector('.info-pop').textContent = talkTrack(key, v);
+      el.innerHTML = talkTrack(el.getAttribute('data-track'), v);
     });
   }
 

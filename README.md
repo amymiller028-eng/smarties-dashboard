@@ -63,6 +63,25 @@ Three program types ask "Has your manager communicated their expectations about 
 
 The dashboard shows the **% who answered NO** as a contextual orange/gold tile on those views only. Hidden everywhere else (because the question wasn't asked).
 
-## Safe to share
+## Testimonials / quotes
 
-This dashboard shows only aggregated metrics and anonymous quotes. No respondent names, emails, or individual scores are exposed.
+Quotes are pulled automatically by `compute-data.py` from **two** free-text columns on each sheet:
+
+1. *"What would you want to share with future facilitators…"* (the original source)
+2. *"What were your facilitator's strengths?"* (added — this is where most of the rich, named comments live)
+
+How they're chosen and shown:
+
+- **Included** if the comment reads positively *or* names the trainer. Advisory/negative comments are filtered out (see `EXCLUDE_PHRASES`).
+- **Ranked** by substance, not just buzzwords — multi-sentence, longer, first-person reflections rise to the top (see `substance_bonus`). This keeps thoughtful comments from getting buried.
+- **No cap** — every qualifying quote is shown, ordered best-first.
+- **Attribution:** each quote shows the participant's **first name**, taken from the First/Last columns or, if blank, the free-text *"Name (optional)"* field. Style is controlled by `NAME_STYLE` in `compute-data.py` (`first` / `first_initial` / `full`).
+- **Company tag** (e.g. "Jane, SYF") appears only when a **corporate email** is on file — generic domains (gmail, yahoo, …) are skipped. Currently no emails are in the workbook, so only names show; tags light up automatically once corporate emails are added.
+
+## EQ-growth figure (confidence-adjusted)
+
+The side card shows **% of EQ growth participants credit to this program** plus their **% confidence** in that estimate. The **ⓘ** tooltip explains how to use it: multiply the two for a *confidence-adjusted* figure (e.g. 71% × 84% ≈ 60%) — a conservative number that holds up to scrutiny. This is the credibility/isolation step from the **Phillips ROI Methodology**. The talk track tells reps to lead with the simple "X% credited" line and keep the adjusted number in reserve. Wording lives in `talkTrack()` in `dashboard.js`.
+
+## Privacy note — names are now shown
+
+This dashboard shows aggregated metrics plus **participant first names on quotes** (and a company abbreviation when a corporate email is on file). Emails themselves and individual scores are **not** exposed. Because it's a public site, keep names to first-name only (`NAME_STYLE = "first"`) unless you have a reason to show more.

@@ -269,6 +269,26 @@ def quote_score(text):
     return pos
 
 
+def substance_bonus(text):
+    """Reward thoughtful, specific testimonials so they don't get buried under
+    short buzzword-dense blurbs. Rewards multi-sentence depth, length, and
+    first-person reflection — the marks of a credible, quotable story."""
+    low = " " + text.lower() + " "
+    sentences = sum(text.count(c) for c in ".!?")
+    bonus = min(sentences, 4)            # up to +4 for multi-sentence depth
+    if len(text) >= 150: bonus += 1
+    if len(text) >= 280: bonus += 2      # a substantial, fleshed-out reflection
+    if " i " in low or low.lstrip().startswith("i "):
+        bonus += 1                       # personal, first-person voice
+    return bonus
+
+
+def rank_value(text, score, names_trainer):
+    """Sort key for testimonials: positivity + substance + a nudge for quotes
+    that name the trainer. Higher ranks first."""
+    return score + substance_bonus(text) + (1 if names_trainer else 0)
+
+
 def mentions_facilitator(text, facilitator):
     """True if the quote text mentions any token of the facilitator's name (>=3 chars)."""
     if not facilitator:
@@ -380,10 +400,11 @@ def best_quotes(ds, program_label, max_n=None):
             if score < 1 and not names_trainer:
                 continue
 
-            pairs.append((score, text, fac, names_trainer, name, company))
+            rank = rank_value(text, score, names_trainer)
+            pairs.append((rank, text, fac, names_trainer, name, company))
 
-    # Sort: positivity desc, with name-mentioning quotes promoted slightly
-    pairs.sort(key=lambda x: (-(x[0] + (1 if x[3] else 0)), -len(x[1])))
+    # Sort: substance + positivity desc, then longer first as a tie-breaker.
+    pairs.sort(key=lambda x: (-x[0], -len(x[1])))
     seen, picked = set(), []
     for _, text, fac, _, name, company in pairs:
         key = text[:60].lower()
