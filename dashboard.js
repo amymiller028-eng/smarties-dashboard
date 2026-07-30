@@ -305,7 +305,7 @@ Friction isn't the problem. It's the opportunity.
         channel: 'email',
         chip: 'Client email',
         text:
-`Quick proof point from Leading Through Friction: ${v.advocacy}% of participants said they'd want their team or other leaders in their organization to go through it, and ${top.strongly}% strongly agreed they "${top.text.charAt(0).toLowerCase() + top.text.slice(1)}". NPS came in at ${v.nps} with no detractors. Happy to walk you through what that looks like for your leaders.`
+`Quick proof point from Leading Through Friction: ${v.advocacy}% of participants said they'd want their team or other leaders in their organization to go through it. ${top.strongly}% strongly agreed with "${top.text}." NPS came in at ${v.nps} with no detractors. Happy to walk you through what that looks like for your leaders.`
       },
       {
         channel: 'pitch',

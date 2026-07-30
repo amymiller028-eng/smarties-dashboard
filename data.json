@@ -1,16 +1,16 @@
 {
   "meta": {
-    "lastUpdated": "2026-06-23",
+    "lastUpdated": "2026-07-30",
     "reportingPeriod": "Q1 2026 to date"
   },
   "views": {
     "all": {
       "label": "All Programs",
       "type": "standard",
-      "nps": 73,
-      "participants": 399,
-      "sessions": 31,
-      "clients": 31,
+      "nps": 74,
+      "participants": 422,
+      "sessions": 32,
+      "clients": 32,
       "eiDevelopmentAttributed": 69,
       "confidenceInEstimate": 80,
       "topBox": {
@@ -23,7 +23,7 @@
       },
       "modality": {
         "virtual": 254,
-        "inPerson": 152
+        "inPerson": 175
       },
       "noManagerExpectationsPct": 65,
       "managerExpectationsResponses": 259
@@ -245,6 +245,142 @@
       "pctMovedUpInConfidence": 71,
       "pctRatedValuable": 100,
       "confidenceScale": "1=Slightly \u00b7 2=Moderately \u00b7 3=Confident \u00b7 4=Fully"
+    },
+    "ltf-summary": {
+      "label": "Leading Through Friction",
+      "type": "ltf",
+      "nps": 96,
+      "participants": 23,
+      "sessions": 1,
+      "clients": 1,
+      "advocacy": 100,
+      "advocacyStrongly": 87,
+      "stronglyAgreeOverall": 77,
+      "ratingsCount": 160,
+      "unanimous": 6,
+      "statements": [
+        {
+          "text": "I gained practical tools I can apply to real leadership challenges",
+          "n": 23,
+          "top2": 100,
+          "strongly": 87,
+          "mean": 4.87
+        },
+        {
+          "text": "This course was a worthwhile investment of my time",
+          "n": 23,
+          "top2": 100,
+          "strongly": 87,
+          "mean": 4.87
+        },
+        {
+          "text": "I'd want my team or other leaders in my organization to go through this",
+          "n": 23,
+          "top2": 100,
+          "strongly": 87,
+          "mean": 4.87
+        },
+        {
+          "text": "The facilitator kept me engaged",
+          "n": 23,
+          "top2": 100,
+          "strongly": 78,
+          "mean": 4.78
+        },
+        {
+          "text": "The course materials were easy to navigate",
+          "n": 22,
+          "top2": 95,
+          "strongly": 73,
+          "mean": 4.68
+        },
+        {
+          "text": "I have a clearer way to recognize and respond to friction when it shows up",
+          "n": 23,
+          "top2": 100,
+          "strongly": 65,
+          "mean": 4.65
+        },
+        {
+          "text": "I expect this program to improve how I lead going forward",
+          "n": 23,
+          "top2": 100,
+          "strongly": 61,
+          "mean": 4.61
+        }
+      ],
+      "modality": {
+        "virtual": 0,
+        "inPerson": 23
+      }
+    },
+    "ltf-private": {
+      "label": "Leading Through Friction \u2014 Private Program",
+      "type": "ltf",
+      "nps": 96,
+      "participants": 23,
+      "sessions": 1,
+      "clients": 1,
+      "advocacy": 100,
+      "advocacyStrongly": 87,
+      "stronglyAgreeOverall": 77,
+      "ratingsCount": 160,
+      "unanimous": 6,
+      "statements": [
+        {
+          "text": "I gained practical tools I can apply to real leadership challenges",
+          "n": 23,
+          "top2": 100,
+          "strongly": 87,
+          "mean": 4.87
+        },
+        {
+          "text": "This course was a worthwhile investment of my time",
+          "n": 23,
+          "top2": 100,
+          "strongly": 87,
+          "mean": 4.87
+        },
+        {
+          "text": "I'd want my team or other leaders in my organization to go through this",
+          "n": 23,
+          "top2": 100,
+          "strongly": 87,
+          "mean": 4.87
+        },
+        {
+          "text": "The facilitator kept me engaged",
+          "n": 23,
+          "top2": 100,
+          "strongly": 78,
+          "mean": 4.78
+        },
+        {
+          "text": "The course materials were easy to navigate",
+          "n": 22,
+          "top2": 95,
+          "strongly": 73,
+          "mean": 4.68
+        },
+        {
+          "text": "I have a clearer way to recognize and respond to friction when it shows up",
+          "n": 23,
+          "top2": 100,
+          "strongly": 65,
+          "mean": 4.65
+        },
+        {
+          "text": "I expect this program to improve how I lead going forward",
+          "n": 23,
+          "top2": 100,
+          "strongly": 61,
+          "mean": 4.61
+        }
+      ],
+      "modality": {
+        "virtual": 0,
+        "inPerson": 23
+      }
     }
   },
   "testimonials": [
@@ -2423,6 +2559,110 @@
       "name": "Will",
       "company": "",
       "view": "custom"
+    },
+    {
+      "quote": "Excellent speaker, keeps you engaged, energy and passionate. Thank you. Very much appreciated. Worth my 3.5 hour drive.",
+      "program": "Leading Through Friction (Private Program)",
+      "facilitator": "Josh Rosenthal",
+      "name": "",
+      "company": "",
+      "view": "ltf-private"
+    },
+    {
+      "quote": "Josh was very engaging and helped us provide real life examples to learn from.",
+      "program": "Leading Through Friction (Private Program)",
+      "facilitator": "Josh Rosenthal",
+      "name": "Rhonda",
+      "company": "",
+      "view": "ltf-private"
+    },
+    {
+      "quote": "Very good speaker. Responded well to audience examples.",
+      "program": "Leading Through Friction (Private Program)",
+      "facilitator": "Josh Rosenthal",
+      "name": "",
+      "company": "",
+      "view": "ltf-private"
+    },
+    {
+      "quote": "He really knew the material, good examples that supported thoughtful analysis",
+      "program": "Leading Through Friction (Private Program)",
+      "facilitator": "Josh Rosenthal",
+      "name": "",
+      "company": "",
+      "view": "ltf-private"
+    },
+    {
+      "quote": "Friction is not good or bad, it\u2019s what we have to work through.",
+      "program": "Leading Through Friction (Private Program)",
+      "facilitator": "Josh Rosenthal",
+      "name": "",
+      "company": "",
+      "view": "ltf-private"
+    },
+    {
+      "quote": "Very knowledable on material, great examples; dynamic speaker",
+      "program": "Leading Through Friction (Private Program)",
+      "facilitator": "Josh Rosenthal",
+      "name": "",
+      "company": "",
+      "view": "ltf-private"
+    },
+    {
+      "quote": "Great speaker, very engaging and open",
+      "program": "Leading Through Friction (Private Program)",
+      "facilitator": "Josh Rosenthal",
+      "name": "Angie",
+      "company": "",
+      "view": "ltf-private"
+    },
+    {
+      "quote": "Energy was well paced, excellent answers to questions, very knowledgeable and connected content to real life very well",
+      "program": "Leading Through Friction (Private Program)",
+      "facilitator": "Josh Rosenthal",
+      "name": "",
+      "company": "",
+      "view": "ltf-private"
+    },
+    {
+      "quote": "Very engaging, was able to connect examples shared within the group to the concepts",
+      "program": "Leading Through Friction (Private Program)",
+      "facilitator": "Josh Rosenthal",
+      "name": "",
+      "company": "",
+      "view": "ltf-private"
+    },
+    {
+      "quote": "Pause, name and choose - a powerful reminder of our ability to control ourselves",
+      "program": "Leading Through Friction (Private Program)",
+      "facilitator": "Josh Rosenthal",
+      "name": "",
+      "company": "",
+      "view": "ltf-private"
+    },
+    {
+      "quote": "Engaging and genuinely interested in conversation and discussion",
+      "program": "Leading Through Friction (Private Program)",
+      "facilitator": "Josh Rosenthal",
+      "name": "",
+      "company": "",
+      "view": "ltf-private"
+    },
+    {
+      "quote": "Great energy and knowledge",
+      "program": "Leading Through Friction (Private Program)",
+      "facilitator": "Josh Rosenthal",
+      "name": "",
+      "company": "",
+      "view": "ltf-private"
+    },
+    {
+      "quote": "Engaging and knowledgeable",
+      "program": "Leading Through Friction (Private Program)",
+      "facilitator": "Josh Rosenthal",
+      "name": "",
+      "company": "",
+      "view": "ltf-private"
     }
   ]
 }
