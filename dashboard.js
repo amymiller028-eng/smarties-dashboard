@@ -54,18 +54,27 @@
     document.getElementById('footerDate').textContent = fmtDate(d.meta.lastUpdated);
     document.getElementById('viewLabel').textContent = v.label;
 
-    if (v.type === 'refresher') {
-      document.getElementById('standardView').hidden = true;
-      document.getElementById('refresherView').hidden = false;
+    const panes = {
+      standard: document.getElementById('standardView'),
+      ltf: document.getElementById('ltfView'),
+      refresher: document.getElementById('refresherView')
+    };
+    const which = panes[v.type] ? v.type : 'standard';
+    Object.entries(panes).forEach(([k, el]) => { if (el) el.hidden = k !== which; });
+
+    if (which === 'refresher') {
       renderRefresher(v);
       renderShareSnippets(v, 'shareGridRefresher');
+      renderTestimonials('testimonials');
+    } else if (which === 'ltf') {
+      renderLtf(v);
+      renderShareSnippets(v, 'shareGridLtf');
+      renderTestimonials('ltfTestimonials');
     } else {
-      document.getElementById('refresherView').hidden = true;
-      document.getElementById('standardView').hidden = false;
       renderStandard(v);
       renderShareSnippets(v, 'shareGrid');
+      renderTestimonials('testimonials');
     }
-    renderTestimonials();
   }
 
   function renderStandard(v) {
@@ -101,14 +110,10 @@
       noManagerCard.hidden = true;
     }
 
-    // Modality bar
-    const total = v.modality.virtual + v.modality.inPerson;
-    const vPct = total ? (v.modality.virtual / total) * 100 : 0;
-    const iPct = total ? (v.modality.inPerson / total) * 100 : 0;
-    document.getElementById('virtualFill').style.width = vPct + '%';
-    document.getElementById('inPersonFill').style.width = iPct + '%';
-    document.getElementById('virtualLabel').textContent = vPct > 8 ? `Virtual ${Math.round(vPct)}%` : '';
-    document.getElementById('inPersonLabel').textContent = iPct > 8 ? `In person ${Math.round(iPct)}%` : '';
+    renderModality(v.modality, {
+      virtualFill: 'virtualFill', inPersonFill: 'inPersonFill',
+      virtualLabel: 'virtualLabel', inPersonLabel: 'inPersonLabel'
+    });
   }
 
   // The EQ-growth card's "how to use this" popover: explains the two numbers
@@ -131,6 +136,51 @@
     });
   }
 
+  // Shared by the standard and LTF views — both carry a { virtual, inPerson } count.
+  function renderModality(modality, ids) {
+    const total = modality.virtual + modality.inPerson;
+    const vPct = total ? (modality.virtual / total) * 100 : 0;
+    const iPct = total ? (modality.inPerson / total) * 100 : 0;
+    document.getElementById(ids.virtualFill).style.width = vPct + '%';
+    document.getElementById(ids.inPersonFill).style.width = iPct + '%';
+    document.getElementById(ids.virtualLabel).textContent = vPct > 8 ? `Virtual ${Math.round(vPct)}%` : '';
+    document.getElementById(ids.inPersonLabel).textContent = iPct > 8 ? `In person ${Math.round(iPct)}%` : '';
+  }
+
+  function renderLtf(v) {
+    const npsEl = document.getElementById('ltfNps');
+    npsEl.textContent = v.nps;
+    flashFadeIn(npsEl);
+    document.getElementById('ltfNpsCaption').textContent = npsCaption(v.nps);
+    document.getElementById('ltfNpsBar').style.width = ((v.nps + 100) / 200) * 100 + '%';
+
+    document.getElementById('ltfAdvocacy').textContent = v.advocacy;
+    document.getElementById('ltfAdvocacyStrong').textContent = v.advocacyStrongly;
+    document.getElementById('ltfParticipants').textContent = v.participants;
+    document.getElementById('ltfSessions').textContent = v.sessions;
+    document.getElementById('ltfClients').textContent = v.clients;
+
+    const total = v.statements.length;
+    document.getElementById('ltfStatementsSub').textContent =
+      `${v.unanimous} of ${total} statements drew agreement from every participant. ` +
+      `Bars show the share who picked "strongly agree" — the top of the scale.`;
+
+    document.getElementById('ltfStatements').innerHTML = v.statements.map(s => `
+      <div class="statement-row">
+        <div class="statement-text">${escapeHtml(s.text)}</div>
+        <div class="statement-bar"><span style="width:${s.strongly}%"></span></div>
+        <div class="statement-nums">
+          <b>${s.strongly}%</b>strongly agree
+          <em>${s.top2}% agreed &middot; avg ${s.mean.toFixed(2)}/5</em>
+        </div>
+      </div>`).join('');
+
+    renderModality(v.modality, {
+      virtualFill: 'ltfVirtualFill', inPersonFill: 'ltfInPersonFill',
+      virtualLabel: 'ltfVirtualLabel', inPersonLabel: 'ltfInPersonLabel'
+    });
+  }
+
   function renderRefresher(v) {
     document.getElementById('confBefore').textContent = v.confidenceBefore.toFixed(2);
     document.getElementById('confAfter').textContent = v.confidenceAfter.toFixed(2);
@@ -148,8 +198,8 @@
     document.getElementById('pctMovedUp').textContent = v.pctMovedUpInConfidence;
   }
 
-  function renderTestimonials() {
-    const container = document.getElementById('testimonials');
+  function renderTestimonials(targetId) {
+    const container = document.getElementById(targetId || 'testimonials');
     if (!container) return;
     const items = state.data.testimonials || [];
     let pool = items;
@@ -233,6 +283,49 @@ Our ${label} delivers emotional intelligence training that actually sticks.
     return snippets;
   }
 
+  // LTF has no EQ-attribution question, so its snippets lead on unanimity
+  // and advocacy instead of the confidence-adjusted growth figure.
+  function buildLtfSnippets(v) {
+    const total = v.statements.length;
+    const top = v.statements[0];
+    const snippets = [
+      {
+        channel: 'linkedin',
+        chip: 'LinkedIn post',
+        text:
+`${v.nps} NPS. Zero detractors. ${v.advocacy}% would put their own team through it.
+
+${v.unanimous} of our ${total} end-of-session statements drew agreement from every single participant in Leading Through Friction.
+
+Friction isn't the problem. It's the opportunity.
+
+#LeadershipDevelopment #EmotionalIntelligence #TalentSmartEQ`
+      },
+      {
+        channel: 'email',
+        chip: 'Client email',
+        text:
+`Quick proof point from Leading Through Friction: ${v.advocacy}% of participants said they'd want their team or other leaders in their organization to go through it, and ${top.strongly}% strongly agreed they "${top.text.charAt(0).toLowerCase() + top.text.slice(1)}". NPS came in at ${v.nps} with no detractors. Happy to walk you through what that looks like for your leaders.`
+      },
+      {
+        channel: 'pitch',
+        chip: 'Pitch / proposal line',
+        text:
+`Leading Through Friction scored an NPS of ${v.nps} with zero detractors, and every participant agreed on ${v.unanimous} of ${total} impact statements — including that they'd send their own team. (n=${v.participants} leaders, ${v.sessions} session${v.sessions === 1 ? '' : 's'}.)`
+      }
+    ];
+
+    const quote = bestTestimonialForView();
+    if (quote) {
+      const who = personLabel(quote) || `${quote.program} participant`;
+      snippets.push({
+        channel: 'quote', chip: 'Shareable quote',
+        text: `"${quote.quote}"\n\n— ${who}`
+      });
+    }
+    return snippets;
+  }
+
   function buildRefresherSnippets(v) {
     const before = v.confidenceBefore.toFixed(2);
     const after = v.confidenceAfter.toFixed(2);
@@ -266,7 +359,9 @@ Certification doesn't end at Level 2. #TrainTheTrainer #TalentSmartEQ`
   function renderShareSnippets(v, targetId) {
     const grid = document.getElementById(targetId);
     if (!grid) return;
-    const snippets = v.type === 'refresher' ? buildRefresherSnippets(v) : buildStandardSnippets(v);
+    const snippets = v.type === 'refresher' ? buildRefresherSnippets(v)
+                   : v.type === 'ltf' ? buildLtfSnippets(v)
+                   : buildStandardSnippets(v);
     grid.innerHTML = snippets.map(s => `
       <div class="share-card fade-in" data-channel="${s.channel}">
         <div class="share-head-row">
@@ -350,9 +445,20 @@ Certification doesn't end at Level 2. #TrainTheTrainer #TalentSmartEQ`
     });
   }
 
+  // Hide any tab whose view isn't in data.json. LTF's Public and Train the
+  // Trainer sub-tabs stay hidden until those sheets exist, then appear on
+  // their own with no code change.
+  function pruneNav() {
+    const have = state.data.views || {};
+    document.querySelectorAll('.tab, .sub-tab').forEach(btn => {
+      btn.hidden = !have[btn.dataset.view];
+    });
+  }
+
   async function init() {
     try {
       await loadData();
+      pruneNav();
       wireTabs();
       setActiveTab('all');
       render();

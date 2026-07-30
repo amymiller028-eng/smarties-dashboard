@@ -69,6 +69,68 @@ SHEET_COLS = {
     },
 }
 
+# --- Leading Through Friction -------------------------------------------------
+# LTF runs its own survey: seven agreement statements that only partly overlap
+# the standard question set. One sheet per delivery mode, named "LTF-<Delivery>".
+# Add LTF-Public / LTF-TTT sheets and they appear on the dashboard by themselves.
+LTF_DELIVERIES = {                       # sheet suffix -> (view key, tab label)
+    "Private": ("ltf-private", "Private Program"),
+    "Public":  ("ltf-public",  "Public"),
+    "TTT":     ("ltf-ttt",     "Train the Trainer"),
+}
+
+# LTF's own columns, named for the questions they actually ask.
+LTF_COLS = {
+    "session": "A", "modality": "L", "facilitator": "M",
+    "materials": "N", "engaged": "O", "tools": "P", "worthwhile": "Q",
+    "clearer": "R", "improve": "S", "recommend_team": "T",
+    "nps": "W", "learned": "X",
+}
+
+# The seven statements, ordered strongest-first. Drives the dashboard list.
+LTF_STATEMENTS = [
+    ("tools",          "I gained practical tools I can apply to real leadership challenges"),
+    ("worthwhile",     "This course was a worthwhile investment of my time"),
+    ("recommend_team", "I'd want my team or other leaders in my organization to go through this"),
+    ("engaged",        "The facilitator kept me engaged"),
+    ("materials",      "The course materials were easy to navigate"),
+    ("clearer",        "I have a clearer way to recognize and respond to friction when it shows up"),
+    ("improve",        "I expect this program to improve how I lead going forward"),
+]
+
+# How LTF feeds the SHARED "All Programs" tiles. Only four of the six have an
+# honest equivalent: LTF never asks about content relevance or facilitator
+# knowledge, so it contributes nothing to those two rather than letting a
+# near-enough question stand in for them.
+LTF_AS_STANDARD = {
+    "session": "A", "modality": "L", "facilitator": "M",
+    "content_relevant": None,        # not asked in LTF
+    "fac_knowledge": None,           # not asked in LTF
+    "fac_engaged": "O",              # "The facilitator kept me engaged"
+    "worthwhile": "Q",               # exact match
+    "apply_on_job": "P",             # "gained practical tools I can apply..."
+    "gained_knowledge": "R",         # "clearer way to recognize and respond to friction"
+    "nps": "W",
+    "ei_dev_pct": None,              # LTF doesn't ask the EQ-attribution pair,
+    "confidence_pct": None,          # so it can't drag those averages either way
+    "manager_exp": None,
+    "quote": "X",                    # "most important thing you learned"
+}
+
+
+def ltf_sheets(sheetnames):
+    """LTF delivery sheets present in the workbook, in delivery order."""
+    return [f"LTF-{sfx}" for sfx in LTF_DELIVERIES if f"LTF-{sfx}" in sheetnames]
+
+
+def all_sheet_cols(sheetnames):
+    """Standard-shaped column map for every sheet, LTF sheets included."""
+    cols = dict(SHEET_COLS)
+    for name in ltf_sheets(sheetnames):
+        cols[name] = LTF_AS_STANDARD
+    return cols
+
+
 CONFIDENCE_MAP = {
     "slightly confident": 1,
     "moderately confident": 2,
@@ -195,6 +257,61 @@ def standard_view(label, datasets):
         view["managerExpectationsResponses"] = len(me_values)
 
     return view
+
+
+def ltf_view(label, datasets):
+    """LTF's own view. Its seven statements don't map onto the standard six
+    tiles, so it reports them directly: agreement and strength of agreement
+    per statement, plus the advocacy question as the headline companion to NPS."""
+    def cat(key):
+        out = []
+        for ds in datasets:
+            out.extend(ds.get(key, []))
+        return out
+
+    def share(nums, floor):
+        return round(sum(1 for v in nums if v >= floor) / len(nums) * 100) if nums else 0
+
+    sessions_all = [s for s in cat("session") if s]
+    nps_all = cat("nps")
+    participants = len(numeric(nps_all))
+    if participants == 0:
+        participants = sum(sum(1 for v in ds.get("modality", []) if v) for ds in datasets)
+
+    statements, all_ratings = [], []
+    for key, text in LTF_STATEMENTS:
+        nums = numeric(cat(key))
+        if not nums:
+            continue
+        all_ratings.extend(nums)
+        statements.append({
+            "text": text,
+            "n": len(nums),
+            "top2": share(nums, 4),
+            "strongly": share(nums, 5),
+            "mean": round(sum(nums) / len(nums), 2),
+        })
+
+    advocacy = numeric(cat("recommend_team"))
+
+    return {
+        "label": label,
+        "type": "ltf",
+        "nps": nps(nps_all),
+        "participants": participants,
+        "sessions": distinct_count(sessions_all),
+        "clients": distinct_count(sessions_all),
+        "advocacy": share(advocacy, 4),
+        "advocacyStrongly": share(advocacy, 5),
+        "stronglyAgreeOverall": share(all_ratings, 5),
+        "ratingsCount": len(all_ratings),
+        "unanimous": sum(1 for s in statements if s["top2"] == 100),
+        "statements": statements,
+        "modality": {
+            "virtual": sum(count_text(ds.get("modality", []), "Virtual") for ds in datasets),
+            "inPerson": sum(count_text(ds.get("modality", []), "In person") for ds in datasets),
+        },
+    }
 
 
 def refresher_view(ws):
@@ -350,6 +467,12 @@ def detect_extra_cols(ws):
         for key, needles in EXTRA_HEADER_NEEDLES.items():
             if key in found:
                 continue
+            # A real contact column is labelled, not asked: "Email Address".
+            # Survey *questions* also contain the word — LTF's opt-in ends
+            # "...please add your email address here!" — and matching one would
+            # turn a "may we contact you" answer into a public company tag.
+            if key == "email" and len(hl) > 40:
+                continue
             if any(n in hl for n in needles):
                 found[key] = get_column_letter(c)
     return found
@@ -421,6 +544,8 @@ PROGRAM_LABELS = {
     "TTTL1": "TTT L1", "TTTL2": "TTT L2", "TTTTeams": "TTT Teams",
     "PrivateL1": "Private L1", "PrivateL2": "Private L2",
     "PublicL1": "Public L1", "Custom Programs": "Custom Programs",
+    "LTF-Private": "LTF — Private", "LTF-Public": "LTF — Public",
+    "LTF-TTT": "LTF — TTT",
 }
 
 
@@ -476,7 +601,7 @@ def update_trainers_tab():
     trainer_data = defaultdict(lambda: defaultdict(lambda: {
         "nps": [], "apply": [], "engage": [], "modality": [], "sessions": set()
     }))
-    for sheet_name, cols in SHEET_COLS.items():
+    for sheet_name, cols in all_sheet_cols(wb.sheetnames).items():
         if sheet_name not in wb.sheetnames or not cols.get("facilitator"):
             continue
         raw_ws = wb[sheet_name]
@@ -571,8 +696,10 @@ def update_trainers_tab():
 def main():
     wb = openpyxl.load_workbook(SRC, data_only=True)
 
+    ltf_present = ltf_sheets(wb.sheetnames)
+
     raw = {}
-    for sheet_name, cols in SHEET_COLS.items():
+    for sheet_name, cols in all_sheet_cols(wb.sheetnames).items():
         if sheet_name not in wb.sheetnames:
             print(f"  skipping missing sheet: {sheet_name}")
             continue
@@ -583,6 +710,9 @@ def main():
         for key in ("email", "first", "last", "name_optional", "strengths"):
             ds[key] = col_values(ws, extra[key]) if extra.get(key) else []
         raw[sheet_name] = ds
+
+    # LTF again, this time under its own question names, for its own view.
+    ltf_raw = {name: collect_sheet(wb[name], LTF_COLS) for name in ltf_present}
 
     views = {}
 
@@ -607,6 +737,16 @@ def main():
     views["custom"] = standard_view("Custom Programs", [raw["Custom Programs"]])
     views["refresher"] = refresher_view(wb["Refresher"])
 
+    # Leading Through Friction — summary plus one view per delivery mode that
+    # actually has data. Views the dashboard doesn't find, it hides.
+    if ltf_present:
+        views["ltf-summary"] = ltf_view(
+            "Leading Through Friction", [ltf_raw[s] for s in ltf_present])
+        for s in ltf_present:
+            key, delivery = LTF_DELIVERIES[s.split("-", 1)[1]]
+            views[key] = ltf_view(
+                f"Leading Through Friction — {delivery}", [ltf_raw[s]])
+
     # Quotes
     testimonials = []
     label_for = {
@@ -620,6 +760,10 @@ def main():
         "PrivateL1": "private-l1", "PrivateL2": "private-l2",
         "PublicL1": "public-l1", "Custom Programs": "custom",
     }
+    for s in ltf_present:
+        key, delivery = LTF_DELIVERIES[s.split("-", 1)[1]]
+        label_for[s] = f"Leading Through Friction ({delivery})"
+        view_for[s] = key
     for sheet_name, ds in raw.items():
         for q in best_quotes(ds, label_for[sheet_name]):
             q["view"] = view_for[sheet_name]
@@ -643,6 +787,9 @@ def main():
     for k, v in views.items():
         if v.get("type") == "refresher":
             print(f"  {k:18s} participants={v['participants']:>3}  growth={v['confidenceGrowth']}  valuable%={v['pctRatedValuable']}")
+        elif v.get("type") == "ltf":
+            print(f"  {k:18s} NPS={v['nps']:>3}  N={v['participants']:>3}  "
+                  f"advocacy={v['advocacy']}%  unanimous={v['unanimous']}/{len(v['statements'])}")
         else:
             extra = f"  noManager%={v.get('noManagerExpectationsPct','-')}" if "noManagerExpectationsPct" in v else ""
             print(f"  {k:18s} NPS={v['nps']:>3}  N={v['participants']:>3}  applyOnJob={v['topBox']['applyOnJob']}%{extra}")

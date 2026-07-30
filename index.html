@@ -33,6 +33,7 @@
       <div class="tabs primary-tabs" role="tablist">
         <button class="tab is-active" data-view="all" role="tab" aria-selected="true">All Programs</button>
         <button class="tab" data-view="ttt-summary" data-group="ttt" role="tab" aria-selected="false">Train the Trainer</button>
+        <button class="tab" data-view="ltf-summary" data-group="ltf" role="tab" aria-selected="false">LTF</button>
         <button class="tab" data-view="private-summary" data-group="private" role="tab" aria-selected="false">Private Program</button>
         <button class="tab" data-view="public-l1" role="tab" aria-selected="false">Public Program</button>
         <button class="tab" data-view="custom" role="tab" aria-selected="false">Custom Programs</button>
@@ -44,6 +45,14 @@
         <button class="sub-tab" data-view="ttt-l1">Level 1</button>
         <button class="sub-tab" data-view="ttt-l2">Level 2</button>
         <button class="sub-tab" data-view="ttt-teams">Teams</button>
+      </div>
+      <!-- Delivery modes with no data yet are hidden by dashboard.js, so
+           Public and Train the Trainer appear the first time they run. -->
+      <div class="sub-tabs" data-group="ltf" hidden>
+        <button class="sub-tab is-active" data-view="ltf-summary">Summary</button>
+        <button class="sub-tab" data-view="ltf-private">Private Program</button>
+        <button class="sub-tab" data-view="ltf-public">Public</button>
+        <button class="sub-tab" data-view="ltf-ttt">Train the Trainer</button>
       </div>
       <div class="sub-tabs" data-group="private" hidden>
         <button class="sub-tab is-active" data-view="private-summary">Summary</button>
@@ -124,6 +133,73 @@
           <p class="section-sub">Copy-ready snippets built from the numbers above. Pick a channel, hit copy, share.</p>
         </div>
         <div class="share-grid" id="shareGrid"></div>
+      </section>
+    </div>
+
+    <!-- ============= LEADING THROUGH FRICTION VIEW ============= -->
+    <div id="ltfView" hidden>
+      <section class="hero-kpi">
+        <div class="hero-card">
+          <div class="hero-eyebrow">Net Promoter Score</div>
+          <div class="hero-number" id="ltfNps">—</div>
+          <div class="hero-caption" id="ltfNpsCaption">World-class satisfaction</div>
+          <div class="hero-footnote">* NPS above 70 is considered world-class.</div>
+          <div class="hero-scale">
+            <span>-100</span>
+            <div class="scale-bar"><div class="scale-fill" id="ltfNpsBar"></div></div>
+            <span>+100</span>
+          </div>
+        </div>
+        <div class="hero-side">
+          <div class="side-card highlight-card">
+            <div class="side-eyebrow">Would send their own team</div>
+            <div class="side-number"><span id="ltfAdvocacy">—</span><span class="unit">%</span></div>
+            <div class="side-caption">agreed they'd want their team or other leaders to go through it — <span id="ltfAdvocacyStrong">—</span>% of them strongly.</div>
+          </div>
+          <div class="side-card">
+            <div class="side-eyebrow">Reach</div>
+            <div class="reach-grid">
+              <div><div class="reach-num" id="ltfParticipants">—</div><div class="reach-label">Leaders</div></div>
+              <div><div class="reach-num" id="ltfSessions">—</div><div class="reach-label">Sessions</div></div>
+              <div><div class="reach-num" id="ltfClients">—</div><div class="reach-label">Clients</div></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="kpi-grid">
+        <h2 class="section-title">Every statement, rated</h2>
+        <p class="section-sub" id="ltfStatementsSub">—</p>
+        <div class="statements" id="ltfStatements"></div>
+      </section>
+
+      <section class="refresher-note">
+        <p>Leading Through Friction uses its own end-of-session survey. Its seven statements aren't the same questions the other programs ask, so the shared top-2-box tiles don't apply here — the full statement-by-statement breakdown is above.</p>
+      </section>
+
+      <section class="split">
+        <div class="split-col">
+          <h2 class="section-title">In their own words</h2>
+          <div class="testimonials" id="ltfTestimonials"></div>
+        </div>
+        <div class="split-col">
+          <h2 class="section-title">Delivery modality</h2>
+          <p class="section-sub">How participants attended.</p>
+          <div class="modality-row">
+            <div class="modality-bar">
+              <div class="modality-fill virtual" id="ltfVirtualFill"><span id="ltfVirtualLabel">—</span></div>
+              <div class="modality-fill inperson" id="ltfInPersonFill"><span id="ltfInPersonLabel">—</span></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="share-panel">
+        <div class="share-head">
+          <h2 class="section-title">Share this story</h2>
+          <p class="section-sub">Copy-ready snippets built from the numbers above. Pick a channel, hit copy, share.</p>
+        </div>
+        <div class="share-grid" id="shareGridLtf"></div>
       </section>
     </div>
 
