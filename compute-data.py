@@ -6,15 +6,113 @@ Run any time you've added new survey responses to the workbook.
     python compute-data.py
 """
 import json
+import re
 from collections import Counter
-from datetime import datetime
+from datetime import datetime, timedelta
 from pathlib import Path
 import openpyxl
 
 SRC = Path(r"C:\Users\Amy Miller - TS\OneDrive - TalentSmart\Program-Evals-2026.xlsx")
 OUT = Path(__file__).parent / "data.json"
 
-# Per-sheet column mappings. None means the sheet doesn't have that question.
+# 2025 lives in its own workbook and is closed history — read, never written.
+# Its sheets ask the same questions in different columns, which resolve_cols()
+# handles, so each one just names the 2026 sheet whose history it continues.
+LEGACY_SRC = Path(r"C:\Users\Amy Miller - TS\OneDrive - TalentSmart\Program_Evals.xlsx")
+LEGACY_SHEETS = {
+    "PrivateL1_EOS": "PrivateL1",
+    "PrivateL2_EOS": "PrivateL2",
+    "TTTLevel1_EOS": "TTTL1",
+    "TTTLevel2_EOS": "TTTL2",
+    "TTT_Teams":     "TTTTeams",
+    # EQ in Policing has no 2026 counterpart — it becomes its own family under
+    # Custom Programs. NOTE: the sheet holds 3 sessions, only 19 of its 26 rows
+    # are the policing engagement itself.
+    "policing":      "Policing",
+    # "Refresh" is deliberately absent: despite the name it's a standard EOS
+    # survey, not the refresher-readiness instrument, and its item labels sit
+    # in row 2. It needs its own parse before it can be included.
+}
+
+# --- Column resolution --------------------------------------------------------
+# Columns are found by HEADER TEXT and then confirmed by the SHAPE OF THEIR
+# VALUES, because a header row can't be trusted on its own: the TTTTeams export
+# has a header row sitting one column to the right of its own data, so matching
+# on text alone reads the wrong column for every metric on that sheet. Anything
+# in COLUMN_OVERRIDES below wins outright.
+
+COLUMN_NEEDLES = {
+    "session":          ["session name"],
+    "modality":         ["facilitated virtually"],
+    "facilitator":      ["facilitator name"],
+    "content_relevant": ["relevant to my job"],
+    "fac_knowledge":    ["enhanced by my facilitator"],
+    "fac_engaged":      ["facilitator kept me engaged"],
+    "worthwhile":       ["worthwhile investment"],
+    "apply_on_job":     ["apply what i learned"],
+    "gained_knowledge": ["gained new knowledge"],
+    "nps":              ["recommend this program"],
+    "ei_dev_pct":       ["percentage of your development in emotional intelligence"],
+    "confidence_pct":   ["confident are you in this estimate"],
+    "manager_exp":      ["manager communicated"],
+    "quote":            ["share with future participants", "share with future facilitators"],
+    "start_date":       ["start date"],
+    "end_date":         ["end date"],
+}
+
+
+def _nums(values):
+    return [v for v in values if isinstance(v, (int, float))]
+
+def _in_range(lo, hi):
+    def check(values):
+        n = _nums(values)
+        return bool(n) and all(lo <= v <= hi for v in n)
+    return check
+
+def _looks_like_text(values):
+    return any(isinstance(v, str) and v.strip() and not v.strip().isdigit()
+               for v in values)
+
+def _looks_like_modality(values):
+    return any(str(v).strip().lower() in ("virtual", "in person")
+               for v in values if v not in (None, ""))
+
+_LIKERT = _in_range(1, 5)
+
+# A detected column must also look like its metric, or we refuse it.
+COLUMN_SHAPES = {
+    "modality":         _looks_like_modality,
+    "facilitator":      _looks_like_text,
+    "session":          _looks_like_text,
+    "quote":            _looks_like_text,
+    "nps":              _in_range(0, 10),
+    "ei_dev_pct":       _in_range(0, 100),
+    "confidence_pct":   _in_range(0, 100),
+    "content_relevant": _LIKERT,
+    "fac_knowledge":    _LIKERT,
+    "fac_engaged":      _LIKERT,
+    "worthwhile":       _LIKERT,
+    "apply_on_job":     _LIKERT,
+    "gained_knowledge": _LIKERT,
+}
+
+# Sheets whose headers can't be trusted, or questions to deliberately ignore.
+# None means "this sheet doesn't have that question, don't go looking".
+COLUMN_OVERRIDES = {
+    # Header row is one column right of the data — every key pinned by hand.
+    "TTTTeams": {
+        "session": "A", "modality": "R", "facilitator": "S",
+        "content_relevant": "W", "fac_knowledge": "X", "fac_engaged": "Y",
+        "worthwhile": "AA", "apply_on_job": "AB", "gained_knowledge": "AC",
+        "nps": "AF", "ei_dev_pct": "AI", "confidence_pct": "AJ",
+        "manager_exp": None, "quote": "AK",
+    },
+}
+
+
+# Legacy hand-written map. Kept as the reference the resolver is checked
+# against; `--verify-columns` reports any disagreement.
 SHEET_COLS = {
     "TTTL1": {
         "session": "A", "modality": "S", "facilitator": "T",
@@ -118,15 +216,233 @@ LTF_AS_STANDARD = {
 }
 
 
+# --- Dates --------------------------------------------------------------------
+# Response dates arrive in four states. Real datetimes; Excel serial numbers
+# saved as text ("45891.59349537037"); the literal string "########", which is
+# Excel's too-narrow-column display accidentally saved as a value and destroys
+# the date in that cell; and blank. For the last two the date is recovered from
+# the Session Name, which nearly always carries one ("... - July 23, 2026").
+
+EXCEL_EPOCH = datetime(1899, 12, 30)
+
+_MONTHS = {m: i for i, m in enumerate(
+    ["jan", "feb", "mar", "apr", "may", "jun",
+     "jul", "aug", "sep", "oct", "nov", "dec"], start=1)}
+
+_SESSION_MONTH_YEAR = re.compile(
+    r"(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)[a-z]*\.?\s*"
+    r"(?:\d{1,2}(?:\s*[-–]\s*\d{1,2})?\s*,?\s*)?(20\d{2})", re.I)
+_SESSION_YEAR_ONLY = re.compile(r"\b(20\d{2})\b")
+_SESSION_YEAR_RANGE = re.compile(r"\b20\d{2}\s*[-–]\s*20\d{2}\b")
+
+
+def parse_cell_date(value):
+    """A datetime from a date cell, whatever state it's in. None if unusable."""
+    if isinstance(value, datetime):
+        return value
+    if value in (None, ""):
+        return None
+    text = str(value).strip()
+    if not text or set(text) == {"#"}:          # '########' — destroyed
+        return None
+    try:                                        # Excel serial saved as text
+        return EXCEL_EPOCH + timedelta(days=float(text))
+    except ValueError:
+        pass
+    for fmt in ("%Y-%m-%d", "%m/%d/%Y", "%m/%d/%y", "%d%b%Y", "%B %d, %Y"):
+        try:
+            return datetime.strptime(text, fmt)
+        except ValueError:
+            continue
+    return None
+
+
+def parse_session_date(session):
+    """Approximate date from a session name — month precision is enough to
+    bucket by year and quarter. None when the name spans years ("2023-2024")."""
+    if not session:
+        return None
+    text = " ".join(str(session).split())
+    if _SESSION_YEAR_RANGE.search(text):        # ambiguous, don't guess
+        return None
+    m = _SESSION_MONTH_YEAR.search(text)
+    if m:
+        return datetime(int(m.group(2)), _MONTHS[m.group(1).lower()[:3]], 1)
+    y = _SESSION_YEAR_ONLY.search(text)
+    return datetime(int(y.group(1)), 1, 1) if y else None
+
+
+def response_date(start, end, session):
+    """Best available date for one response, most trustworthy source first."""
+    return (parse_cell_date(start) or parse_cell_date(end)
+            or parse_session_date(session))
+
+
+def period_of(dt):
+    """{'year': 2026, 'quarter': '2026-Q3'} — or None when undated."""
+    return None if dt is None else {
+        "year": dt.year, "quarter": f"{dt.year}-Q{(dt.month - 1) // 3 + 1}"}
+
+
+def _read_locked_file(path):
+    """Read a file Excel currently has open.
+
+    Python's open() asks Windows for a handle in a way Excel's lock refuses,
+    even though the file is perfectly readable — Explorer and PowerShell copy
+    it fine. Going through CreateFileW with every share flag set gets the same
+    access they do.
+    """
+    import ctypes, msvcrt, os
+    from ctypes import wintypes
+
+    GENERIC_READ, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL = 0x80000000, 3, 0x80
+    FILE_SHARE_ALL = 0x1 | 0x2 | 0x4          # read | write | delete
+
+    CreateFileW = ctypes.windll.kernel32.CreateFileW
+    CreateFileW.argtypes = [wintypes.LPCWSTR, wintypes.DWORD, wintypes.DWORD,
+                            wintypes.LPVOID, wintypes.DWORD, wintypes.DWORD,
+                            wintypes.HANDLE]
+    CreateFileW.restype = wintypes.HANDLE
+
+    handle = CreateFileW(str(path), GENERIC_READ, FILE_SHARE_ALL, None,
+                         OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, None)
+    if handle == wintypes.HANDLE(-1).value:
+        raise ctypes.WinError(ctypes.get_last_error())
+    with os.fdopen(msvcrt.open_osfhandle(handle, os.O_RDONLY), "rb") as fh:
+        return fh.read()
+
+
+def load_readonly(path, **kwargs):
+    """Open a workbook we only ever read. Having it open in Excel shouldn't
+    block a refresh, so fall back to reading a snapshot of the bytes."""
+    try:
+        return openpyxl.load_workbook(path, **kwargs)
+    except PermissionError:
+        import io
+        try:
+            data = _read_locked_file(path)
+        except Exception as exc:
+            print(f"  ! {path.name} is locked and could not be read ({exc}). "
+                  f"Close it in Excel and re-run.")
+            raise
+        print(f"  ({path.name} is open in Excel — reading a snapshot of it)")
+        return openpyxl.load_workbook(io.BytesIO(data), **kwargs)
+
+
+def _header_map(ws):
+    """{'A': 'session name', ...} — normalised header text by column letter."""
+    from openpyxl.utils import get_column_letter
+    out = {}
+    for c in range(1, min(ws.max_column, 120) + 1):
+        h = ws.cell(row=1, column=c).value
+        if h:
+            out[get_column_letter(c)] = " ".join(str(h).split()).lower()
+    return out
+
+
+def resolve_cols(ws, sheet_name, needles=None, shapes=None, warn=None):
+    """Locate each metric's column: explicit override first, else header text
+    confirmed against the shape of the values underneath it.
+
+    Returns {key: 'G' or None}. Appends human-readable notes to `warn`.
+    """
+    needles = needles or COLUMN_NEEDLES
+    shapes = shapes or COLUMN_SHAPES
+    warn = warn if warn is not None else []
+    overrides = COLUMN_OVERRIDES.get(sheet_name, {})
+    headers = _header_map(ws)
+
+    resolved = {}
+    for key in needles:
+        if key in overrides:                       # pinned by hand — trust it
+            resolved[key] = overrides[key]
+            continue
+
+        letter = next((col for col, text in headers.items()
+                       if any(n in text for n in needles[key])), None)
+        if letter is None:
+            resolved[key] = None
+            continue
+
+        values = col_values(ws, letter)
+        if not any(v not in (None, "") for v in values):
+            resolved[key] = None                   # column exists but is empty
+            continue
+
+        check = shapes.get(key)
+        if check and not check(values):
+            warn.append(f"{sheet_name}.{key}: header matched at {letter} but the "
+                        f"values don't look like {key} — ignoring this column")
+            resolved[key] = None
+            continue
+
+        resolved[key] = letter
+    return resolved
+
+
+# --- 90-day Learner impact survey ---------------------------------------------
+# A different instrument entirely: sent ~90 days after a program to measure what
+# people still DO, not how they felt on the day. Lives in the 2025 workbook and
+# keeps collecting, so it's read by cohort rather than by year.
+LEARNER_SHEET = "Learner"
+
+LEARNER_SCALE = {"strongly disagree": 1, "disagree": 2,
+                 "neither agree or disagree": 3, "neither agree nor disagree": 3,
+                 "agree": 4, "strongly agree": 5}
+
+# Items where AGREEING is the bad outcome — improvement means the score falls.
+# Scored naively these read as declines and drag the headline down.
+LEARNER_REVERSED = ["hard time trusting", "burned out", "do not handle change"]
+
+# Seven job levels is too thin to slice once you account for the 67-of-91 who
+# completed the before/after block, so they're banded into three.
+LEARNER_BANDS = [
+    ("Individual contributor", ["employee/associate", "supervisor",
+                                "independently employed/consultant"]),
+    ("Manager",                ["manager/senior manager"]),
+    ("Senior leader",          ["director/senior director", "executive/vp",
+                                "senior executive/svp"]),
+]
+
+# Multi-select blocks: (label, first column header, last column header).
+# Bounds are pinned by hand — inferring them swallowed the neighbouring matrix.
+LEARNER_BLOCKS = [
+    ("Business outcomes improved",
+     "please select any measurable business outcomes", "other (please specify)"),
+    ("Where it helped most",
+     "in which area(s) has the training helped", "other"),
+    ("Barriers to applying it",
+     "most significant barriers", "other (please specify)4"),
+]
+
+LEARNER_SINGLES = {
+    "nps":         "how likely is it that you would recommend",
+    "overall":     "how would you rate the training experience",
+    "applies":     "how often do you apply the skills",
+    "challenges":  "how often have you encountered any challenges",
+    "manager":     "extent has your manager talked with you",
+    "job_level":   "what is your job level",
+    "session":     "session",
+    "ei_pct":      "what percentage of your development in emotional intelligence",
+}
+
+
 def ltf_sheets(sheetnames):
     """LTF delivery sheets present in the workbook, in delivery order."""
     return [f"LTF-{sfx}" for sfx in LTF_DELIVERIES if f"LTF-{sfx}" in sheetnames]
 
 
-def all_sheet_cols(sheetnames):
-    """Standard-shaped column map for every sheet, LTF sheets included."""
-    cols = dict(SHEET_COLS)
-    for name in ltf_sheets(sheetnames):
+def all_sheet_cols(wb, warn=None):
+    """Standard-shaped column map for every sheet, LTF sheets included.
+
+    Resolved from the workbook itself rather than hardcoded, so a sheet whose
+    columns shift (or a new year's export) maps itself.
+    """
+    cols = {}
+    for name in SHEET_COLS:
+        if name in wb.sheetnames:
+            cols[name] = resolve_cols(wb[name], name, warn=warn)
+    for name in ltf_sheets(wb.sheetnames):
         cols[name] = LTF_AS_STANDARD
     return cols
 
@@ -200,13 +516,79 @@ def avg(values):
 def count_text(values, target):
     return sum(1 for v in values if v and str(v).strip().lower() == target.lower())
 
+
+# --- Categorical answers -------------------------------------------------------
+# 2026 exports store the answer text ("Yes", "In Person"). The 2025 exports often
+# store the option NUMBER instead, and sometimes a longer label. Matching on the
+# literal string silently counted those as neither, which understated the
+# manager-expectations figure badly (3% where the real answer is ~64%).
+
+def norm_yes_no(value):
+    """'1'/'Yes' -> 'yes', '2'/'No' -> 'no', anything else -> '' ."""
+    t = str(value).strip().lower()
+    if t in ("1", "yes", "y"):
+        return "yes"
+    if t in ("2", "no", "n"):
+        return "no"
+    return ""
+
+
+def norm_modality(value):
+    """'Virtual (video-based, online) Delivery' -> 'virtual', 'In Person' ->
+    'in person'. The 2025 exports store the option number instead: 1 = Virtual,
+    2 = In Person (confirmed by Amy, 2026-07-30), matching how 1/2 encode
+    Yes/No for the manager-expectations question."""
+    t = str(value).strip().lower()
+    if t.startswith("virtual"):
+        return "virtual"
+    if t.startswith("in person") or t.startswith("in-person"):
+        return "in person"
+    if t == "1":
+        return "virtual"
+    if t == "2":
+        return "in person"
+    return ""
+
+
+def count_norm(values, normaliser, target):
+    return sum(1 for v in values if v not in (None, "") and normaliser(v) == target)
+
 def distinct_count(values):
     return len({v for v in values if v not in (None, "")})
 
 
 def collect_sheet(ws, cols):
-    """Pull all relevant column values from a sheet at once."""
-    return {key: col_values(ws, c) if c else [] for key, c in cols.items()}
+    """Pull all relevant column values from a sheet at once, plus a per-row
+    response date parallel to them (`_date`) so views can be sliced by period."""
+    ds = {key: col_values(ws, c) if c else [] for key, c in cols.items()}
+
+    n = max((len(v) for v in ds.values()), default=0)
+    def at(key, i):
+        col = ds.get(key) or []
+        return col[i] if i < len(col) else None
+
+    ds["_date"] = [response_date(at("start_date", i), at("end_date", i),
+                                 at("session", i)) for i in range(n)]
+    return ds
+
+
+def filter_period(ds, period):
+    """A copy of one dataset holding only responses from `period` ('2025',
+    '2026', or 'all'). Undated responses are kept only in 'all'."""
+    if period == "all":
+        return ds
+    year = int(period)
+    keep = [i for i, d in enumerate(ds.get("_date", [])) if d and d.year == year]
+    out = {}
+    for key, col in ds.items():
+        out[key] = [col[i] for i in keep if i < len(col)] if isinstance(col, list) else col
+    return out
+
+
+def periods_in(datasets):
+    """Sorted list of years present across datasets."""
+    years = {d.year for ds in datasets for d in ds.get("_date", []) if d}
+    return [str(y) for y in sorted(years)]
 
 
 def standard_view(label, datasets):
@@ -242,19 +624,50 @@ def standard_view(label, datasets):
             "facilitatorEngaging": top2box(cat("fac_engaged")),
         },
         "modality": {
-            "virtual": sum(count_text(ds.get("modality", []), "Virtual") for ds in datasets),
-            "inPerson": sum(count_text(ds.get("modality", []), "In person") for ds in datasets),
+            "virtual": sum(count_norm(ds.get("modality", []), norm_modality, "virtual")
+                           for ds in datasets),
+            "inPerson": sum(count_norm(ds.get("modality", []), norm_modality, "in person")
+                            for ds in datasets),
         },
     }
 
-    # Manager expectations: % NO across datasets that asked the question.
-    me_values = []
-    for ds in datasets:
-        me_values.extend(v for v in ds.get("manager_exp", []) if v not in (None, ""))
+    # Manager expectations: % NO among answers we can actually read. Anything
+    # unrecognised is excluded from BOTH halves rather than silently inflating
+    # the denominator.
+    me_values = [norm_yes_no(v) for ds in datasets
+                 for v in ds.get("manager_exp", []) if v not in (None, "")]
+    me_values = [v for v in me_values if v]
     if me_values:
-        no_count = sum(1 for v in me_values if str(v).strip().lower() == "no")
+        no_count = sum(1 for v in me_values if v == "no")
         view["noManagerExpectationsPct"] = round(no_count / len(me_values) * 100)
         view["managerExpectationsResponses"] = len(me_values)
+
+    # Same program, split by whether the participant's manager set
+    # expectations. Columns are read row-for-row, so index i is one person.
+    with_mgr, without_mgr = [], []
+    for ds in datasets:
+        answers, scores = ds.get("manager_exp") or [], ds.get("nps") or []
+        for i in range(min(len(answers), len(scores))):
+            if answers[i] in (None, ""):
+                continue
+            answer = norm_yes_no(answers[i])
+            if not answer:
+                continue
+            try:
+                score = float(scores[i])
+            except (TypeError, ValueError):
+                continue
+            (with_mgr if answer == "yes" else without_mgr).append(score)
+
+    # Below ~20 a side, NPS swings wildly on one person — Private L2 in 2026
+    # shows a 19-point "effect" off 16 responses. Don't publish those.
+    MIN_PER_SIDE = 20
+    if len(with_mgr) >= MIN_PER_SIDE and len(without_mgr) >= MIN_PER_SIDE:
+        view["managerSplit"] = {
+            "withExpectations": {"nps": nps(with_mgr), "n": len(with_mgr)},
+            "without": {"nps": nps(without_mgr), "n": len(without_mgr)},
+            "gap": nps(with_mgr) - nps(without_mgr),
+        }
 
     return view
 
@@ -311,6 +724,148 @@ def ltf_view(label, datasets):
             "virtual": sum(count_text(ds.get("modality", []), "Virtual") for ds in datasets),
             "inPerson": sum(count_text(ds.get("modality", []), "In person") for ds in datasets),
         },
+    }
+
+
+def learner_view(ws):
+    """The 90-day impact view: what people still do, banded by job level."""
+    from openpyxl.utils import get_column_letter
+
+    hdr = {get_column_letter(c): " ".join(str(ws.cell(row=1, column=c).value or "").split())
+           for c in range(1, ws.max_column + 1)}
+    letters = list(hdr)
+
+    def find(needle):
+        return next((L for L in letters if needle in hdr[L].lower()), None)
+
+    rows = [r for r in range(2, ws.max_row + 1)
+            if any(ws.cell(row=r, column=c).value not in (None, "")
+                   for c in range(1, 12))]
+
+    single = {k: find(n) for k, n in LEARNER_SINGLES.items()}
+    def cell(letter, r):
+        return ws[f"{letter}{r}"].value if letter else None
+
+    # Which band each respondent falls in.
+    def band_of(r):
+        lvl = str(cell(single["job_level"], r) or "").strip().lower()
+        for name, members in LEARNER_BANDS:
+            if lvl in members:
+                return name
+        return None
+
+    # Before/after pairs, keyed by the behavior they measure.
+    pairs = {}
+    for L in letters:
+        h = hdr[L]
+        if " - Before EQ Training" in h or " - After EQ Training" in h:
+            stem, phase = h.rsplit(" - ", 1)
+            pairs.setdefault(stem.rstrip(" ."), {})[phase.split()[0]] = L
+
+    def score(value, reversed_item):
+        n = LEARNER_SCALE.get(str(value).strip().lower())
+        if n is None:
+            return None
+        return (6 - n) if reversed_item else n   # higher always means better
+
+    # Multi-select blocks, bounded by hand.
+    def block_counts(first_needle, last_needle, subset):
+        start = find(first_needle)
+        if not start:
+            return []
+        end = next((L for L in letters[letters.index(start):]
+                    if hdr[L].lower() == last_needle), None)
+        span = letters[letters.index(start): letters.index(end) + 1 if end else None]
+        out = []
+        for L in span:
+            picked = [r for r in subset if cell(L, r) not in (None, "")]
+            if not picked:
+                continue
+            # The first column's header is the question; its answer text is the option.
+            name = hdr[L]
+            if L == start:
+                name = str(cell(L, picked[0])).strip()
+            if name.lower().startswith("other"):
+                continue
+            out.append({"label": name, "count": len(picked)})
+        return sorted(out, key=lambda d: -d["count"])
+
+    def distribution(letter, subset):
+        vals = [str(cell(letter, r)).strip() for r in subset
+                if cell(letter, r) not in (None, "")]
+        total = len(vals)
+        return [{"label": k, "count": n, "pct": round(n / total * 100)}
+                for k, n in Counter(vals).most_common()] if total else []
+
+    def build(subset):
+        behaviors = []
+        improved_any, paired_people = set(), set()
+        for stem, ph in pairs.items():
+            if "Before" not in ph or "After" not in ph:
+                continue
+            rev = any(k in stem.lower() for k in LEARNER_REVERSED)
+            before, after, up = [], [], 0
+            for r in subset:
+                sb = score(cell(ph["Before"], r), rev)
+                sa = score(cell(ph["After"], r), rev)
+                if sb is None or sa is None:
+                    continue
+                before.append(sb); after.append(sa); paired_people.add(r)
+                if sa > sb:
+                    up += 1; improved_any.add(r)
+            if not before:
+                continue
+            mb, ma = sum(before) / len(before), sum(after) / len(after)
+            behaviors.append({
+                "text": stem, "reversed": rev, "n": len(before),
+                "before": round(mb, 2), "after": round(ma, 2),
+                "change": round(ma - mb, 2),
+                "improvedPct": round(up / len(before) * 100),
+            })
+        behaviors.sort(key=lambda b: -b["change"])
+
+        nps_scores = numeric([cell(single["nps"], r) for r in subset])
+        applies = distribution(single["applies"], subset)
+        often = sum(d["count"] for d in applies if d["label"].lower() in ("always", "usually"))
+        applies_total = sum(d["count"] for d in applies)
+
+        return {
+            "respondents": len(subset),
+            "pairedRespondents": len(paired_people),
+            "nps": nps(nps_scores) if nps_scores else None,
+            "npsResponses": len(nps_scores),
+            "beforeAvg": round(sum(b["before"] for b in behaviors) / len(behaviors), 2)
+                         if behaviors else 0,
+            "afterAvg": round(sum(b["after"] for b in behaviors) / len(behaviors), 2)
+                        if behaviors else 0,
+            "improvedAnyPct": round(len(improved_any) / len(paired_people) * 100)
+                              if paired_people else 0,
+            "appliesOftenPct": round(often / applies_total * 100) if applies_total else 0,
+            "behaviors": behaviors,
+            "applies": applies,
+            "challenges": distribution(single["challenges"], subset),
+            "managerReinforcement": distribution(single["manager"], subset),
+            "overall": distribution(single["overall"], subset),
+            "eiAttributed": avg([cell(single["ei_pct"], r) for r in subset]),
+            "blocks": [{"label": lbl, "items": block_counts(a, b, subset)}
+                       for lbl, a, b in LEARNER_BLOCKS],
+        }
+
+    by_band = {"All": build(rows)}
+    for name, _ in LEARNER_BANDS:
+        members = [r for r in rows if band_of(r) == name]
+        if members:
+            by_band[name] = build(members)
+
+    cohorts = sorted({str(cell(single["session"], r)).strip()
+                      for r in rows if cell(single["session"], r)})
+
+    return {
+        "label": "90-Day Impact",
+        "type": "learner",
+        "bands": list(by_band),
+        "cohorts": len(cohorts),
+        "byBand": by_band,
     }
 
 
@@ -540,18 +1095,57 @@ def best_quotes(ds, program_label, max_n=None):
     return picked
 
 
+# Standard views, in display order. Each names the raw sheet families it draws
+# from, so a family can span several source sheets (2026 + its 2025 history).
+STANDARD_VIEWS = [
+    ("ttt-summary",     "Train the Trainer — Summary", ["TTTL1", "TTTL2", "TTTTeams"]),
+    ("ttt-l1",          "Train the Trainer — Level 1", ["TTTL1"]),
+    ("ttt-l2",          "Train the Trainer — Level 2", ["TTTL2"]),
+    ("ttt-teams",       "Train the Trainer — Teams",   ["TTTTeams"]),
+    ("private-summary", "Private Program — Summary",   ["PrivateL1", "PrivateL2"]),
+    ("private-l1",      "Private Program — Level 1",   ["PrivateL1"]),
+    ("private-l2",      "Private Program — Level 2",   ["PrivateL2"]),
+    ("public-l1",       "Public Program",              ["PublicL1"]),
+    ("custom-summary",  "Custom Programs — Summary",   ["Custom Programs", "Policing"]),
+    ("custom-misc",     "Custom Programs — Misc.",     ["Custom Programs"]),
+    ("custom-policing", "Custom Programs — EQ in Policing", ["Policing"]),
+]
+
+# What the dashboard shows before anyone touches the year control.
+DEFAULT_PERIOD = "2026"
+
+
+def build_standard_views(raw, period):
+    """Every standard view for one period. 'all' spans every family, including
+    LTF, which is why it's built from raw rather than STANDARD_VIEWS."""
+    out = {}
+    everything = [d for lst in raw.values() for d in lst]
+    out["all"] = standard_view("All Programs",
+                               [filter_period(d, period) for d in everything])
+    for key, label, families in STANDARD_VIEWS:
+        dsets = [filter_period(d, period)
+                 for fam in families for d in raw.get(fam, [])]
+        out[key] = standard_view(label, dsets)
+    return out
+
+
 PROGRAM_LABELS = {
     "TTTL1": "TTT L1", "TTTL2": "TTT L2", "TTTTeams": "TTT Teams",
     "PrivateL1": "Private L1", "PrivateL2": "Private L2",
     "PublicL1": "Public L1", "Custom Programs": "Custom Programs",
     "LTF-Private": "LTF — Private", "LTF-Public": "LTF — Public",
-    "LTF-TTT": "LTF — TTT",
+    "LTF-TTT": "LTF — TTT", "Policing": "EQ in Policing",
 }
 
 
-def update_trainers_tab():
+def update_trainers_tab(cols_by_sheet):
     """Rewrites the Trainers tab. One OVERALL row per trainer plus a per-program
-    drill-down row for each program they've taught."""
+    drill-down row for each program they've taught.
+
+    Takes the column map resolved in main() rather than re-resolving: this
+    function opens the workbook without data_only, where value-shape checks
+    would be looking at formulas instead of results.
+    """
     from openpyxl.styles import Font, PatternFill, Alignment, Border, Side
     from collections import defaultdict
 
@@ -601,7 +1195,7 @@ def update_trainers_tab():
     trainer_data = defaultdict(lambda: defaultdict(lambda: {
         "nps": [], "apply": [], "engage": [], "modality": [], "sessions": set()
     }))
-    for sheet_name, cols in all_sheet_cols(wb.sheetnames).items():
+    for sheet_name, cols in cols_by_sheet.items():
         if sheet_name not in wb.sheetnames or not cols.get("facilitator"):
             continue
         raw_ws = wb[sheet_name]
@@ -693,13 +1287,154 @@ def update_trainers_tab():
     print(f"Trainers tab updated: {len(trainer_data)} trainers")
 
 
+def session_rows(raw):
+    """One row per session, for the Excel-only Sessions tab.
+
+    Session names carry client names, so this deliberately never reaches
+    data.json — it stays in the workbook on OneDrive.
+    """
+    from collections import defaultdict
+    acc = defaultdict(lambda: {
+        "dates": [], "nps": [], "apply": [], "engage": [],
+        "modality": [], "facilitators": Counter(), "program": ""})
+
+    for family, datasets in raw.items():
+        label = PROGRAM_LABELS.get(family, family)
+        for ds in datasets:
+            dates = ds.get("_date", [])
+            def at(key, i):
+                col = ds.get(key) or []
+                return col[i] if i < len(col) else None
+            for i in range(len(dates)):
+                sess = at("session", i)
+                if not sess:
+                    continue
+                g = acc[str(sess).strip()]
+                g["program"] = label
+                if dates[i]:
+                    g["dates"].append(dates[i])
+                for key, bucket in (("nps", "nps"), ("apply_on_job", "apply"),
+                                    ("fac_engaged", "engage")):
+                    v = at(key, i)
+                    if v not in (None, ""):
+                        g[bucket].append(v)
+                m = norm_modality(at("modality", i)) if at("modality", i) else ""
+                if m:
+                    g["modality"].append(m)
+                f = at("facilitator", i)
+                if f:
+                    g["facilitators"][str(f).strip()] += 1
+
+    rows = []
+    for sess, g in acc.items():
+        scores = numeric(g["nps"])
+        if not scores:
+            continue
+        when = min(g["dates"]) if g["dates"] else None
+        per = period_of(when) or {}
+        virtual = sum(1 for m in g["modality"] if m == "virtual")
+        in_person = sum(1 for m in g["modality"] if m == "in person")
+        rows.append({
+            "year": per.get("year", ""),
+            "quarter": per.get("quarter", ""),
+            "date": when.date().isoformat() if when else "",
+            "program": g["program"],
+            "session": sess,
+            "facilitator": (g["facilitators"].most_common(1)[0][0]
+                            if g["facilitators"] else ""),
+            "responses": len(scores),
+            "nps": nps(scores),
+            "promoters": sum(1 for s in scores if s >= 9),
+            "passives": sum(1 for s in scores if 7 <= s <= 8),
+            "detractors": sum(1 for s in scores if s <= 6),
+            "apply": top2box(g["apply"]) if g["apply"] else "",
+            "engaging": top2box(g["engage"]) if g["engage"] else "",
+            "modality": ("Virtual" if virtual and not in_person else
+                         "In person" if in_person and not virtual else
+                         "Mixed" if virtual and in_person else ""),
+        })
+    rows.sort(key=lambda r: (str(r["date"]), r["session"]), reverse=True)
+    return rows
+
+
+def update_sessions_tab(rows):
+    """Writes the Sessions tab: every session, newest first, with year and
+    quarter as their own filterable columns."""
+    from openpyxl.styles import Font, PatternFill, Alignment
+
+    wb = openpyxl.load_workbook(SRC)
+    if "Sessions" in wb.sheetnames:
+        del wb["Sessions"]
+    idx = (wb.sheetnames.index("Trainers") + 1) if "Trainers" in wb.sheetnames else 0
+    ws = wb.create_sheet("Sessions", idx)
+    ws.sheet_view.showGridLines = False
+
+    NAVY, LOW, MID, HIGH = "002D61", "FDE7E9", "FFF4D6", "E4F7EF"
+
+    ws.merge_cells("A1:N1")
+    ws["A1"] = "Every Session — Internal View"
+    ws["A1"].font = Font(name="Calibri", size=18, bold=True, color="FFFFFF")
+    ws["A1"].fill = PatternFill("solid", fgColor=NAVY)
+    ws["A1"].alignment = Alignment(horizontal="left", vertical="center", indent=1)
+    ws.row_dimensions[1].height = 34
+
+    ws.merge_cells("A2:N2")
+    ws["A2"] = ("Session names include client names — this tab is deliberately NOT published "
+                "to the dashboard. Use the filter arrows on row 4 to slice by Year or Quarter. "
+                "NPS is shaded: red below 50, amber 50-69, green 70+.")
+    ws["A2"].font = Font(name="Calibri", size=10, italic=True, color="555555")
+    ws["A2"].alignment = Alignment(horizontal="left", vertical="center", indent=1, wrap_text=True)
+    ws.row_dimensions[2].height = 30
+
+    headers = ["Year", "Quarter", "Date", "Program", "Session", "Facilitator",
+               "Responses", "NPS", "Promoters", "Passives", "Detractors",
+               "% Apply on Job", "% Engaging", "Modality"]
+    for i, h in enumerate(headers, start=1):
+        c = ws.cell(row=4, column=i, value=h)
+        c.font = Font(name="Calibri", size=11, bold=True, color="FFFFFF")
+        c.fill = PatternFill("solid", fgColor=NAVY)
+        c.alignment = Alignment(horizontal="center", vertical="center", wrap_text=True)
+    ws.row_dimensions[4].height = 34
+
+    for i, w in enumerate([8, 10, 12, 16, 54, 20, 11, 8, 11, 10, 11, 14, 12, 11], start=1):
+        ws.column_dimensions[chr(64 + i)].width = w
+
+    for r, row in enumerate(rows, start=5):
+        vals = [row["year"], row["quarter"], row["date"], row["program"],
+                row["session"], row["facilitator"], row["responses"], row["nps"],
+                row["promoters"], row["passives"], row["detractors"],
+                (row["apply"] / 100 if row["apply"] != "" else ""),
+                (row["engaging"] / 100 if row["engaging"] != "" else ""),
+                row["modality"]]
+        for j, v in enumerate(vals, start=1):
+            c = ws.cell(row=r, column=j, value=v)
+            c.alignment = Alignment(horizontal="left" if j in (4, 5, 6) else "center",
+                                    vertical="center")
+            if j in (12, 13) and v != "":
+                c.number_format = "0%"
+        nps_cell = ws.cell(row=r, column=8)
+        nps_cell.font = Font(bold=True)
+        nps_cell.fill = PatternFill("solid", fgColor=(
+            LOW if row["nps"] < 50 else MID if row["nps"] < 70 else HIGH))
+
+    ws.auto_filter.ref = f"A4:N{4 + len(rows)}"
+    ws.freeze_panes = "A5"
+    wb.save(SRC)
+    print(f"Sessions tab updated: {len(rows)} sessions")
+
+
 def main():
     wb = openpyxl.load_workbook(SRC, data_only=True)
 
     ltf_present = ltf_sheets(wb.sheetnames)
 
+    col_warnings = []
+    cols_by_sheet = all_sheet_cols(wb, warn=col_warnings)
+    for w in col_warnings:
+        print(f"  ! {w}")
+
     raw = {}
-    for sheet_name, cols in all_sheet_cols(wb.sheetnames).items():
+    for sheet_name, cols in cols_by_sheet.items():
         if sheet_name not in wb.sheetnames:
             print(f"  skipping missing sheet: {sheet_name}")
             continue
@@ -709,33 +1444,44 @@ def main():
         extra = detect_extra_cols(ws)
         for key in ("email", "first", "last", "name_optional", "strengths"):
             ds[key] = col_values(ws, extra[key]) if extra.get(key) else []
-        raw[sheet_name] = ds
+        raw[sheet_name] = [ds]
+
+    # 2025 history, from its own workbook, appended to the family it continues.
+    wb_learner = None
+    if LEGACY_SRC.exists():
+        wb_old = load_readonly(LEGACY_SRC, data_only=True)
+        wb_learner = wb_old
+        for sheet_old, family in LEGACY_SHEETS.items():
+            if sheet_old not in wb_old.sheetnames:
+                print(f"  skipping missing 2025 sheet: {sheet_old}")
+                continue
+            ws_old = wb_old[sheet_old]
+            cols_old = resolve_cols(ws_old, sheet_old, warn=col_warnings)
+            ds_old = collect_sheet(ws_old, cols_old)
+            extra = detect_extra_cols(ws_old)
+            for key in ("email", "first", "last", "name_optional", "strengths"):
+                ds_old[key] = col_values(ws_old, extra[key]) if extra.get(key) else []
+            raw.setdefault(family, []).append(ds_old)
+            dated = sum(1 for d in ds_old["_date"] if d)
+            print(f"  + 2025 {sheet_old} -> {family}: {dated} dated responses")
+    else:
+        print(f"  ! 2025 workbook not found at {LEGACY_SRC}")
 
     # LTF again, this time under its own question names, for its own view.
     ltf_raw = {name: collect_sheet(wb[name], LTF_COLS) for name in ltf_present}
 
     views = {}
 
-    # All Programs (everything except Refresher)
-    views["all"] = standard_view("All Programs", list(raw.values()))
+    # Standard views for the default period. The year control swaps these out
+    # for the matching entry in viewsByPeriod.
+    views.update(build_standard_views(raw, DEFAULT_PERIOD))
 
-    # Train the Trainer family
-    views["ttt-summary"] = standard_view("Train the Trainer — Summary",
-        [raw["TTTL1"], raw["TTTL2"], raw["TTTTeams"]])
-    views["ttt-l1"] = standard_view("Train the Trainer — Level 1", [raw["TTTL1"]])
-    views["ttt-l2"] = standard_view("Train the Trainer — Level 2", [raw["TTTL2"]])
-    views["ttt-teams"] = standard_view("Train the Trainer — Teams", [raw["TTTTeams"]])
-
-    # Private family
-    views["private-summary"] = standard_view("Private Program — Summary",
-        [raw["PrivateL1"], raw["PrivateL2"]])
-    views["private-l1"] = standard_view("Private Program — Level 1", [raw["PrivateL1"]])
-    views["private-l2"] = standard_view("Private Program — Level 2", [raw["PrivateL2"]])
-
-    # Public, Custom, Refresher
-    views["public-l1"] = standard_view("Public Program", [raw["PublicL1"]])
-    views["custom"] = standard_view("Custom Programs", [raw["Custom Programs"]])
+    # Refresher is its own instrument on its own timeline — not year-filtered.
     views["refresher"] = refresher_view(wb["Refresher"])
+
+    # 90-day impact survey — its own instrument too, banded by job level.
+    if wb_learner is not None and LEARNER_SHEET in wb_learner.sheetnames:
+        views["learner"] = learner_view(wb_learner[LEARNER_SHEET])
 
     # Leading Through Friction — summary plus one view per delivery mode that
     # actually has data. Views the dashboard doesn't find, it hides.
@@ -753,40 +1499,57 @@ def main():
         "TTTL1": "Train the Trainer L1", "TTTL2": "Train the Trainer L2",
         "TTTTeams": "TTT for Teams", "PrivateL1": "Private Program L1",
         "PrivateL2": "Private Program L2", "PublicL1": "Public Program",
-        "Custom Programs": "Custom Program",
+        "Custom Programs": "Custom Program", "Policing": "EQ in Policing",
     }
     view_for = {
         "TTTL1": "ttt-l1", "TTTL2": "ttt-l2", "TTTTeams": "ttt-teams",
         "PrivateL1": "private-l1", "PrivateL2": "private-l2",
-        "PublicL1": "public-l1", "Custom Programs": "custom",
+        "PublicL1": "public-l1", "Custom Programs": "custom-misc",
+        "Policing": "custom-policing",
     }
     for s in ltf_present:
         key, delivery = LTF_DELIVERIES[s.split("-", 1)[1]]
         label_for[s] = f"Leading Through Friction ({delivery})"
         view_for[s] = key
-    for sheet_name, ds in raw.items():
-        for q in best_quotes(ds, label_for[sheet_name]):
-            q["view"] = view_for[sheet_name]
-            testimonials.append(q)
+    for sheet_name, datasets in raw.items():
+        for ds in datasets:
+            for period in periods_in([ds]) or [DEFAULT_PERIOD]:
+                for q in best_quotes(filter_period(ds, period), label_for[sheet_name]):
+                    q["view"] = view_for[sheet_name]
+                    q["period"] = period
+                    testimonials.append(q)
+
+    all_periods = periods_in([d for lst in raw.values() for d in lst])
+    views_by_period = {p: build_standard_views(raw, p)
+                       for p in ["all"] + all_periods}
 
     payload = {
         "meta": {
             "lastUpdated": datetime.now().strftime("%Y-%m-%d"),
             "reportingPeriod": "Q1 2026 to date",
+            "periods": all_periods,
+            "defaultPeriod": DEFAULT_PERIOD,
         },
         "views": views,
+        "viewsByPeriod": views_by_period,
         "testimonials": testimonials,
     }
 
     OUT.write_text(json.dumps(payload, indent=2), encoding="utf-8")
     print(f"\nWrote: {OUT}")
 
-    # Refresh the Trainers tab in the workbook
-    update_trainers_tab()
+    # Refresh the internal-only workbook tabs
+    update_trainers_tab(cols_by_sheet)
+    update_sessions_tab(session_rows(raw))
     print("\nQuick summary of computed views:")
     for k, v in views.items():
         if v.get("type") == "refresher":
             print(f"  {k:18s} participants={v['participants']:>3}  growth={v['confidenceGrowth']}  valuable%={v['pctRatedValuable']}")
+        elif v.get("type") == "learner":
+            a = v["byBand"]["All"]
+            print(f"  {k:18s} n={a['respondents']:>3}  paired={a['pairedRespondents']:>3}  "
+                  f"{a['beforeAvg']}->{a['afterAvg']}  NPS@90d={a['nps']}  "
+                  f"applying={a['appliesOftenPct']}%  bands={len(v['bands'])}")
         elif v.get("type") == "ltf":
             print(f"  {k:18s} NPS={v['nps']:>3}  N={v['participants']:>3}  "
                   f"advocacy={v['advocacy']}%  unanimous={v['unanimous']}/{len(v['statements'])}")

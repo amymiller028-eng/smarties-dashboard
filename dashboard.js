@@ -1,5 +1,8 @@
 (() => {
-  const state = { data: null, view: 'all' };
+  // `period` is the selected year ('2025' | '2026' | 'all'). It defaults to
+  // whatever the data says, so the year control can be added without changing
+  // what anyone sees today.
+  const state = { data: null, view: 'all', period: null, band: 'All' };
 
   async function loadData() {
     const res = await fetch('data.json?v=' + Date.now());
@@ -40,23 +43,90 @@
     return label ? `<span class="src-person">${escapeHtml(label)}</span> &middot; ` : '';
   }
 
+  // Quotes carry the year they came from. Show only the selected period —
+  // entries with no `period` (older data.json) always pass.
+  function testimonialsForPeriod() {
+    const all = state.data.testimonials || [];
+    if (state.period === 'all') return all;
+    return all.filter(t => !t.period || t.period === state.period);
+  }
+
   function flashFadeIn(el) {
     if (!el) return;
     el.classList.remove('fade-in'); void el.offsetWidth; el.classList.add('fade-in');
   }
 
+  // Views that vary by year live in viewsByPeriod. Refresher and LTF don't —
+  // they're their own instruments on their own timelines — so they fall back
+  // to the flat `views` map.
+  function viewFor(period, key) {
+    const byPeriod = state.data.viewsByPeriod && state.data.viewsByPeriod[period];
+    return (byPeriod && byPeriod[key]) || null;
+  }
+
+  function isPeriodic(key) {
+    const vbp = state.data.viewsByPeriod || {};
+    return Object.keys(vbp).some(p => vbp[p][key]);
+  }
+
+  function periodHasData(period, key) {
+    const v = viewFor(period, key);
+    return !!v && v.participants > 0;
+  }
+
+  function availablePeriods() {
+    return ((state.data.meta && state.data.meta.periods) || []).concat('all');
+  }
+
+  function renderPeriodControls() {
+    const bar = document.getElementById('periodBar');
+    const host = document.getElementById('periodControls');
+    if (!bar || !host) return;
+
+    if (!isPeriodic(state.view)) { bar.hidden = true; return; }
+    bar.hidden = false;
+
+    host.innerHTML = availablePeriods().map(p => {
+      const has = periodHasData(p, state.view);
+      const label = p === 'all' ? 'All time' : p;
+      return `<button type="button" class="period-btn${p === state.period ? ' is-active' : ''}"` +
+             ` data-period="${p}"${has ? '' : ' disabled title="No data for this program in ' + label + '"'}>` +
+             `${label}</button>`;
+    }).join('');
+
+    host.querySelectorAll('.period-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        state.period = btn.dataset.period;
+        render();
+      });
+    });
+  }
+
   function render() {
     const d = state.data;
-    const v = d.views[state.view];
+
+    // Selecting a program with nothing in the current year would render an
+    // empty page — fall back to All time rather than showing zeros.
+    if (isPeriodic(state.view) && !periodHasData(state.period, state.view)) {
+      const fallback = availablePeriods().find(p => periodHasData(p, state.view));
+      if (fallback) state.period = fallback;
+    }
+
+    const v = viewFor(state.period, state.view) || d.views[state.view];
     if (!v) return;
+    renderPeriodControls();
 
     document.getElementById('lastUpdated').textContent = fmtDate(d.meta.lastUpdated);
     document.getElementById('footerDate').textContent = fmtDate(d.meta.lastUpdated);
-    document.getElementById('viewLabel').textContent = v.label;
+    document.getElementById('viewLabel').textContent =
+      isPeriodic(state.view)
+        ? `${v.label} · ${state.period === 'all' ? 'All time' : state.period}`
+        : v.label;
 
     const panes = {
       standard: document.getElementById('standardView'),
       ltf: document.getElementById('ltfView'),
+      learner: document.getElementById('learnerView'),
       refresher: document.getElementById('refresherView')
     };
     const which = panes[v.type] ? v.type : 'standard';
@@ -70,6 +140,8 @@
       renderLtf(v);
       renderShareSnippets(v, 'shareGridLtf');
       renderTestimonials('ltfTestimonials');
+    } else if (which === 'learner') {
+      renderLearner(v);
     } else {
       renderStandard(v);
       renderShareSnippets(v, 'shareGrid');
@@ -110,10 +182,34 @@
       noManagerCard.hidden = true;
     }
 
+    renderManagerSplit(v);
+
     renderModality(v.modality, {
       virtualFill: 'virtualFill', inPersonFill: 'inPersonFill',
       virtualLabel: 'virtualLabel', inPersonLabel: 'inPersonLabel'
     });
+  }
+
+  // Only appears where the program actually asks the manager question.
+  function renderManagerSplit(v) {
+    const panel = document.getElementById('mgrSplit');
+    if (!panel) return;
+    const s = v.managerSplit;
+    if (!s) { panel.hidden = true; return; }
+    panel.hidden = false;
+
+    document.getElementById('mgrWithNps').textContent = s.withExpectations.nps;
+    document.getElementById('mgrWithN').textContent = s.withExpectations.n;
+    document.getElementById('mgrWithoutNps').textContent = s.without.nps;
+    document.getElementById('mgrWithoutN').textContent = s.without.n;
+    document.getElementById('mgrGap').textContent = (s.gap >= 0 ? '+' : '') + s.gap;
+
+    const total = s.withExpectations.n + s.without.n;
+    const share = total ? Math.round(s.without.n / total * 100) : 0;
+    document.getElementById('mgrNote').textContent =
+      `${share}% of participants said no expectations were set. This is a correlation, not proof of ` +
+      `cause — but it points at the pre-work conversation rather than the program itself.`;
+    flashFadeIn(panel);
   }
 
   // The EQ-growth card's "how to use this" popover: explains the two numbers
@@ -181,6 +277,91 @@
     });
   }
 
+  // --- 90-day impact -------------------------------------------------------
+  // Positions on the slope track use the real 1-5 scale, so a +0.32 shift looks
+  // like what it is. The colored segment carries the change.
+  const SCALE_MIN = 1, SCALE_MAX = 5;
+  const scalePct = v => ((v - SCALE_MIN) / (SCALE_MAX - SCALE_MIN)) * 100;
+
+  function rankRows(items, klass) {
+    if (!items || !items.length) return '<div class="dist-row"><div class="dist-label" style="color:#7a8699">No responses yet.</div></div>';
+    const max = Math.max.apply(null, items.map(i => i.count));
+    return items.map(i => `
+      <div class="${klass}-row">
+        <div class="${klass}-label">${escapeHtml(i.label)}</div>
+        <div class="${klass}-bar"><span style="width:${(i.count / max) * 100}%"></span></div>
+        <div class="${klass}-value">${i.pct !== undefined ? i.pct + '%' : i.count}</div>
+      </div>`).join('');
+  }
+
+  function renderBandControls(v) {
+    const host = document.getElementById('bandControls');
+    if (!host) return;
+    if (!state.band || !v.byBand[state.band]) state.band = 'All';
+    host.innerHTML = v.bands.map(b =>
+      `<button type="button" class="period-btn${b === state.band ? ' is-active' : ''}" data-band="${escapeHtml(b)}">` +
+      `${escapeHtml(b)} <span style="opacity:.55">(${v.byBand[b].respondents})</span></button>`
+    ).join('');
+    host.querySelectorAll('.period-btn').forEach(btn => {
+      btn.addEventListener('click', () => { state.band = btn.dataset.band; render(); });
+    });
+  }
+
+  function renderLearner(v) {
+    renderBandControls(v);
+    const d = v.byBand[state.band] || v.byBand.All;
+
+    const before = document.getElementById('lrnBefore');
+    before.textContent = d.beforeAvg.toFixed(2);
+    document.getElementById('lrnAfter').textContent = d.afterAvg.toFixed(2);
+    flashFadeIn(before);
+
+    const shift = d.afterAvg - d.beforeAvg;
+    document.getElementById('lrnShift').textContent =
+      `${shift >= 0 ? '+' : ''}${shift.toFixed(2)} across ${d.behaviors.length} leadership behaviors, on a 5-point scale`;
+    document.getElementById('lrnFootnote').textContent =
+      `${d.improvedAnyPct}% improved on at least one behavior · ${d.pairedRespondents} people answered both halves` +
+      (d.pairedRespondents < 25 ? ' — a small sample, read as directional' : '');
+
+    document.getElementById('lrnApplying').textContent = d.appliesOftenPct;
+    document.getElementById('lrnN').textContent = d.respondents;
+    document.getElementById('lrnPaired').textContent = d.pairedRespondents;
+    document.getElementById('lrnNps').textContent = d.nps === null ? '—' : d.nps;
+
+    document.getElementById('lrnSlopeSub').textContent =
+      'Each row is one behavior, rated before the program and again 90 days later. ' +
+      'Sorted by how much it moved.';
+
+    document.getElementById('lrnSlopes').innerHTML = d.behaviors.map(b => {
+      const a = scalePct(Math.min(b.before, b.after));
+      const w = Math.abs(scalePct(b.after) - scalePct(b.before));
+      return `
+      <div class="slope-row">
+        <div class="slope-text">${escapeHtml(b.text)}${b.reversed ? '<span class="rev" title="Agreeing is the negative answer, so this is inverted">inverted</span>' : ''}</div>
+        <div class="slope-track">
+          <span class="slope-seg" style="left:${a}%; width:${w}%"></span>
+          <span class="slope-dot before" style="left:${scalePct(b.before)}%" title="Before: ${b.before}"></span>
+          <span class="slope-dot after" style="left:${scalePct(b.after)}%" title="After: ${b.after}"></span>
+        </div>
+        <div class="slope-change">${b.change >= 0 ? '+' : ''}${b.change.toFixed(2)}</div>
+        <div class="slope-improved">${b.improvedPct}% up</div>
+      </div>`;
+    }).join('') + `
+      <div class="slope-legend">
+        <span><i class="legend-dot before"></i>Before training</span>
+        <span><i class="legend-dot after"></i>90 days later</span>
+        <span style="color:#7a8699">Scale runs 1 (strongly disagree) to 5 (strongly agree)</span>
+      </div>`;
+
+    document.getElementById('lrnApplies').innerHTML = rankRows(d.applies, 'dist');
+    document.getElementById('lrnManager').innerHTML = rankRows(d.managerReinforcement, 'dist');
+
+    const block = name => (d.blocks.find(b => b.label === name) || {}).items || [];
+    document.getElementById('lrnOutcomes').innerHTML = rankRows(block('Business outcomes improved'), 'rank');
+    document.getElementById('lrnAreas').innerHTML = rankRows(block('Where it helped most'), 'rank');
+    document.getElementById('lrnBarriers').innerHTML = rankRows(block('Barriers to applying it'), 'rank');
+  }
+
   function renderRefresher(v) {
     document.getElementById('confBefore').textContent = v.confidenceBefore.toFixed(2);
     document.getElementById('confAfter').textContent = v.confidenceAfter.toFixed(2);
@@ -201,7 +382,7 @@
   function renderTestimonials(targetId) {
     const container = document.getElementById(targetId || 'testimonials');
     if (!container) return;
-    const items = state.data.testimonials || [];
+    const items = testimonialsForPeriod();
     let pool = items;
     if (state.view !== 'all') {
       // Match testimonials whose view matches the current view, or
@@ -222,7 +403,7 @@
   }
 
   function bestTestimonialForView() {
-    const items = state.data.testimonials || [];
+    const items = testimonialsForPeriod();
     let pool = items;
     if (state.view !== 'all') {
       const family = state.view.split('-')[0];
@@ -458,6 +639,7 @@ Certification doesn't end at Level 2. #TrainTheTrainer #TalentSmartEQ`
   async function init() {
     try {
       await loadData();
+      state.period = (state.data.meta && state.data.meta.defaultPeriod) || 'all';
       pruneNav();
       wireTabs();
       setActiveTab('all');

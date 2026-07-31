@@ -36,8 +36,9 @@
         <button class="tab" data-view="ltf-summary" data-group="ltf" role="tab" aria-selected="false">LTF</button>
         <button class="tab" data-view="private-summary" data-group="private" role="tab" aria-selected="false">Private Program</button>
         <button class="tab" data-view="public-l1" role="tab" aria-selected="false">Public Program</button>
-        <button class="tab" data-view="custom" role="tab" aria-selected="false">Custom Programs</button>
+        <button class="tab" data-view="custom-summary" data-group="custom" role="tab" aria-selected="false">Custom Programs</button>
         <button class="tab" data-view="refresher" role="tab" aria-selected="false">Refresher</button>
+        <button class="tab" data-view="learner" role="tab" aria-selected="false">90-Day Impact</button>
       </div>
 
       <div class="sub-tabs" data-group="ttt" hidden>
@@ -54,10 +55,19 @@
         <button class="sub-tab" data-view="ltf-public">Public</button>
         <button class="sub-tab" data-view="ltf-ttt">Train the Trainer</button>
       </div>
+      <div class="sub-tabs" data-group="custom" hidden>
+        <button class="sub-tab is-active" data-view="custom-summary">Summary</button>
+        <button class="sub-tab" data-view="custom-misc">Custom Misc.</button>
+        <button class="sub-tab" data-view="custom-policing">EQ in Policing</button>
+      </div>
       <div class="sub-tabs" data-group="private" hidden>
         <button class="sub-tab is-active" data-view="private-summary">Summary</button>
         <button class="sub-tab" data-view="private-l1">Level 1</button>
         <button class="sub-tab" data-view="private-l2">Level 2</button>
+      </div>
+      <div class="period-bar" id="periodBar" hidden>
+        <span class="period-label">Year</span>
+        <div class="period-controls" id="periodControls" role="group" aria-label="Filter by year"></div>
       </div>
     </nav>
 
@@ -108,6 +118,28 @@
             <div class="kpi-label">did <strong>not</strong> have a manager who set clear expectations about applying this training on the job<span class="kpi-sub" id="noManagerN"></span></div>
           </div>
         </div>
+      </section>
+
+      <section class="mgr-split" id="mgrSplit" hidden>
+        <h2 class="section-title">Does manager reinforcement move the needle?</h2>
+        <p class="section-sub">The same program, split by whether the participant's manager set expectations about applying it on the job.</p>
+        <div class="mgr-grid">
+          <div class="mgr-card is-with">
+            <div class="mgr-eyebrow">Manager set expectations</div>
+            <div class="mgr-nps" id="mgrWithNps">—</div>
+            <div class="mgr-n"><span id="mgrWithN">—</span> participants</div>
+          </div>
+          <div class="mgr-gap">
+            <div class="mgr-gap-num" id="mgrGap">—</div>
+            <div class="mgr-gap-label">point<br />difference</div>
+          </div>
+          <div class="mgr-card is-without">
+            <div class="mgr-eyebrow">Manager did not</div>
+            <div class="mgr-nps" id="mgrWithoutNps">—</div>
+            <div class="mgr-n"><span id="mgrWithoutN">—</span> participants</div>
+          </div>
+        </div>
+        <p class="mgr-note" id="mgrNote"></p>
       </section>
 
       <section class="split">
@@ -200,6 +232,82 @@
           <p class="section-sub">Copy-ready snippets built from the numbers above. Pick a channel, hit copy, share.</p>
         </div>
         <div class="share-grid" id="shareGridLtf"></div>
+      </section>
+    </div>
+
+    <!-- ============= 90-DAY IMPACT (LEARNER) VIEW ============= -->
+    <div id="learnerView" hidden>
+      <div class="period-bar band-bar" id="bandBar">
+        <span class="period-label">Job level</span>
+        <div class="period-controls" id="bandControls" role="group" aria-label="Filter by job level"></div>
+      </div>
+
+      <section class="hero-kpi">
+        <div class="hero-card">
+          <div class="hero-eyebrow">Behavior change, 90 days later</div>
+          <div class="hero-confidence">
+            <div class="confidence-side">
+              <div class="confidence-label">Before training</div>
+              <div class="confidence-num" id="lrnBefore">—</div>
+            </div>
+            <div class="confidence-arrow">→</div>
+            <div class="confidence-side">
+              <div class="confidence-label">90 days after</div>
+              <div class="confidence-num" id="lrnAfter">—</div>
+            </div>
+          </div>
+          <div class="hero-caption" id="lrnShift">—</div>
+          <div class="hero-footnote" id="lrnFootnote">—</div>
+        </div>
+        <div class="hero-side">
+          <div class="side-card highlight-card">
+            <div class="side-eyebrow">Still using it at 90 days</div>
+            <div class="side-number"><span id="lrnApplying">—</span><span class="unit">%</span></div>
+            <div class="side-caption">apply the skills &ldquo;always&rdquo; or &ldquo;usually&rdquo; &mdash; three months on.</div>
+          </div>
+          <div class="side-card">
+            <div class="side-eyebrow">Reach</div>
+            <div class="reach-grid">
+              <div><div class="reach-num" id="lrnN">—</div><div class="reach-label">Responses</div></div>
+              <div><div class="reach-num" id="lrnPaired">—</div><div class="reach-label">Before / after</div></div>
+              <div><div class="reach-num" id="lrnNps">—</div><div class="reach-label">NPS at 90 days</div></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="kpi-grid">
+        <h2 class="section-title">What changed, behavior by behavior</h2>
+        <p class="section-sub" id="lrnSlopeSub">—</p>
+        <div class="slopes" id="lrnSlopes"></div>
+      </section>
+
+      <section class="split">
+        <div class="split-col">
+          <h2 class="section-title">Are they still using it?</h2>
+          <p class="section-sub">How often they apply what they learned.</p>
+          <div class="dist-block" id="lrnApplies"></div>
+
+          <h2 class="section-title section-title-spaced">Has their manager engaged?</h2>
+          <p class="section-sub">Conversations about applying the training on the job.</p>
+          <div class="dist-block" id="lrnManager"></div>
+        </div>
+        <div class="split-col">
+          <h2 class="section-title">Business outcomes they say improved</h2>
+          <p class="section-sub">Selected by respondents; they could pick more than one.</p>
+          <div class="rank-block" id="lrnOutcomes"></div>
+        </div>
+      </section>
+
+      <section class="split">
+        <div class="split-col">
+          <h2 class="section-title">Where it helped most</h2>
+          <div class="rank-block" id="lrnAreas"></div>
+        </div>
+        <div class="split-col">
+          <h2 class="section-title">What gets in the way</h2>
+          <div class="rank-block" id="lrnBarriers"></div>
+        </div>
       </section>
     </div>
 
