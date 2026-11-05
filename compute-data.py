@@ -774,6 +774,8 @@ def ltf_view(label, datasets):
         "type": "ltf",
         "nps": nps(nps_all),
         "participants": participants,
+        # The share text claims "zero detractors" only when this is 0.
+        "detractors": sum(1 for s in numeric(nps_all) if s <= 6),
         "sessions": distinct_count(sessions_all),
         "clients": distinct_count(sessions_all),
         "advocacy": share(advocacy, 4),

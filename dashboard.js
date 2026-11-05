@@ -469,12 +469,15 @@ Our ${label} delivers emotional intelligence training that actually sticks.
   function buildLtfSnippets(v) {
     const total = v.statements.length;
     const top = v.statements[0];
+    // Claims that only hold for some cohorts: say them only when the data does.
+    const noDetractors = v.detractors === 0;
+    const allWouldSendTeam = v.advocacy === 100;
     const snippets = [
       {
         channel: 'linkedin',
         chip: 'LinkedIn post',
         text:
-`${v.nps} NPS. Zero detractors. ${v.advocacy}% would put their own team through it.
+`${v.nps} NPS.${noDetractors ? ' Zero detractors.' : ''} ${v.advocacy}% would put their own team through it.
 
 ${v.unanimous} of our ${total} end-of-session statements drew agreement from every single participant in Leading Through Friction.
 
@@ -486,13 +489,13 @@ Friction isn't the problem. It's the opportunity.
         channel: 'email',
         chip: 'Client email',
         text:
-`Quick proof point from Leading Through Friction: ${v.advocacy}% of participants said they'd want their team or other leaders in their organization to go through it. ${top.strongly}% strongly agreed with "${top.text}." NPS came in at ${v.nps} with no detractors. Happy to walk you through what that looks like for your leaders.`
+`Quick proof point from Leading Through Friction: ${v.advocacy}% of participants said they'd want their team or other leaders in their organization to go through it. ${top.strongly}% strongly agreed with "${top.text}." NPS came in at ${v.nps}${noDetractors ? ' with no detractors' : ''}. Happy to walk you through what that looks like for your leaders.`
       },
       {
         channel: 'pitch',
         chip: 'Pitch / proposal line',
         text:
-`Leading Through Friction scored an NPS of ${v.nps} with zero detractors, and every participant agreed on ${v.unanimous} of ${total} impact statements — including that they'd send their own team. (n=${v.participants} leaders, ${v.sessions} session${v.sessions === 1 ? '' : 's'}.)`
+`Leading Through Friction scored an NPS of ${v.nps}${noDetractors ? ' with zero detractors' : ''}, and every participant agreed on ${v.unanimous} of ${total} impact statements${allWouldSendTeam ? " — including that they'd send their own team" : ''}. (n=${v.participants} leaders, ${v.sessions} session${v.sessions === 1 ? '' : 's'}.)`
       }
     ];
 
