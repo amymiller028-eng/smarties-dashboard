@@ -32,6 +32,18 @@ Interactive impact dashboard that reads from `data.json`. Update the JSON each w
    - OR: in your repo's main page, click **Add file → Upload files**, drag `data.json` in, commit
 5. Live site updates within ~60 seconds
 
+## Revised survey forms ("New…" sheets)
+
+From mid-2026 the forms changed, so new responses go into their own sheets. Each one feeds the same tab as the sheet it continues (`NEW_FORM_SHEETS` in `compute-data.py`):
+
+- `NewPrivateL1` → Private Level 1 · `NewPrivateL2` → Private Level 2 · `NewTTTTeams` → TTT Teams
+- `NewTTTL1&L2` holds both TTT levels. Each row is sorted by its **Session Name**: "Level 2" or "L2" goes to Level 2, everything else to Level 1.
+- `LTF-Private&TTT` is split the same way: a Session Name with "TTT" goes to the Train the Trainer LTF tab, everything else to Private.
+
+So keep "Level 2"/"L2" and "TTT" in session names. Questions the new forms dropped (Private: *gained new knowledge*; TTT: *content relevant*) leave those tiles running on the older responses.
+
+If the workbook is open in Excel, `data.json` still rebuilds; only the Excel-only Trainers and Sessions tabs wait until it's closed.
+
 ## Adding a new program type
 
 If you add a brand-new program with its own sheet (e.g. "TTTL3" or "Coaching"), tell Claude. The new sheet's column layout needs to be added to `compute-data.py`'s `SHEET_COLS` mapping, and a new tab needs to be added to the dashboard.

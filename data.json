@@ -1,6 +1,6 @@
 {
   "meta": {
-    "lastUpdated": "2026-07-31",
+    "lastUpdated": "2026-11-05",
     "reportingPeriod": "Q1 2026 to date",
     "periods": [
       "2025",
@@ -12,91 +12,91 @@
     "all": {
       "label": "All Programs",
       "type": "standard",
-      "nps": 74,
-      "participants": 422,
-      "sessions": 32,
-      "clients": 32,
-      "eiDevelopmentAttributed": 69,
-      "confidenceInEstimate": 80,
+      "nps": 73,
+      "participants": 659,
+      "sessions": 53,
+      "clients": 53,
+      "eiDevelopmentAttributed": 70,
+      "confidenceInEstimate": 82,
       "topBox": {
-        "applyOnJob": 99,
-        "gainedKnowledge": 97,
-        "worthwhileInvestment": 97,
-        "contentRelevant": 100,
+        "applyOnJob": 98,
+        "gainedKnowledge": 98,
+        "worthwhileInvestment": 96,
+        "contentRelevant": 98,
         "facilitatorKnowledge": 99,
         "facilitatorEngaging": 99
       },
       "modality": {
-        "virtual": 254,
-        "inPerson": 175
+        "virtual": 349,
+        "inPerson": 299
       },
-      "noManagerExpectationsPct": 65,
-      "managerExpectationsResponses": 259,
+      "noManagerExpectationsPct": 68,
+      "managerExpectationsResponses": 436,
       "managerSplit": {
         "withExpectations": {
-          "nps": 66,
-          "n": 91
+          "nps": 70,
+          "n": 138
         },
         "without": {
-          "nps": 68,
-          "n": 168
+          "nps": 69,
+          "n": 294
         },
-        "gap": -2
+        "gap": 1
       }
     },
     "ttt-summary": {
       "label": "Train the Trainer \u2014 Summary",
       "type": "standard",
       "nps": 85,
-      "participants": 122,
-      "sessions": 12,
-      "clients": 12,
-      "eiDevelopmentAttributed": 71,
-      "confidenceInEstimate": 84,
+      "participants": 149,
+      "sessions": 18,
+      "clients": 18,
+      "eiDevelopmentAttributed": 72,
+      "confidenceInEstimate": 85,
       "topBox": {
         "applyOnJob": 99,
         "gainedKnowledge": 98,
-        "worthwhileInvestment": 98,
+        "worthwhileInvestment": 99,
         "contentRelevant": 100,
         "facilitatorKnowledge": 98,
         "facilitatorEngaging": 97
       },
       "modality": {
-        "virtual": 87,
-        "inPerson": 37
+        "virtual": 111,
+        "inPerson": 40
       }
     },
     "ttt-l1": {
       "label": "Train the Trainer \u2014 Level 1",
       "type": "standard",
-      "nps": 83,
-      "participants": 83,
-      "sessions": 6,
-      "clients": 6,
-      "eiDevelopmentAttributed": 71,
-      "confidenceInEstimate": 84,
+      "nps": 84,
+      "participants": 97,
+      "sessions": 8,
+      "clients": 8,
+      "eiDevelopmentAttributed": 72,
+      "confidenceInEstimate": 85,
       "topBox": {
         "applyOnJob": 99,
-        "gainedKnowledge": 96,
+        "gainedKnowledge": 97,
         "worthwhileInvestment": 98,
         "contentRelevant": 100,
-        "facilitatorKnowledge": 96,
-        "facilitatorEngaging": 95
+        "facilitatorKnowledge": 97,
+        "facilitatorEngaging": 96
       },
       "modality": {
-        "virtual": 61,
+        "virtual": 75,
         "inPerson": 23
       }
     },
     "ttt-l2": {
       "label": "Train the Trainer \u2014 Level 2",
       "type": "standard",
-      "nps": 89,
-      "participants": 27,
-      "sessions": 4,
-      "clients": 4,
+      "nps": 85,
+      "participants": 33,
+      "sessions": 6,
+      "clients": 6,
       "eiDevelopmentAttributed": 77,
-      "confidenceInEstimate": 87,
+      "confidenceInEstimate": 86,
       "topBox": {
         "applyOnJob": 100,
         "gainedKnowledge": 100,
@@ -106,19 +106,19 @@
         "facilitatorEngaging": 100
       },
       "modality": {
-        "virtual": 14,
-        "inPerson": 14
+        "virtual": 17,
+        "inPerson": 17
       }
     },
     "ttt-teams": {
       "label": "Train the Trainer \u2014 Teams",
       "type": "standard",
-      "nps": 92,
-      "participants": 12,
-      "sessions": 2,
-      "clients": 2,
-      "eiDevelopmentAttributed": 58,
-      "confidenceInEstimate": 75,
+      "nps": 95,
+      "participants": 19,
+      "sessions": 4,
+      "clients": 4,
+      "eiDevelopmentAttributed": 65,
+      "confidenceInEstimate": 81,
       "topBox": {
         "applyOnJob": 100,
         "gainedKnowledge": 100,
@@ -128,103 +128,114 @@
         "facilitatorEngaging": 100
       },
       "modality": {
-        "virtual": 12,
+        "virtual": 19,
         "inPerson": 0
       }
     },
     "private-summary": {
       "label": "Private Program \u2014 Summary",
       "type": "standard",
-      "nps": 66,
-      "participants": 232,
-      "sessions": 15,
-      "clients": 15,
-      "eiDevelopmentAttributed": 68,
-      "confidenceInEstimate": 80,
+      "nps": 67,
+      "participants": 424,
+      "sessions": 28,
+      "clients": 28,
+      "eiDevelopmentAttributed": 70,
+      "confidenceInEstimate": 82,
       "topBox": {
         "applyOnJob": 98,
         "gainedKnowledge": 97,
         "worthwhileInvestment": 95,
-        "contentRelevant": 100,
-        "facilitatorKnowledge": 100,
+        "contentRelevant": 98,
+        "facilitatorKnowledge": 99,
         "facilitatorEngaging": 99
       },
       "modality": {
-        "virtual": 122,
-        "inPerson": 115
+        "virtual": 174,
+        "inPerson": 236
       },
-      "noManagerExpectationsPct": 63,
-      "managerExpectationsResponses": 231,
+      "noManagerExpectationsPct": 67,
+      "managerExpectationsResponses": 408,
       "managerSplit": {
         "withExpectations": {
-          "nps": 65,
-          "n": 86
+          "nps": 69,
+          "n": 133
         },
         "without": {
-          "nps": 66,
-          "n": 145
+          "nps": 68,
+          "n": 271
         },
-        "gap": -1
+        "gap": 1
       }
     },
     "private-l1": {
       "label": "Private Program \u2014 Level 1",
       "type": "standard",
-      "nps": 64,
-      "participants": 189,
-      "sessions": 13,
-      "clients": 13,
-      "eiDevelopmentAttributed": 69,
-      "confidenceInEstimate": 78,
+      "nps": 66,
+      "participants": 357,
+      "sessions": 24,
+      "clients": 24,
+      "eiDevelopmentAttributed": 71,
+      "confidenceInEstimate": 81,
       "topBox": {
         "applyOnJob": 98,
         "gainedKnowledge": 98,
         "worthwhileInvestment": 96,
-        "contentRelevant": 99,
+        "contentRelevant": 98,
         "facilitatorKnowledge": 99,
         "facilitatorEngaging": 99
       },
       "modality": {
-        "virtual": 87,
-        "inPerson": 105
+        "virtual": 139,
+        "inPerson": 225
       },
-      "noManagerExpectationsPct": 63,
-      "managerExpectationsResponses": 188,
+      "noManagerExpectationsPct": 67,
+      "managerExpectationsResponses": 341,
       "managerSplit": {
         "withExpectations": {
-          "nps": 66,
-          "n": 70
+          "nps": 70,
+          "n": 108
         },
         "without": {
-          "nps": 63,
-          "n": 118
+          "nps": 66,
+          "n": 229
         },
-        "gap": 3
+        "gap": 4
       }
     },
     "private-l2": {
       "label": "Private Program \u2014 Level 2",
       "type": "standard",
-      "nps": 74,
-      "participants": 43,
-      "sessions": 2,
-      "clients": 2,
-      "eiDevelopmentAttributed": 67,
-      "confidenceInEstimate": 88,
+      "nps": 73,
+      "participants": 67,
+      "sessions": 4,
+      "clients": 4,
+      "eiDevelopmentAttributed": 69,
+      "confidenceInEstimate": 87,
       "topBox": {
-        "applyOnJob": 100,
+        "applyOnJob": 99,
         "gainedKnowledge": 93,
-        "worthwhileInvestment": 93,
-        "contentRelevant": 100,
+        "worthwhileInvestment": 94,
+        "contentRelevant": 99,
         "facilitatorKnowledge": 100,
-        "facilitatorEngaging": 98
+        "facilitatorEngaging": 99
       },
       "modality": {
         "virtual": 35,
-        "inPerson": 10
+        "inPerson": 11
       },
       "noManagerExpectationsPct": 63,
-      "managerExpectationsResponses": 43
+      "managerExpectationsResponses": 67,
+      "managerSplit": {
+        "withExpectations": {
+          "nps": 64,
+          "n": 25
+        },
+        "without": {
+          "nps": 79,
+          "n": 42
+        },
+        "gap": -15
+      }
     },
     "public-l1": {
       "label": "Public Program",
@@ -1700,137 +1711,205 @@
     "ltf-summary": {
       "label": "Leading Through Friction",
       "type": "ltf",
-      "nps": 96,
-      "participants": 23,
-      "sessions": 1,
-      "clients": 1,
-      "advocacy": 100,
-      "advocacyStrongly": 87,
-      "stronglyAgreeOverall": 77,
-      "ratingsCount": 160,
-      "unanimous": 6,
+      "nps": 80,
+      "participants": 41,
+      "sessions": 3,
+      "clients": 3,
+      "advocacy": 93,
+      "advocacyStrongly": 76,
+      "stronglyAgreeOverall": 70,
+      "ratingsCount": 292,
+      "unanimous": 2,
       "statements": [
         {
           "text": "I gained practical tools I can apply to real leadership challenges",
-          "n": 23,
-          "top2": 100,
-          "strongly": 87,
-          "mean": 4.87
+          "n": 41,
+          "top2": 98,
+          "strongly": 85,
+          "mean": 4.83
         },
         {
           "text": "This course was a worthwhile investment of my time",
-          "n": 23,
-          "top2": 100,
-          "strongly": 87,
-          "mean": 4.87
+          "n": 42,
+          "top2": 95,
+          "strongly": 81,
+          "mean": 4.74
         },
         {
           "text": "I'd want my team or other leaders in my organization to go through this",
-          "n": 23,
-          "top2": 100,
-          "strongly": 87,
-          "mean": 4.87
+          "n": 42,
+          "top2": 93,
+          "strongly": 76,
+          "mean": 4.69
         },
         {
           "text": "The facilitator kept me engaged",
-          "n": 23,
+          "n": 42,
           "top2": 100,
-          "strongly": 78,
-          "mean": 4.78
+          "strongly": 67,
+          "mean": 4.67
         },
         {
           "text": "The course materials were easy to navigate",
-          "n": 22,
+          "n": 41,
           "top2": 95,
-          "strongly": 73,
-          "mean": 4.68
+          "strongly": 66,
+          "mean": 4.56
         },
         {
           "text": "I have a clearer way to recognize and respond to friction when it shows up",
-          "n": 23,
+          "n": 42,
           "top2": 100,
-          "strongly": 65,
-          "mean": 4.65
+          "strongly": 60,
+          "mean": 4.6
         },
         {
           "text": "I expect this program to improve how I lead going forward",
-          "n": 23,
-          "top2": 100,
-          "strongly": 61,
-          "mean": 4.61
+          "n": 42,
+          "top2": 98,
+          "strongly": 52,
+          "mean": 4.5
         }
       ],
       "modality": {
-        "virtual": 0,
+        "virtual": 19,
         "inPerson": 23
       }
     },
     "ltf-private": {
       "label": "Leading Through Friction \u2014 Private Program",
       "type": "ltf",
-      "nps": 96,
-      "participants": 23,
+      "nps": 83,
+      "participants": 30,
+      "sessions": 2,
+      "clients": 2,
+      "advocacy": 94,
+      "advocacyStrongly": 77,
+      "stronglyAgreeOverall": 70,
+      "ratingsCount": 216,
+      "unanimous": 2,
+      "statements": [
+        {
+          "text": "I gained practical tools I can apply to real leadership challenges",
+          "n": 31,
+          "top2": 97,
+          "strongly": 81,
+          "mean": 4.77
+        },
+        {
+          "text": "This course was a worthwhile investment of my time",
+          "n": 31,
+          "top2": 94,
+          "strongly": 77,
+          "mean": 4.68
+        },
+        {
+          "text": "I'd want my team or other leaders in my organization to go through this",
+          "n": 31,
+          "top2": 94,
+          "strongly": 77,
+          "mean": 4.71
+        },
+        {
+          "text": "The facilitator kept me engaged",
+          "n": 31,
+          "top2": 100,
+          "strongly": 71,
+          "mean": 4.71
+        },
+        {
+          "text": "The course materials were easy to navigate",
+          "n": 30,
+          "top2": 93,
+          "strongly": 70,
+          "mean": 4.57
+        },
+        {
+          "text": "I have a clearer way to recognize and respond to friction when it shows up",
+          "n": 31,
+          "top2": 100,
+          "strongly": 58,
+          "mean": 4.58
+        },
+        {
+          "text": "I expect this program to improve how I lead going forward",
+          "n": 31,
+          "top2": 97,
+          "strongly": 55,
+          "mean": 4.52
+        }
+      ],
+      "modality": {
+        "virtual": 8,
+        "inPerson": 23
+      }
+    },
+    "ltf-ttt": {
+      "label": "Leading Through Friction \u2014 Train the Trainer",
+      "type": "ltf",
+      "nps": 73,
+      "participants": 11,
       "sessions": 1,
       "clients": 1,
-      "advocacy": 100,
-      "advocacyStrongly": 87,
-      "stronglyAgreeOverall": 77,
-      "ratingsCount": 160,
+      "advocacy": 91,
+      "advocacyStrongly": 73,
+      "stronglyAgreeOverall": 68,
+      "ratingsCount": 76,
       "unanimous": 6,
       "statements": [
         {
           "text": "I gained practical tools I can apply to real leadership challenges",
-          "n": 23,
+          "n": 10,
           "top2": 100,
-          "strongly": 87,
-          "mean": 4.87
+          "strongly": 100,
+          "mean": 5.0
         },
         {
           "text": "This course was a worthwhile investment of my time",
-          "n": 23,
+          "n": 11,
           "top2": 100,
-          "strongly": 87,
-          "mean": 4.87
+          "strongly": 91,
+          "mean": 4.91
         },
         {
           "text": "I'd want my team or other leaders in my organization to go through this",
-          "n": 23,
-          "top2": 100,
-          "strongly": 87,
-          "mean": 4.87
+          "n": 11,
+          "top2": 91,
+          "strongly": 73,
+          "mean": 4.64
         },
         {
           "text": "The facilitator kept me engaged",
-          "n": 23,
+          "n": 11,
           "top2": 100,
-          "strongly": 78,
-          "mean": 4.78
+          "strongly": 55,
+          "mean": 4.55
         },
         {
           "text": "The course materials were easy to navigate",
-          "n": 22,
-          "top2": 95,
-          "strongly": 73,
-          "mean": 4.68
+          "n": 11,
+          "top2": 100,
+          "strongly": 55,
+          "mean": 4.55
         },
         {
           "text": "I have a clearer way to recognize and respond to friction when it shows up",
-          "n": 23,
+          "n": 11,
           "top2": 100,
-          "strongly": 65,
-          "mean": 4.65
+          "strongly": 64,
+          "mean": 4.64
         },
         {
           "text": "I expect this program to improve how I lead going forward",
-          "n": 23,
+          "n": 11,
           "top2": 100,
-          "strongly": 61,
-          "mean": 4.61
+          "strongly": 45,
+          "mean": 4.45
         }
       ],
       "modality": {
-        "virtual": 0,
-        "inPerson": 23
+        "virtual": 11,
+        "inPerson": 0
       }
     }
   },
@@ -1839,67 +1918,67 @@
       "all": {
         "label": "All Programs",
         "type": "standard",
-        "nps": 74,
-        "participants": 1405,
-        "sessions": 110,
-        "clients": 110,
-        "eiDevelopmentAttributed": 68,
-        "confidenceInEstimate": 81,
+        "nps": 73,
+        "participants": 1642,
+        "sessions": 131,
+        "clients": 131,
+        "eiDevelopmentAttributed": 69,
+        "confidenceInEstimate": 82,
         "topBox": {
           "applyOnJob": 98,
           "gainedKnowledge": 96,
           "worthwhileInvestment": 95,
           "contentRelevant": 98,
           "facilitatorKnowledge": 98,
-          "facilitatorEngaging": 97
+          "facilitatorEngaging": 98
         },
         "modality": {
-          "virtual": 754,
-          "inPerson": 643
+          "virtual": 849,
+          "inPerson": 767
         },
-        "noManagerExpectationsPct": 65,
-        "managerExpectationsResponses": 860,
+        "noManagerExpectationsPct": 66,
+        "managerExpectationsResponses": 1037,
         "managerSplit": {
           "withExpectations": {
             "nps": 75,
-            "n": 304
+            "n": 351
           },
           "without": {
-            "nps": 66,
-            "n": 550
+            "nps": 67,
+            "n": 676
           },
-          "gap": 9
+          "gap": 8
         }
       },
       "ttt-summary": {
         "label": "Train the Trainer \u2014 Summary",
         "type": "standard",
         "nps": 81,
-        "participants": 442,
-        "sessions": 44,
-        "clients": 44,
-        "eiDevelopmentAttributed": 68,
+        "participants": 469,
+        "sessions": 50,
+        "clients": 50,
+        "eiDevelopmentAttributed": 69,
         "confidenceInEstimate": 83,
         "topBox": {
           "applyOnJob": 97,
-          "gainedKnowledge": 96,
+          "gainedKnowledge": 97,
           "worthwhileInvestment": 96,
           "contentRelevant": 98,
           "facilitatorKnowledge": 97,
-          "facilitatorEngaging": 96
+          "facilitatorEngaging": 97
         },
         "modality": {
-          "virtual": 255,
-          "inPerson": 164
+          "virtual": 279,
+          "inPerson": 167
         }
       },
       "ttt-l1": {
         "label": "Train the Trainer \u2014 Level 1",
         "type": "standard",
         "nps": 79,
-        "participants": 338,
-        "sessions": 28,
-        "clients": 28,
+        "participants": 352,
+        "sessions": 30,
+        "clients": 30,
         "eiDevelopmentAttributed": 68,
         "confidenceInEstimate": 83,
         "topBox": {
@@ -1911,18 +1990,18 @@
           "facilitatorEngaging": 96
         },
         "modality": {
-          "virtual": 199,
+          "virtual": 213,
           "inPerson": 134
         }
       },
       "ttt-l2": {
         "label": "Train the Trainer \u2014 Level 2",
         "type": "standard",
-        "nps": 89,
-        "participants": 73,
-        "sessions": 11,
-        "clients": 11,
-        "eiDevelopmentAttributed": 72,
+        "nps": 87,
+        "participants": 79,
+        "sessions": 13,
+        "clients": 13,
+        "eiDevelopmentAttributed": 73,
         "confidenceInEstimate": 84,
         "topBox": {
           "applyOnJob": 99,
@@ -1930,22 +2009,22 @@
           "worthwhileInvestment": 100,
           "contentRelevant": 100,
           "facilitatorKnowledge": 100,
-          "facilitatorEngaging": 97
+          "facilitatorEngaging": 98
         },
         "modality": {
-          "virtual": 44,
-          "inPerson": 30
+          "virtual": 47,
+          "inPerson": 33
         }
       },
       "ttt-teams": {
         "label": "Train the Trainer \u2014 Teams",
         "type": "standard",
-        "nps": 87,
-        "participants": 31,
-        "sessions": 5,
-        "clients": 5,
-        "eiDevelopmentAttributed": 59,
-        "confidenceInEstimate": 76,
+        "nps": 89,
+        "participants": 38,
+        "sessions": 7,
+        "clients": 7,
+        "eiDevelopmentAttributed": 63,
+        "confidenceInEstimate": 79,
         "topBox": {
           "applyOnJob": 100,
           "gainedKnowledge": 100,
@@ -1955,7 +2034,7 @@
           "facilitatorEngaging": 100
         },
         "modality": {
-          "virtual": 12,
+          "virtual": 19,
           "inPerson": 0
         }
       },
@@ -1963,11 +2042,11 @@
         "label": "Private Program \u2014 Summary",
         "type": "standard",
         "nps": 69,
-        "participants": 869,
-        "sessions": 58,
-        "clients": 58,
-        "eiDevelopmentAttributed": 68,
-        "confidenceInEstimate": 81,
+        "participants": 1061,
+        "sessions": 71,
+        "clients": 71,
+        "eiDevelopmentAttributed": 69,
+        "confidenceInEstimate": 82,
         "topBox": {
           "applyOnJob": 98,
           "gainedKnowledge": 96,
@@ -1977,30 +2056,30 @@
           "facilitatorEngaging": 98
         },
         "modality": {
-          "virtual": 454,
-          "inPerson": 430
+          "virtual": 506,
+          "inPerson": 551
         },
-        "noManagerExpectationsPct": 64,
-        "managerExpectationsResponses": 832,
+        "noManagerExpectationsPct": 65,
+        "managerExpectationsResponses": 1009,
         "managerSplit": {
           "withExpectations": {
             "nps": 75,
-            "n": 299
+            "n": 346
           },
           "without": {
-            "nps": 66,
-            "n": 527
+            "nps": 67,
+            "n": 653
           },
-          "gap": 9
+          "gap": 8
         }
       },
       "private-l1": {
         "label": "Private Program \u2014 Level 1",
         "type": "standard",
         "nps": 68,
-        "participants": 763,
-        "sessions": 50,
-        "clients": 50,
+        "participants": 931,
+        "sessions": 61,
+        "clients": 61,
         "eiDevelopmentAttributed": 69,
         "confidenceInEstimate": 81,
         "topBox": {
@@ -2012,56 +2091,56 @@
           "facilitatorEngaging": 98
         },
         "modality": {
-          "virtual": 394,
-          "inPerson": 382
+          "virtual": 446,
+          "inPerson": 502
         },
-        "noManagerExpectationsPct": 64,
-        "managerExpectationsResponses": 726,
+        "noManagerExpectationsPct": 65,
+        "managerExpectationsResponses": 879,
         "managerSplit": {
           "withExpectations": {
             "nps": 74,
-            "n": 262
+            "n": 300
           },
           "without": {
-            "nps": 65,
-            "n": 458
+            "nps": 66,
+            "n": 569
           },
-          "gap": 9
+          "gap": 8
         }
       },
       "private-l2": {
         "label": "Private Program \u2014 Level 2",
         "type": "standard",
         "nps": 75,
-        "participants": 106,
-        "sessions": 8,
-        "clients": 8,
-        "eiDevelopmentAttributed": 67,
-        "confidenceInEstimate": 83,
+        "participants": 130,
+        "sessions": 10,
+        "clients": 10,
+        "eiDevelopmentAttributed": 68,
+        "confidenceInEstimate": 84,
         "topBox": {
-          "applyOnJob": 100,
+          "applyOnJob": 99,
           "gainedKnowledge": 97,
           "worthwhileInvestment": 96,
-          "contentRelevant": 100,
+          "contentRelevant": 99,
           "facilitatorKnowledge": 100,
           "facilitatorEngaging": 99
         },
         "modality": {
           "virtual": 60,
-          "inPerson": 48
+          "inPerson": 49
         },
         "noManagerExpectationsPct": 65,
-        "managerExpectationsResponses": 106,
+        "managerExpectationsResponses": 130,
         "managerSplit": {
           "withExpectations": {
-            "nps": 81,
-            "n": 37
+            "nps": 78,
+            "n": 46
           },
           "without": {
-            "nps": 72,
-            "n": 69
+            "nps": 73,
+            "n": 84
           },
-          "gap": 9
+          "gap": 5
         }
       },
       "public-l1": {
@@ -2479,91 +2558,91 @@
       "all": {
         "label": "All Programs",
         "type": "standard",
-        "nps": 74,
-        "participants": 422,
-        "sessions": 32,
-        "clients": 32,
-        "eiDevelopmentAttributed": 69,
-        "confidenceInEstimate": 80,
+        "nps": 73,
+        "participants": 659,
+        "sessions": 53,
+        "clients": 53,
+        "eiDevelopmentAttributed": 70,
+        "confidenceInEstimate": 82,
         "topBox": {
-          "applyOnJob": 99,
-          "gainedKnowledge": 97,
-          "worthwhileInvestment": 97,
-          "contentRelevant": 100,
+          "applyOnJob": 98,
+          "gainedKnowledge": 98,
+          "worthwhileInvestment": 96,
+          "contentRelevant": 98,
           "facilitatorKnowledge": 99,
           "facilitatorEngaging": 99
         },
         "modality": {
-          "virtual": 254,
-          "inPerson": 175
+          "virtual": 349,
+          "inPerson": 299
         },
-        "noManagerExpectationsPct": 65,
-        "managerExpectationsResponses": 259,
+        "noManagerExpectationsPct": 68,
+        "managerExpectationsResponses": 436,
         "managerSplit": {
           "withExpectations": {
-            "nps": 66,
-            "n": 91
+            "nps": 70,
+            "n": 138
           },
           "without": {
-            "nps": 68,
-            "n": 168
+            "nps": 69,
+            "n": 294
           },
-          "gap": -2
+          "gap": 1
         }
       },
       "ttt-summary": {
         "label": "Train the Trainer \u2014 Summary",
         "type": "standard",
         "nps": 85,
-        "participants": 122,
-        "sessions": 12,
-        "clients": 12,
-        "eiDevelopmentAttributed": 71,
-        "confidenceInEstimate": 84,
+        "participants": 149,
+        "sessions": 18,
+        "clients": 18,
+        "eiDevelopmentAttributed": 72,
+        "confidenceInEstimate": 85,
         "topBox": {
           "applyOnJob": 99,
           "gainedKnowledge": 98,
-          "worthwhileInvestment": 98,
+          "worthwhileInvestment": 99,
           "contentRelevant": 100,
           "facilitatorKnowledge": 98,
           "facilitatorEngaging": 97
         },
         "modality": {
-          "virtual": 87,
-          "inPerson": 37
+          "virtual": 111,
+          "inPerson": 40
         }
       },
       "ttt-l1": {
         "label": "Train the Trainer \u2014 Level 1",
         "type": "standard",
-        "nps": 83,
-        "participants": 83,
-        "sessions": 6,
-        "clients": 6,
-        "eiDevelopmentAttributed": 71,
-        "confidenceInEstimate": 84,
+        "nps": 84,
+        "participants": 97,
+        "sessions": 8,
+        "clients": 8,
+        "eiDevelopmentAttributed": 72,
+        "confidenceInEstimate": 85,
         "topBox": {
           "applyOnJob": 99,
-          "gainedKnowledge": 96,
+          "gainedKnowledge": 97,
           "worthwhileInvestment": 98,
           "contentRelevant": 100,
-          "facilitatorKnowledge": 96,
-          "facilitatorEngaging": 95
+          "facilitatorKnowledge": 97,
+          "facilitatorEngaging": 96
         },
         "modality": {
-          "virtual": 61,
+          "virtual": 75,
           "inPerson": 23
         }
       },
       "ttt-l2": {
         "label": "Train the Trainer \u2014 Level 2",
         "type": "standard",
-        "nps": 89,
-        "participants": 27,
-        "sessions": 4,
-        "clients": 4,
+        "nps": 85,
+        "participants": 33,
+        "sessions": 6,
+        "clients": 6,
         "eiDevelopmentAttributed": 77,
-        "confidenceInEstimate": 87,
+        "confidenceInEstimate": 86,
         "topBox": {
           "applyOnJob": 100,
           "gainedKnowledge": 100,
@@ -2573,19 +2652,19 @@
           "facilitatorEngaging": 100
         },
         "modality": {
-          "virtual": 14,
-          "inPerson": 14
+          "virtual": 17,
+          "inPerson": 17
         }
       },
       "ttt-teams": {
         "label": "Train the Trainer \u2014 Teams",
         "type": "standard",
-        "nps": 92,
-        "participants": 12,
-        "sessions": 2,
-        "clients": 2,
-        "eiDevelopmentAttributed": 58,
-        "confidenceInEstimate": 75,
+        "nps": 95,
+        "participants": 19,
+        "sessions": 4,
+        "clients": 4,
+        "eiDevelopmentAttributed": 65,
+        "confidenceInEstimate": 81,
         "topBox": {
           "applyOnJob": 100,
           "gainedKnowledge": 100,
@@ -2595,103 +2674,114 @@
           "facilitatorEngaging": 100
         },
         "modality": {
-          "virtual": 12,
+          "virtual": 19,
           "inPerson": 0
         }
       },
       "private-summary": {
         "label": "Private Program \u2014 Summary",
         "type": "standard",
-        "nps": 66,
-        "participants": 232,
-        "sessions": 15,
-        "clients": 15,
-        "eiDevelopmentAttributed": 68,
-        "confidenceInEstimate": 80,
+        "nps": 67,
+        "participants": 424,
+        "sessions": 28,
+        "clients": 28,
+        "eiDevelopmentAttributed": 70,
+        "confidenceInEstimate": 82,
         "topBox": {
           "applyOnJob": 98,
           "gainedKnowledge": 97,
           "worthwhileInvestment": 95,
-          "contentRelevant": 100,
-          "facilitatorKnowledge": 100,
+          "contentRelevant": 98,
+          "facilitatorKnowledge": 99,
           "facilitatorEngaging": 99
         },
         "modality": {
-          "virtual": 122,
-          "inPerson": 115
+          "virtual": 174,
+          "inPerson": 236
         },
-        "noManagerExpectationsPct": 63,
-        "managerExpectationsResponses": 231,
+        "noManagerExpectationsPct": 67,
+        "managerExpectationsResponses": 408,
         "managerSplit": {
           "withExpectations": {
-            "nps": 65,
-            "n": 86
+            "nps": 69,
+            "n": 133
           },
           "without": {
-            "nps": 66,
-            "n": 145
+            "nps": 68,
+            "n": 271
           },
-          "gap": -1
+          "gap": 1
         }
       },
       "private-l1": {
         "label": "Private Program \u2014 Level 1",
         "type": "standard",
-        "nps": 64,
-        "participants": 189,
-        "sessions": 13,
-        "clients": 13,
-        "eiDevelopmentAttributed": 69,
-        "confidenceInEstimate": 78,
+        "nps": 66,
+        "participants": 357,
+        "sessions": 24,
+        "clients": 24,
+        "eiDevelopmentAttributed": 71,
+        "confidenceInEstimate": 81,
         "topBox": {
           "applyOnJob": 98,
           "gainedKnowledge": 98,
           "worthwhileInvestment": 96,
-          "contentRelevant": 99,
+          "contentRelevant": 98,
           "facilitatorKnowledge": 99,
           "facilitatorEngaging": 99
         },
         "modality": {
-          "virtual": 87,
-          "inPerson": 105
+          "virtual": 139,
+          "inPerson": 225
         },
-        "noManagerExpectationsPct": 63,
-        "managerExpectationsResponses": 188,
+        "noManagerExpectationsPct": 67,
+        "managerExpectationsResponses": 341,
         "managerSplit": {
           "withExpectations": {
-            "nps": 66,
-            "n": 70
+            "nps": 70,
+            "n": 108
           },
           "without": {
-            "nps": 63,
-            "n": 118
+            "nps": 66,
+            "n": 229
           },
-          "gap": 3
+          "gap": 4
         }
       },
       "private-l2": {
         "label": "Private Program \u2014 Level 2",
         "type": "standard",
-        "nps": 74,
-        "participants": 43,
-        "sessions": 2,
-        "clients": 2,
-        "eiDevelopmentAttributed": 67,
-        "confidenceInEstimate": 88,
+        "nps": 73,
+        "participants": 67,
+        "sessions": 4,
+        "clients": 4,
+        "eiDevelopmentAttributed": 69,
+        "confidenceInEstimate": 87,
         "topBox": {
-          "applyOnJob": 100,
+          "applyOnJob": 99,
           "gainedKnowledge": 93,
-          "worthwhileInvestment": 93,
-          "contentRelevant": 100,
+          "worthwhileInvestment": 94,
+          "contentRelevant": 99,
           "facilitatorKnowledge": 100,
-          "facilitatorEngaging": 98
+          "facilitatorEngaging": 99
         },
         "modality": {
           "virtual": 35,
-          "inPerson": 10
+          "inPerson": 11
         },
         "noManagerExpectationsPct": 63,
-        "managerExpectationsResponses": 43
+        "managerExpectationsResponses": 67,
+        "managerSplit": {
+          "withExpectations": {
+            "nps": 64,
+            "n": 25
+          },
+          "without": {
+            "nps": 79,
+            "n": 42
+          },
+          "gap": -15
+        }
       },
       "public-l1": {
         "label": "Public Program",
@@ -3378,6 +3468,96 @@
       "program": "Train the Trainer L1",
       "facilitator": "David Brzozowski",
       "name": "Trinh",
+      "company": "",
+      "view": "ttt-l1",
+      "period": "2026"
+    },
+    {
+      "quote": "He is very knowledgeable and engaging. He worked hard at remembering what people on the call shared and brought conversations back around to connect shared experiences with the content. He was vulnerable and real.",
+      "program": "Train the Trainer L1",
+      "facilitator": "Dimyas Perdue",
+      "name": "Laura",
+      "company": "",
+      "view": "ttt-l1",
+      "period": "2026"
+    },
+    {
+      "quote": "Extremely engaging and knowledgeable.  I appreciated his vulnerability and providing strong personal examples.",
+      "program": "Train the Trainer L1",
+      "facilitator": "Dimyas Perdue",
+      "name": "",
+      "company": "",
+      "view": "ttt-l1",
+      "period": "2026"
+    },
+    {
+      "quote": "Sheri was engaging and extremely knowledgeable on this topic. She communicated clearly and recalled items from earlier in the day.",
+      "program": "Train the Trainer L1",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "Will",
+      "company": "",
+      "view": "ttt-l1",
+      "period": "2026"
+    },
+    {
+      "quote": "Great training ... well developed course, user friendly",
+      "program": "Train the Trainer L1",
+      "facilitator": "Dimyas Perdue",
+      "name": "",
+      "company": "",
+      "view": "ttt-l1",
+      "period": "2026"
+    },
+    {
+      "quote": "Maybe include the tree image in the booklet.  It is a helpful visual.",
+      "program": "Train the Trainer L1",
+      "facilitator": "Dimyas Perdue",
+      "name": "",
+      "company": "",
+      "view": "ttt-l1",
+      "period": "2026"
+    },
+    {
+      "quote": "Just make sure Mr.Dimyas is your facilitator. HANDSO DOWN",
+      "program": "Train the Trainer L1",
+      "facilitator": "Dimyas Perdue",
+      "name": "Brianna",
+      "company": "",
+      "view": "ttt-l1",
+      "period": "2026"
+    },
+    {
+      "quote": "Thank you Dimyas for an amazing training",
+      "program": "Train the Trainer L1",
+      "facilitator": "Dimyas Perdue",
+      "name": "",
+      "company": "",
+      "view": "ttt-l1",
+      "period": "2026"
+    },
+    {
+      "quote": "Engaging us with personal stories and connecting them to concepts.",
+      "program": "Train the Trainer L1",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "",
+      "company": "",
+      "view": "ttt-l1",
+      "period": "2026"
+    },
+    {
+      "quote": "Engagement, knowledgeable, poised, passionate",
+      "program": "Train the Trainer L1",
+      "facilitator": "Dimyas Perdue",
+      "name": "",
+      "company": "",
+      "view": "ttt-l1",
+      "period": "2026"
+    },
+    {
+      "quote": "Great extra add on knowledge",
+      "program": "Train the Trainer L1",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "",
       "company": "",
       "view": "ttt-l1",
       "period": "2026"
@@ -5048,6 +5228,114 @@
       "period": "2026"
     },
     {
+      "quote": "This training was incredibly valuable, and the facilitator truly elevated the experience beyond other trainings I\u2019ve attended. His ability to make emotional intelligence practical, relatable, and directly applicable to our team kept everyone engaged and made the material feel genuinely useful rather than just another required training. He set an exceptionally high standard for what effective facilitation should look like.",
+      "program": "TTT for Teams",
+      "facilitator": "Dimyas Perdue",
+      "name": "Kayce",
+      "company": "",
+      "view": "ttt-teams",
+      "period": "2026"
+    },
+    {
+      "quote": "Incredibly personable. He did a great job navigating the small group train the trainer. He discussed participant hat and facilitator hat. I appreciated that distinction a lot.",
+      "program": "TTT for Teams",
+      "facilitator": "Dimyas Perdue",
+      "name": "",
+      "company": "",
+      "view": "ttt-teams",
+      "period": "2026"
+    },
+    {
+      "quote": "This was the best EQ training I have attended. The facilitator made all the difference. I felt comfortable sharing and it can be a vulnerable subject to discuss. You presentation of yourself makes a huge difference in the participants and I felt that first hand in this training.",
+      "program": "TTT for Teams",
+      "facilitator": "Dimyas Perdue",
+      "name": "",
+      "company": "",
+      "view": "ttt-teams",
+      "period": "2026"
+    },
+    {
+      "quote": "Dimyas is very engaging. He quickly built trust and connection. He develops rapport and encourages meaningful interaction among the trainees.",
+      "program": "TTT for Teams",
+      "facilitator": "Dimyas Perdue",
+      "name": "Maribel",
+      "company": "",
+      "view": "ttt-teams",
+      "period": "2026"
+    },
+    {
+      "quote": "Dimyas was hands down the best facilitator I\u2019ve worked with at TalentSmart. His training today will be the reason we can successfully implement this material and program.",
+      "program": "TTT for Teams",
+      "facilitator": "Dimyas Perdue",
+      "name": "Kayce",
+      "company": "",
+      "view": "ttt-teams",
+      "period": "2026"
+    },
+    {
+      "quote": "Take the class with Greg. He is fantastic!",
+      "program": "TTT for Teams",
+      "facilitator": "Dr. Greg Campbell",
+      "name": "Karen",
+      "company": "",
+      "view": "ttt-teams",
+      "period": "2026"
+    },
+    {
+      "quote": "I love the safe space created by facilitator which allows to be open/transparent which in return helps drive the content.",
+      "program": "TTT for Teams",
+      "facilitator": "Dr. Greg Campbell",
+      "name": "wendy",
+      "company": "",
+      "view": "ttt-teams",
+      "period": "2026"
+    },
+    {
+      "quote": "Transparent, Warm and Engaging.  Able to provide his own experiences and advice to enhance learning the material.",
+      "program": "TTT for Teams",
+      "facilitator": "Dr. Greg Campbell",
+      "name": "wendy",
+      "company": "",
+      "view": "ttt-teams",
+      "period": "2026"
+    },
+    {
+      "quote": "He did a great job on leading and training a small group of 4.  His humor was great to connect with class.",
+      "program": "TTT for Teams",
+      "facilitator": "Dimyas Perdue",
+      "name": "",
+      "company": "",
+      "view": "ttt-teams",
+      "period": "2026"
+    },
+    {
+      "quote": "Love how this ties in with all of the other TalentSmart courses, but takes a different slant on EQ.",
+      "program": "TTT for Teams",
+      "facilitator": "Dr. Greg Campbell",
+      "name": "Bertram",
+      "company": "",
+      "view": "ttt-teams",
+      "period": "2026"
+    },
+    {
+      "quote": "Very engaging and knowledgeable!",
+      "program": "TTT for Teams",
+      "facilitator": "Dr. Greg Campbell",
+      "name": "Bertram",
+      "company": "",
+      "view": "ttt-teams",
+      "period": "2026"
+    },
+    {
+      "quote": "Enthusiastic and passionate",
+      "program": "TTT for Teams",
+      "facilitator": "Dr. Greg Campbell",
+      "name": "Karen",
+      "company": "",
+      "view": "ttt-teams",
+      "period": "2026"
+    },
+    {
       "quote": "David is very knowledgeable and brings an expertise to the course material.   He provides guidance, support,  and instruction that is highly beneficial.",
       "program": "TTT for Teams",
       "facilitator": "David Brzozowski",
@@ -5385,6 +5673,60 @@
       "program": "Train the Trainer L2",
       "facilitator": "David Brzozowski",
       "name": "",
+      "company": "",
+      "view": "ttt-l2",
+      "period": "2026"
+    },
+    {
+      "quote": "Sheri was very knowledgeable, kept us engaged, gave us opportunities to ask questions and made sure we really understood the information before moving on to the next topic. I really liked the examples that were discussed it helped in my understanding where I might have misunderstood something.",
+      "program": "Train the Trainer L2",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "",
+      "company": "",
+      "view": "ttt-l2",
+      "period": "2026"
+    },
+    {
+      "quote": "Be prepared to share fully. The class will be more valuable to you if you do!",
+      "program": "Train the Trainer L2",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "Bertram",
+      "company": "",
+      "view": "ttt-l2",
+      "period": "2026"
+    },
+    {
+      "quote": "Her communication style, and personal experience. Great job!",
+      "program": "Train the Trainer L2",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "",
+      "company": "",
+      "view": "ttt-l2",
+      "period": "2026"
+    },
+    {
+      "quote": "The step by step information and also understanding your audience and what will work best for them to make this training more effective",
+      "program": "Train the Trainer L2",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "",
+      "company": "",
+      "view": "ttt-l2",
+      "period": "2026"
+    },
+    {
+      "quote": "Learn, understand, and keep striving to be impactful and improve.",
+      "program": "Train the Trainer L2",
+      "facilitator": "Dr. Greg Campbell",
+      "name": "",
+      "company": "",
+      "view": "ttt-l2",
+      "period": "2026"
+    },
+    {
+      "quote": "She was very engaging and knowledgeable!",
+      "program": "Train the Trainer L2",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "Bertram",
       "company": "",
       "view": "ttt-l2",
       "period": "2026"
@@ -6651,6 +6993,654 @@
     },
     {
       "quote": "Knowledgeable and engaging",
+      "program": "Private Program L1",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "",
+      "company": "",
+      "view": "private-l1",
+      "period": "2026"
+    },
+    {
+      "quote": "Dr. Campbell was absolutely AMAZING! He was knowledgeable on the subject matter and engaging the entire time. I loved his transparency and authenticity.",
+      "program": "Private Program L1",
+      "facilitator": "Dr. Greg Campbell",
+      "name": "",
+      "company": "",
+      "view": "private-l1",
+      "period": "2026"
+    },
+    {
+      "quote": "I would want to share the different strategies on how to develop your EQ. The 66 strategies are a great tool to use even without the virtual sessions. I gained a lot of specific insight that I can use in my personal life with my self- awareness and management. I also gained a lot of insight how I can develop my social awareness and relationship management in a professional setting. This impacted my development significantly!",
+      "program": "Private Program L1",
+      "facilitator": "Joshua Rosenthal",
+      "name": "",
+      "company": "",
+      "view": "private-l1",
+      "period": "2026"
+    },
+    {
+      "quote": "Dr. Campbell was very informative and engaging. He gave great advice to navigate my EQ. His stories were impactful and the content he provided will definitely be used in the workplace and at home.",
+      "program": "Private Program L1",
+      "facilitator": "Dr. Greg Campbell",
+      "name": "",
+      "company": "",
+      "view": "private-l1",
+      "period": "2026"
+    },
+    {
+      "quote": "Josh speaks very well and the tone he used throughout the duration was very capturing for all of us. I enjoyed the short videos we watched to practice our learnings they were very impactful videos that gave us great examples on what to look for.",
+      "program": "Private Program L1",
+      "facilitator": "Joshua Rosenthal",
+      "name": "",
+      "company": "",
+      "view": "private-l1",
+      "period": "2026"
+    },
+    {
+      "quote": "The way he spoke was very strong. I love the vocab used. He reassured every person and never made anyone feel stupid for their outlook on the questions.",
+      "program": "Private Program L1",
+      "facilitator": "Joshua Rosenthal",
+      "name": "",
+      "company": "",
+      "view": "private-l1",
+      "period": "2026"
+    },
+    {
+      "quote": "Great presentation skills. Keeps everyone involved. Passionate about the topics. Great examples and content was relatable.",
+      "program": "Private Program L1",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "",
+      "company": "",
+      "view": "private-l1",
+      "period": "2026"
+    },
+    {
+      "quote": "Be open, be honest, be engaged, and apply what you learn for the best outcome. There is no transformation without internal transformation. Take the time to understand how your emotions impact your decisions/life.",
+      "program": "Private Program L1",
+      "facilitator": "Dr. Greg Campbell",
+      "name": "",
+      "company": "",
+      "view": "private-l1",
+      "period": "2026"
+    },
+    {
+      "quote": "Sheri was very knowledgeable and was able to make all this new information digestible. She is able to thoughtfully articulate her stories and feelings and I can see that she practices what she teaches.",
+      "program": "Private Program L1",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "",
+      "company": "",
+      "view": "private-l1",
+      "period": "2026"
+    },
+    {
+      "quote": "Sheri was amazing. She gave us lots of great examples ,and made the class very fun and easy to stay engaged with.",
+      "program": "Private Program L1",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "",
+      "company": "",
+      "view": "private-l1",
+      "period": "2026"
+    },
+    {
+      "quote": "Engaging. Prepared. Thoughtful on time.",
+      "program": "Private Program L1",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "",
+      "company": "",
+      "view": "private-l1",
+      "period": "2026"
+    },
+    {
+      "quote": "This is the best personal development course I have attended and it is worth your time. Specific info is shared that can engance your relationships with not only other but yourself",
+      "program": "Private Program L1",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "",
+      "company": "",
+      "view": "private-l1",
+      "period": "2026"
+    },
+    {
+      "quote": "I believe that this is insightful and can allow you to think about yourself and others more. It made me think about personal things in my life more than professionally",
+      "program": "Private Program L1",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "",
+      "company": "",
+      "view": "private-l1",
+      "period": "2026"
+    },
+    {
+      "quote": "Sheri was very clear and concise in her teaching. The examples shared were also helpful in bringing the message home and make it more practical.",
+      "program": "Private Program L1",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "",
+      "company": "",
+      "view": "private-l1",
+      "period": "2026"
+    },
+    {
+      "quote": "Very engaging and open. Did a really good job at communicating that there weren\u2019t any wrong answers.",
+      "program": "Private Program L1",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "",
+      "company": "",
+      "view": "private-l1",
+      "period": "2026"
+    },
+    {
+      "quote": "Attend the session. It is worth your time and effort. Great training session.",
+      "program": "Private Program L1",
+      "facilitator": "Dr. Greg Campbell",
+      "name": "",
+      "company": "",
+      "view": "private-l1",
+      "period": "2026"
+    },
+    {
+      "quote": "Engaging and upbeat. Easy to listen to and great explanations.",
+      "program": "Private Program L1",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "",
+      "company": "",
+      "view": "private-l1",
+      "period": "2026"
+    },
+    {
+      "quote": "Sheri was awesome. Relatable, smart and cool!",
+      "program": "Private Program L1",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "",
+      "company": "",
+      "view": "private-l1",
+      "period": "2026"
+    },
+    {
+      "quote": "It was so great I learned a lot thank you!",
+      "program": "Private Program L1",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "",
+      "company": "",
+      "view": "private-l1",
+      "period": "2026"
+    },
+    {
+      "quote": "Experienced. Speaks well. Engaging.",
+      "program": "Private Program L1",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "",
+      "company": "",
+      "view": "private-l1",
+      "period": "2026"
+    },
+    {
+      "quote": "Very engaging, clear communicator, loved and very impressed that she learned our names, wasn\u2019t pushy or forceful in making people participate or feel uncomfortable",
+      "program": "Private Program L1",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "",
+      "company": "",
+      "view": "private-l1",
+      "period": "2026"
+    },
+    {
+      "quote": "Very personable, connected well over Zoom, and knew how to relay the information in a very understandable way. Also gave really good and timely feedback",
+      "program": "Private Program L1",
+      "facilitator": "Joshua Rosenthal",
+      "name": "",
+      "company": "",
+      "view": "private-l1",
+      "period": "2026"
+    },
+    {
+      "quote": "Very eloquent speaker and did an amazing job at articulating and keeping good time.",
+      "program": "Private Program L1",
+      "facilitator": "Joshua Rosenthal",
+      "name": "",
+      "company": "",
+      "view": "private-l1",
+      "period": "2026"
+    },
+    {
+      "quote": "Engaging, good at acknowledging everyone, kept things entertaining, insightful",
+      "program": "Private Program L1",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "",
+      "company": "",
+      "view": "private-l1",
+      "period": "2026"
+    },
+    {
+      "quote": "Clear and concise, engagement to keep us going. Loved the group breakouts.",
+      "program": "Private Program L1",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "",
+      "company": "",
+      "view": "private-l1",
+      "period": "2026"
+    },
+    {
+      "quote": "I found it to be very helpful and had concrete strategies to take with me.",
+      "program": "Private Program L1",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "",
+      "company": "",
+      "view": "private-l1",
+      "period": "2026"
+    },
+    {
+      "quote": "Sheri was engaging and used real-world, relatable examples.",
+      "program": "Private Program L1",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "",
+      "company": "",
+      "view": "private-l1",
+      "period": "2026"
+    },
+    {
+      "quote": "Josh was awesome. He speaks so fluently.",
+      "program": "Private Program L1",
+      "facilitator": "Joshua Rosenthal",
+      "name": "",
+      "company": "",
+      "view": "private-l1",
+      "period": "2026"
+    },
+    {
+      "quote": "It was truly transformative! Be open!",
+      "program": "Private Program L1",
+      "facilitator": "Dr. Greg Campbell",
+      "name": "",
+      "company": "",
+      "view": "private-l1",
+      "period": "2026"
+    },
+    {
+      "quote": "He was very engaging and could tie the concepts together to make you feel like they would be useful in your daily workday.",
+      "program": "Private Program L1",
+      "facilitator": "Dr. Greg Campbell",
+      "name": "",
+      "company": "",
+      "view": "private-l1",
+      "period": "2026"
+    },
+    {
+      "quote": "The program helps break down your personal scores and provides helpful strategies to develop and strengthen your EQ.",
+      "program": "Private Program L1",
+      "facilitator": "Joshua Rosenthal",
+      "name": "",
+      "company": "",
+      "view": "private-l1",
+      "period": "2026"
+    },
+    {
+      "quote": "Engagement and great examples that really hit home the intention and lesson of what was being discussed.",
+      "program": "Private Program L1",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "",
+      "company": "",
+      "view": "private-l1",
+      "period": "2026"
+    },
+    {
+      "quote": "She was very engaging and had a lot of relatable experiences to help drive the point across.",
+      "program": "Private Program L1",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "",
+      "company": "",
+      "view": "private-l1",
+      "period": "2026"
+    },
+    {
+      "quote": "Josh was great at keeping the audience engaged and checking for understanding.",
+      "program": "Private Program L1",
+      "facilitator": "Joshua Rosenthal",
+      "name": "",
+      "company": "",
+      "view": "private-l1",
+      "period": "2026"
+    },
+    {
+      "quote": "Good communicator and confident. Knowledgeable about what she\u2019s talking about",
+      "program": "Private Program L1",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "",
+      "company": "",
+      "view": "private-l1",
+      "period": "2026"
+    },
+    {
+      "quote": "Engaging and good at explaining the material in an easy way",
+      "program": "Private Program L1",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "",
+      "company": "",
+      "view": "private-l1",
+      "period": "2026"
+    },
+    {
+      "quote": "It\u2019s a great session to learn about emotional intelligence.",
+      "program": "Private Program L1",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "",
+      "company": "",
+      "view": "private-l1",
+      "period": "2026"
+    },
+    {
+      "quote": "Energetic, knowledgeable, passionate about what he does.",
+      "program": "Private Program L1",
+      "facilitator": "Dr. Greg Campbell",
+      "name": "",
+      "company": "",
+      "view": "private-l1",
+      "period": "2026"
+    },
+    {
+      "quote": "Anyone can take away helpful tools from this training.",
+      "program": "Private Program L1",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "",
+      "company": "",
+      "view": "private-l1",
+      "period": "2026"
+    },
+    {
+      "quote": "Engaging and interesting! Fun topic to dive deep knto",
+      "program": "Private Program L1",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "",
+      "company": "",
+      "view": "private-l1",
+      "period": "2026"
+    },
+    {
+      "quote": "Insightful and helpful for professional growth",
+      "program": "Private Program L1",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "",
+      "company": "",
+      "view": "private-l1",
+      "period": "2026"
+    },
+    {
+      "quote": "She is an experienced and engaging presenter.",
+      "program": "Private Program L1",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "",
+      "company": "",
+      "view": "private-l1",
+      "period": "2026"
+    },
+    {
+      "quote": "This is really impactful and I learned a lot",
+      "program": "Private Program L1",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "",
+      "company": "",
+      "view": "private-l1",
+      "period": "2026"
+    },
+    {
+      "quote": "Great group interdisciplinary interaction!",
+      "program": "Private Program L1",
+      "facilitator": "Dr. Greg Campbell",
+      "name": "",
+      "company": "",
+      "view": "private-l1",
+      "period": "2026"
+    },
+    {
+      "quote": "Engaging, thorough, subject matter expert.",
+      "program": "Private Program L1",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "",
+      "company": "",
+      "view": "private-l1",
+      "period": "2026"
+    },
+    {
+      "quote": "It seems simple but is very insightful.",
+      "program": "Private Program L1",
+      "facilitator": "Joshua Rosenthal",
+      "name": "",
+      "company": "",
+      "view": "private-l1",
+      "period": "2026"
+    },
+    {
+      "quote": "Be open to engaging with coworkers!",
+      "program": "Private Program L1",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "",
+      "company": "",
+      "view": "private-l1",
+      "period": "2026"
+    },
+    {
+      "quote": "Very engaging with each attendee.",
+      "program": "Private Program L1",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "",
+      "company": "",
+      "view": "private-l1",
+      "period": "2026"
+    },
+    {
+      "quote": "Great speaker and very engaging",
+      "program": "Private Program L1",
+      "facilitator": "Joshua Rosenthal",
+      "name": "",
+      "company": "",
+      "view": "private-l1",
+      "period": "2026"
+    },
+    {
+      "quote": "Engaging and a great motivator",
+      "program": "Private Program L1",
+      "facilitator": "Dr. Greg Campbell",
+      "name": "",
+      "company": "",
+      "view": "private-l1",
+      "period": "2026"
+    },
+    {
+      "quote": "Clear and effective speaker.",
+      "program": "Private Program L1",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "",
+      "company": "",
+      "view": "private-l1",
+      "period": "2026"
+    },
+    {
+      "quote": "Charismatic and engaging.",
+      "program": "Private Program L1",
+      "facilitator": "Dr. Greg Campbell",
+      "name": "",
+      "company": "",
+      "view": "private-l1",
+      "period": "2026"
+    },
+    {
+      "quote": "Excellent communication and very knowledgeable of various concepts and realities of human behavior",
+      "program": "Private Program L1",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "",
+      "company": "",
+      "view": "private-l1",
+      "period": "2026"
+    },
+    {
+      "quote": "His knowledge on how to use everyday tools to move the needle forward in effective communication",
+      "program": "Private Program L1",
+      "facilitator": "Dr. Greg Campbell",
+      "name": "",
+      "company": "",
+      "view": "private-l1",
+      "period": "2026"
+    },
+    {
+      "quote": "She wan engaging and made the information easy to understand and how to relate it to our life",
+      "program": "Private Program L1",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "",
+      "company": "",
+      "view": "private-l1",
+      "period": "2026"
+    },
+    {
+      "quote": "Good feel for the room Keeping people engaged Strong personal stories",
+      "program": "Private Program L1",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "",
+      "company": "",
+      "view": "private-l1",
+      "period": "2026"
+    },
+    {
+      "quote": "Engagement personable knowledgeable empowerment impactful",
+      "program": "Private Program L1",
+      "facilitator": "Dr. Greg Campbell",
+      "name": "",
+      "company": "",
+      "view": "private-l1",
+      "period": "2026"
+    },
+    {
+      "quote": "Tied the material to real life scenarios was very helpful",
+      "program": "Private Program L1",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "",
+      "company": "",
+      "view": "private-l1",
+      "period": "2026"
+    },
+    {
+      "quote": "She was great at explaining and making it simple",
+      "program": "Private Program L1",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "",
+      "company": "",
+      "view": "private-l1",
+      "period": "2026"
+    },
+    {
+      "quote": "Very well spoken and thoughtful with his words",
+      "program": "Private Program L1",
+      "facilitator": "Joshua Rosenthal",
+      "name": "",
+      "company": "",
+      "view": "private-l1",
+      "period": "2026"
+    },
+    {
+      "quote": "Great spokesman with knowledgeable information",
+      "program": "Private Program L1",
+      "facilitator": "Joshua Rosenthal",
+      "name": "",
+      "company": "",
+      "view": "private-l1",
+      "period": "2026"
+    },
+    {
+      "quote": "Engaging, knowledgeable, fun, personable,",
+      "program": "Private Program L1",
+      "facilitator": "Dr. Greg Campbell",
+      "name": "",
+      "company": "",
+      "view": "private-l1",
+      "period": "2026"
+    },
+    {
+      "quote": "Engaging, knowledgeable, rooted in fair",
+      "program": "Private Program L1",
+      "facilitator": "Dr. Greg Campbell",
+      "name": "",
+      "company": "",
+      "view": "private-l1",
+      "period": "2026"
+    },
+    {
+      "quote": "Excellent engagement with the attendees",
+      "program": "Private Program L1",
+      "facilitator": "Dr. Greg Campbell",
+      "name": "",
+      "company": "",
+      "view": "private-l1",
+      "period": "2026"
+    },
+    {
+      "quote": "This is a good way to work on yourself",
+      "program": "Private Program L1",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "",
+      "company": "",
+      "view": "private-l1",
+      "period": "2026"
+    },
+    {
+      "quote": "Engaging and used examples to explain",
+      "program": "Private Program L1",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "",
+      "company": "",
+      "view": "private-l1",
+      "period": "2026"
+    },
+    {
+      "quote": "Engaging, interesting, knowledgeable",
+      "program": "Private Program L1",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "",
+      "company": "",
+      "view": "private-l1",
+      "period": "2026"
+    },
+    {
+      "quote": "Engaging and confident in material",
+      "program": "Private Program L1",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "",
+      "company": "",
+      "view": "private-l1",
+      "period": "2026"
+    },
+    {
+      "quote": "Engaging, empathetic, entertaining",
+      "program": "Private Program L1",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "",
+      "company": "",
+      "view": "private-l1",
+      "period": "2026"
+    },
+    {
+      "quote": "Great engagement and communication",
+      "program": "Private Program L1",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "",
+      "company": "",
+      "view": "private-l1",
+      "period": "2026"
+    },
+    {
+      "quote": "Engaging informed and trustworthy",
+      "program": "Private Program L1",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "",
+      "company": "",
+      "view": "private-l1",
+      "period": "2026"
+    },
+    {
+      "quote": "It was insightful and productive",
+      "program": "Private Program L1",
+      "facilitator": "Dr. Sheri Duchock",
+      "name": "",
+      "company": "",
+      "view": "private-l1",
+      "period": "2026"
+    },
+    {
+      "quote": "Personable, relatable, engaging",
       "program": "Private Program L1",
       "facilitator": "Dr. Sheri Duchock",
       "name": "",
@@ -9620,6 +10610,69 @@
       "period": "2026"
     },
     {
+      "quote": "She was very engaging but also has such a large range of knowledge on the topic! I learned a lot about myself but also how I can be more emotionally intelligent to others!",
+      "program": "Private Program L2",
+      "facilitator": "",
+      "name": "",
+      "company": "",
+      "view": "private-l2",
+      "period": "2026"
+    },
+    {
+      "quote": "I would love to share the 66 ways of improvement for each section. Those are helpful to review to get a perspective on how you can make your thinking more positive",
+      "program": "Private Program L2",
+      "facilitator": "",
+      "name": "",
+      "company": "",
+      "view": "private-l2",
+      "period": "2026"
+    },
+    {
+      "quote": "Empathetic yet concise presentation of information. I enjoyed hearing about personal experiences, as well as getting insight through movie clip analysis.",
+      "program": "Private Program L2",
+      "facilitator": "",
+      "name": "",
+      "company": "",
+      "view": "private-l2",
+      "period": "2026"
+    },
+    {
+      "quote": "Listen!! One of the most valuable trainings we\u2019re given - self development!",
+      "program": "Private Program L2",
+      "facilitator": "",
+      "name": "",
+      "company": "",
+      "view": "private-l2",
+      "period": "2026"
+    },
+    {
+      "quote": "Really great at keeping attention and making the activities apply to what is being taught.",
+      "program": "Private Program L2",
+      "facilitator": "",
+      "name": "",
+      "company": "",
+      "view": "private-l2",
+      "period": "2026"
+    },
+    {
+      "quote": "Sheri's does a phenomenal job at keeping us engaged while Mastering our EQ.",
+      "program": "Private Program L2",
+      "facilitator": "",
+      "name": "",
+      "company": "",
+      "view": "private-l2",
+      "period": "2026"
+    },
+    {
+      "quote": "Great presenter, very comforting & kind",
+      "program": "Private Program L2",
+      "facilitator": "",
+      "name": "",
+      "company": "",
+      "view": "private-l2",
+      "period": "2026"
+    },
+    {
       "quote": "Sheri is great, very attentive and all around amazing. Really appreciate her and all her efforts.",
       "program": "Private Program L2",
       "facilitator": "Dr. Sheri Duchock",
@@ -10250,6 +11303,15 @@
       "period": "2026"
     },
     {
+      "quote": "Was very knowledgeable and kept a great pace for the training session.",
+      "program": "Leading Through Friction (Private Program)",
+      "facilitator": "Josh Rosenthal",
+      "name": "",
+      "company": "",
+      "view": "ltf-private",
+      "period": "2026"
+    },
+    {
       "quote": "Friction is not good or bad, it\u2019s what we have to work through.",
       "program": "Leading Through Friction (Private Program)",
       "facilitator": "Josh Rosenthal",
@@ -10263,6 +11325,15 @@
       "program": "Leading Through Friction (Private Program)",
       "facilitator": "Josh Rosenthal",
       "name": "",
+      "company": "",
+      "view": "ltf-private",
+      "period": "2026"
+    },
+    {
+      "quote": "Josh was an excellent communicator and presentor",
+      "program": "Leading Through Friction (Private Program)",
+      "facilitator": "Josh Rosenthal",
+      "name": "Phillip",
       "company": "",
       "view": "ltf-private",
       "period": "2026"
@@ -10313,6 +11384,24 @@
       "period": "2026"
     },
     {
+      "quote": "Control, influence, accept is a great tool",
+      "program": "Leading Through Friction (Private Program)",
+      "facilitator": "Josh Rosenthal",
+      "name": "Phillip",
+      "company": "",
+      "view": "ltf-private",
+      "period": "2026"
+    },
+    {
+      "quote": "Good speaker    Good speaker",
+      "program": "Leading Through Friction (Private Program)",
+      "facilitator": "Josh Rosenthal",
+      "name": "",
+      "company": "",
+      "view": "ltf-private",
+      "period": "2026"
+    },
+    {
       "quote": "Great energy and knowledge",
       "program": "Leading Through Friction (Private Program)",
       "facilitator": "Josh Rosenthal",
@@ -10328,6 +11417,51 @@
       "name": "",
       "company": "",
       "view": "ltf-private",
+      "period": "2026"
+    },
+    {
+      "quote": "Josh is engaging, supportive, provided great examples, actively listened, and I felt like he was rooting for everyone to succeed. He was also extremely responsive in making certain I had all the materials I needed, as I was unable to download.",
+      "program": "Leading Through Friction (Train the Trainer)",
+      "facilitator": "Josh Rosenthal",
+      "name": "",
+      "company": "",
+      "view": "ltf-ttt",
+      "period": "2026"
+    },
+    {
+      "quote": "Josh had good examples and kept us all well engaged. He knew the materials well.",
+      "program": "Leading Through Friction (Train the Trainer)",
+      "facilitator": "Josh Rosenthal",
+      "name": "The",
+      "company": "",
+      "view": "ltf-ttt",
+      "period": "2026"
+    },
+    {
+      "quote": "Very engaging. Great grasp of the program.",
+      "program": "Leading Through Friction (Train the Trainer)",
+      "facilitator": "Josh Rosenthal",
+      "name": "Keep",
+      "company": "",
+      "view": "ltf-ttt",
+      "period": "2026"
+    },
+    {
+      "quote": "He was knowledgable, engaging, and funny.",
+      "program": "Leading Through Friction (Train the Trainer)",
+      "facilitator": "Josh Rosenthal",
+      "name": "I",
+      "company": "",
+      "view": "ltf-ttt",
+      "period": "2026"
+    },
+    {
+      "quote": "Great presenter and knowledgeable",
+      "program": "Leading Through Friction (Train the Trainer)",
+      "facilitator": "Josh Rosenthal",
+      "name": "I",
+      "company": "",
+      "view": "ltf-ttt",
       "period": "2026"
     },
     {

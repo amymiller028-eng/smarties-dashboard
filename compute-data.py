@@ -12,13 +12,16 @@ from datetime import datetime, timedelta
 from pathlib import Path
 import openpyxl
 
-SRC = Path(r"C:\Users\Amy Miller - TS\OneDrive - TalentSmart\Program-Evals-2026.xlsx")
+# Relative to whoever is signed in, so a new computer (new Windows username)
+# doesn't break the refresh.
+ONEDRIVE = Path.home() / "OneDrive - TalentSmart"
+SRC = ONEDRIVE / "Program-Evals-2026.xlsx"
 OUT = Path(__file__).parent / "data.json"
 
 # 2025 lives in its own workbook and is closed history — read, never written.
 # Its sheets ask the same questions in different columns, which resolve_cols()
 # handles, so each one just names the 2026 sheet whose history it continues.
-LEGACY_SRC = Path(r"C:\Users\Amy Miller - TS\OneDrive - TalentSmart\Program_Evals.xlsx")
+LEGACY_SRC = ONEDRIVE / "Program_Evals.xlsx"
 LEGACY_SHEETS = {
     "PrivateL1_EOS": "PrivateL1",
     "PrivateL2_EOS": "PrivateL2",
@@ -166,6 +169,40 @@ SHEET_COLS = {
         "manager_exp": "AK", "quote": "AL",
     },
 }
+
+# --- Revised forms (from mid-2026) ---------------------------------------------
+# The new survey forms go into their own "New..." sheets. Their columns are
+# found by header text like every other sheet; questions the new forms dropped
+# (Private: "gained new knowledge"; TTT: "content relevant") simply resolve to
+# None, so those tiles carry on from the older responses only.
+#
+# Each sheet names the family it continues. A sheet holding more than one
+# family gives a function of the Session Name instead.
+
+def _ttt_level(session):
+    """TTT L1 and L2 share one sheet: 'TTT Level 2: ...', '... TTT L2 - ...'."""
+    return "TTTL2" if re.search(r"\b(level\s*2|l2)\b", session, re.I) else "TTTL1"
+
+def _ltf_delivery(session):
+    """Private and TTT LTF share one sheet: 'TTT LTF - October 20-21, 2026'."""
+    return "LTF-TTT" if re.search(r"\bTTT\b", session) else "LTF-Private"
+
+NEW_FORM_SHEETS = {
+    "NewPrivateL1": "PrivateL1",
+    "NewPrivateL2": "PrivateL2",
+    "NewTTTL1&L2":  _ttt_level,
+    "NewTTTTeams":  "TTTTeams",
+}
+
+# LTF sheets that mix deliveries, split the same way.
+LTF_MIXED_SHEETS = {
+    "LTF-Private&TTT": _ltf_delivery,
+}
+
+
+def family_of(route, session):
+    """The family one row belongs to, given its sheet's route."""
+    return route(str(session or "").strip()) if callable(route) else route
 
 # --- Leading Through Friction -------------------------------------------------
 # LTF runs its own survey: seven agreement statements that only partly overlap
@@ -428,8 +465,16 @@ LEARNER_SINGLES = {
 
 
 def ltf_sheets(sheetnames):
-    """LTF delivery sheets present in the workbook, in delivery order."""
-    return [f"LTF-{sfx}" for sfx in LTF_DELIVERIES if f"LTF-{sfx}" in sheetnames]
+    """LTF sheets present in the workbook: one per delivery, in delivery order,
+    then any sheet that mixes deliveries."""
+    return ([f"LTF-{sfx}" for sfx in LTF_DELIVERIES if f"LTF-{sfx}" in sheetnames]
+            + [s for s in LTF_MIXED_SHEETS if s in sheetnames])
+
+
+def sheet_route(name):
+    """Which family a sheet feeds: its own name, or NEW_FORM_SHEETS /
+    LTF_MIXED_SHEETS when it continues or mixes other families."""
+    return NEW_FORM_SHEETS.get(name) or LTF_MIXED_SHEETS.get(name) or name
 
 
 def all_sheet_cols(wb, warn=None):
@@ -439,12 +484,29 @@ def all_sheet_cols(wb, warn=None):
     columns shift (or a new year's export) maps itself.
     """
     cols = {}
-    for name in SHEET_COLS:
+    for name in list(SHEET_COLS) + list(NEW_FORM_SHEETS):
         if name in wb.sheetnames:
             cols[name] = resolve_cols(wb[name], name, warn=warn)
     for name in ltf_sheets(wb.sheetnames):
         cols[name] = LTF_AS_STANDARD
     return cols
+
+
+def split_by_family(ds, route):
+    """{family: dataset} for one sheet. A fixed route keeps the sheet whole;
+    a session-name route hands each row to its own family."""
+    if not callable(route):
+        return {route: ds}
+    sessions = ds.get("session") or []
+    groups = {}
+    for i, s in enumerate(sessions):
+        if s in (None, ""):
+            continue
+        groups.setdefault(family_of(route, s), []).append(i)
+    return {fam: {key: ([col[i] for i in idx if i < len(col)]
+                        if isinstance(col, list) else col)
+                  for key, col in ds.items()}
+            for fam, idx in groups.items()}
 
 
 CONFIDENCE_MAP = {
@@ -1199,12 +1261,14 @@ def update_trainers_tab(cols_by_sheet):
         if sheet_name not in wb.sheetnames or not cols.get("facilitator"):
             continue
         raw_ws = wb[sheet_name]
-        program_label = PROGRAM_LABELS.get(sheet_name, sheet_name)
+        route = sheet_route(sheet_name)
         for r in range(2, raw_ws.max_row + 1):
             fac = raw_ws[f"{cols['facilitator']}{r}"].value
             if not fac: continue
             fac = str(fac).strip()
             if not fac: continue
+            family = family_of(route, raw_ws[f"{cols['session']}{r}"].value)
+            program_label = PROGRAM_LABELS.get(family, family)
             g = trainer_data[fac][program_label]
             g["nps"].append(raw_ws[f"{cols['nps']}{r}"].value)
             g["apply"].append(raw_ws[f"{cols['apply_on_job']}{r}"].value)
@@ -1424,7 +1488,7 @@ def update_sessions_tab(rows):
 
 
 def main():
-    wb = openpyxl.load_workbook(SRC, data_only=True)
+    wb = load_readonly(SRC, data_only=True)
 
     ltf_present = ltf_sheets(wb.sheetnames)
 
@@ -1444,7 +1508,11 @@ def main():
         extra = detect_extra_cols(ws)
         for key in ("email", "first", "last", "name_optional", "strengths"):
             ds[key] = col_values(ws, extra[key]) if extra.get(key) else []
-        raw[sheet_name] = [ds]
+        # New-form sheets join the family they continue; mixed sheets split.
+        for family, part in split_by_family(ds, sheet_route(sheet_name)).items():
+            raw.setdefault(family, []).append(part)
+            if family != sheet_name:
+                print(f"  + {sheet_name} -> {family}: {len(numeric(part.get('nps', [])))} responses")
 
     # 2025 history, from its own workbook, appended to the family it continues.
     wb_learner = None
@@ -1468,7 +1536,13 @@ def main():
         print(f"  ! 2025 workbook not found at {LEGACY_SRC}")
 
     # LTF again, this time under its own question names, for its own view.
-    ltf_raw = {name: collect_sheet(wb[name], LTF_COLS) for name in ltf_present}
+    # Keyed by delivery family, since one sheet can hold more than one.
+    ltf_raw = {}
+    for name in ltf_present:
+        ds = collect_sheet(wb[name], LTF_COLS)
+        for family, part in split_by_family(ds, sheet_route(name)).items():
+            ltf_raw.setdefault(family, []).append(part)
+    ltf_families = [f"LTF-{sfx}" for sfx in LTF_DELIVERIES if f"LTF-{sfx}" in ltf_raw]
 
     views = {}
 
@@ -1485,13 +1559,13 @@ def main():
 
     # Leading Through Friction — summary plus one view per delivery mode that
     # actually has data. Views the dashboard doesn't find, it hides.
-    if ltf_present:
+    if ltf_families:
         views["ltf-summary"] = ltf_view(
-            "Leading Through Friction", [ltf_raw[s] for s in ltf_present])
-        for s in ltf_present:
+            "Leading Through Friction", [d for s in ltf_families for d in ltf_raw[s]])
+        for s in ltf_families:
             key, delivery = LTF_DELIVERIES[s.split("-", 1)[1]]
             views[key] = ltf_view(
-                f"Leading Through Friction — {delivery}", [ltf_raw[s]])
+                f"Leading Through Friction — {delivery}", ltf_raw[s])
 
     # Quotes
     testimonials = []
@@ -1507,7 +1581,7 @@ def main():
         "PublicL1": "public-l1", "Custom Programs": "custom-misc",
         "Policing": "custom-policing",
     }
-    for s in ltf_present:
+    for s in ltf_families:
         key, delivery = LTF_DELIVERIES[s.split("-", 1)[1]]
         label_for[s] = f"Leading Through Friction ({delivery})"
         view_for[s] = key
@@ -1538,9 +1612,15 @@ def main():
     OUT.write_text(json.dumps(payload, indent=2), encoding="utf-8")
     print(f"\nWrote: {OUT}")
 
-    # Refresh the internal-only workbook tabs
-    update_trainers_tab(cols_by_sheet)
-    update_sessions_tab(session_rows(raw))
+    # Refresh the internal-only workbook tabs. Excel holding the workbook open
+    # blocks the save; data.json is already written, so say so and carry on.
+    try:
+        update_trainers_tab(cols_by_sheet)
+        update_sessions_tab(session_rows(raw))
+    except PermissionError:
+        print("  ! Program-Evals-2026.xlsx is open in Excel, so the Trainers and "
+              "Sessions tabs were not refreshed. data.json is up to date. Close "
+              "the workbook and re-run to refresh those tabs.")
     print("\nQuick summary of computed views:")
     for k, v in views.items():
         if v.get("type") == "refresher":
